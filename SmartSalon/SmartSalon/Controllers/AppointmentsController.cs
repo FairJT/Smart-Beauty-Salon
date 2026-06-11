@@ -23,6 +23,9 @@ namespace SmartSalon.Controllers
             [FromQuery] DateTime date,
             [FromQuery] int duration = 30)
         {
+            if (date.Date < DateTime.Today)
+                return BadRequest(new { message = "Cannot book slots for past dates" });
+
             var slots = await _appointmentService.GetSlotsAsync(artistId, date, duration);
             if (slots == null) return NotFound(new { message = "Artist not found" });
             return Ok(slots);
@@ -33,6 +36,9 @@ namespace SmartSalon.Controllers
         public async Task<IActionResult> Create([FromBody] CreateAppointmentDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if (dto.StartTime < DateTime.UtcNow)
+                return BadRequest(new { message = "Cannot book appointments in the past" });
 
             var clientId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var result = await _appointmentService.CreateAsync(dto, clientId);
@@ -57,9 +63,13 @@ namespace SmartSalon.Controllers
         public async Task<IActionResult> Confirm(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            var confirmed = await _appointmentService.ConfirmAsync(id, userId);
-            if (!confirmed)
-                return NotFound(new { message = "Appointment not found or access denied" });
+            var (success, isNotFound) = await _appointmentService.ConfirmAsync(id, userId);
+
+            if (isNotFound)
+                return NotFound(new { message = "Appointment not found" });
+
+            if (!success)
+                return Forbid();
 
             return Ok(new { message = "Appointment confirmed" });
         }

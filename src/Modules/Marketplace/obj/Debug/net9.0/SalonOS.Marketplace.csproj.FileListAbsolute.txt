@@ -1,0 +1,16 @@
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.csproj.AssemblyReference.cache
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.GeneratedMSBuildEditorConfig.editorconfig
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.AssemblyInfoInputs.cache
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.AssemblyInfo.cs
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.csproj.CoreCompileInputs.cache
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.sourcelink.json
+d:\PR\SmartSalon\src\Modules\Marketplace\bin\Debug\net9.0\SalonOS.Marketplace.deps.json
+D:\PR\SmartSalon\src\Modules\Marketplace\bin\Debug\net9.0\SalonOS.Marketplace.dll
+D:\PR\SmartSalon\src\Modules\Marketplace\bin\Debug\net9.0\SalonOS.Marketplace.pdb
+D:\PR\SmartSalon\src\Modules\Marketplace\bin\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\Modules\Marketplace\bin\Debug\net9.0\SalonOS.Shared.pdb
+d:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS..351B9D75.Up2Date
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.dll
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\refint\SalonOS.Marketplace.dll
+D:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\SalonOS.Marketplace.pdb
+d:\PR\SmartSalon\src\Modules\Marketplace\obj\Debug\net9.0\ref\SalonOS.Marketplace.dll

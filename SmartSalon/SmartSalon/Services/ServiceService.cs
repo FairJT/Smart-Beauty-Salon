@@ -26,6 +26,21 @@ namespace SmartSalon.Services
                 .ToListAsync();
         }
 
+        public async Task<ServiceListItemDto?> GetByIdAsync(int id)
+        {
+            var service = await _db.SalonServices.FindAsync(id);
+            if (service == null || !service.IsActive) return null;
+
+            return new ServiceListItemDto
+            {
+                Id = service.Id,
+                Name = service.Name,
+                Category = service.Category,
+                BaseDurationMinutes = service.BaseDurationMinutes,
+                BasePrice = service.BasePrice
+            };
+        }
+
         public async Task<int?> CreateServiceAsync(CreateServiceDto dto)
         {
             if (!await _db.Salons.AnyAsync(s => s.Id == dto.SalonId))

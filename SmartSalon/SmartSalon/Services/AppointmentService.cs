@@ -143,15 +143,15 @@ namespace SmartSalon.Services
                 .ToListAsync();
         }
 
-        public async Task<bool> ConfirmAsync(int id, string userId)
+        public async Task<(bool Success, bool IsNotFound)> ConfirmAsync(int id, string userId)
         {
             var appointment = await _db.Appointments
                 .Include(a => a.Salon)
                 .Include(a => a.Client)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
-            if (appointment == null) return false;
-            if (appointment.Salon?.ManagerId != userId) return false;
+            if (appointment == null) return (false, true);
+            if (appointment.Salon?.ManagerId != userId) return (false, false);
 
             appointment.Status = AppointmentStatus.Confirmed;
             await _db.SaveChangesAsync();
@@ -165,7 +165,7 @@ namespace SmartSalon.Services
                     appointment.Client.Id, salonName, dateTime);
             }
 
-            return true;
+            return (true, false);
         }
 
         public async Task<bool> CompleteAsync(int id, string userId)

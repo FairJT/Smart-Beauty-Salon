@@ -1,0 +1,16 @@
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.csproj.AssemblyReference.cache
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.GeneratedMSBuildEditorConfig.editorconfig
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.AssemblyInfoInputs.cache
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.AssemblyInfo.cs
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.csproj.CoreCompileInputs.cache
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.sourcelink.json
+d:\PR\SmartSalon\src\Modules\Catalog\bin\Debug\net9.0\SalonOS.Catalog.deps.json
+D:\PR\SmartSalon\src\Modules\Catalog\bin\Debug\net9.0\SalonOS.Catalog.dll
+D:\PR\SmartSalon\src\Modules\Catalog\bin\Debug\net9.0\SalonOS.Catalog.pdb
+D:\PR\SmartSalon\src\Modules\Catalog\bin\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\Modules\Catalog\bin\Debug\net9.0\SalonOS.Shared.pdb
+d:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS..85F6465E.Up2Date
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.dll
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\refint\SalonOS.Catalog.dll
+D:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\SalonOS.Catalog.pdb
+d:\PR\SmartSalon\src\Modules\Catalog\obj\Debug\net9.0\ref\SalonOS.Catalog.dll

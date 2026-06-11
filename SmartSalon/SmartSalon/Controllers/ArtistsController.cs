@@ -26,6 +26,14 @@ namespace SmartSalon.Controllers
             return Ok(artists);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var artist = await _artistService.GetByIdAsync(id);
+            if (artist == null) return NotFound(new { message = "Artist not found" });
+            return Ok(artist);
+        }
+
         [HttpGet("{id:int}/report")]
         [Authorize]
         public async Task<IActionResult> GetReport(

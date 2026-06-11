@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
+using SmartSalon.DTOs;
 
 namespace SmartSalon.Tests;
 
@@ -14,6 +16,8 @@ public class NotificationTests : IClassFixture<TestFixture>
         _client = fixture.CreateClient();
     }
 
+    #region Get Notifications Tests
+
     [Fact]
     public async Task GetNotifications_WithAuth_ReturnsEmptyList()
     {
@@ -21,8 +25,9 @@ public class NotificationTests : IClassFixture<TestFixture>
         var response = await client.GetAsync("/api/notifications");
         response.EnsureSuccessStatusCode();
 
-        var result = await response.Content.ReadFromJsonAsync<dynamic>();
+        var result = await response.Content.ReadFromJsonAsync<NotificationsResponseDto>();
         Assert.NotNull(result);
+        Assert.Empty(result!.Notifications);
     }
 
     [Fact]
@@ -32,6 +37,10 @@ public class NotificationTests : IClassFixture<TestFixture>
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 
+    #endregion
+
+    #region Get Unread Count Tests
+
     [Fact]
     public async Task GetUnreadCount_ReturnsZero()
     {
@@ -39,10 +48,20 @@ public class NotificationTests : IClassFixture<TestFixture>
         var response = await client.GetAsync("/api/notifications/unread-count");
         response.EnsureSuccessStatusCode();
 
-        var result = await response.Content.ReadFromJsonAsync<dynamic>();
-        Assert.NotNull(result);
-        Assert.Equal(0, (int)result.count);
+        var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(0, result.GetProperty("count").GetInt32());
     }
+
+    [Fact]
+    public async Task GetUnreadCount_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _client.GetAsync("/api/notifications/unread-count");
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    #endregion
+
+    #region Mark As Read Tests
 
     [Fact]
     public async Task MarkAsRead_NonExisting_ReturnsNotFound()
@@ -53,15 +72,37 @@ public class NotificationTests : IClassFixture<TestFixture>
     }
 
     [Fact]
+    public async Task MarkAsRead_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _client.PutAsJsonAsync("/api/notifications/1/read", new { });
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    #endregion
+
+    #region Mark All As Read Tests
+
+    [Fact]
     public async Task MarkAllAsRead_ReturnsSuccess()
     {
         var client = _fixture.CreateClientWithToken("user-notif-4");
         var response = await client.PutAsJsonAsync("/api/notifications/read-all", new { });
         response.EnsureSuccessStatusCode();
 
-        var result = await response.Content.ReadFromJsonAsync<dynamic>();
-        Assert.NotNull(result);
+        var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.True(result.TryGetProperty("message", out _));
     }
+
+    [Fact]
+    public async Task MarkAllAsRead_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _client.PutAsJsonAsync("/api/notifications/read-all", new { });
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    #endregion
+
+    #region Delete Notification Tests
 
     [Fact]
     public async Task DeleteNotification_NonExisting_ReturnsNotFound()
@@ -72,30 +113,34 @@ public class NotificationTests : IClassFixture<TestFixture>
     }
 
     [Fact]
+    public async Task DeleteNotification_WithoutAuth_ReturnsUnauthorized()
+    {
+        var response = await _client.DeleteAsync("/api/notifications/1");
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    #endregion
+
+    #region Full Notification Flow
+
+    [Fact]
     public async Task FullNotificationFlow_CreateReadDelete()
     {
-        // This test verifies the notification flow end-to-end:
-        // 1. Create an appointment (triggers notification to manager)
-        // 2. Check manager has notifications
-        // 3. Mark as read
-        // 4. Verify unread count is 0
-
         var managerId = "notif-manager-1";
 
-        // Setup salon
         var managerClient = _fixture.CreateClientWithToken(managerId, "SalonManager");
-        var salonResponse = await managerClient.PostAsJsonAsync("/api/salons", new SmartSalon.DTOs.CreateSalonDto
+        var salonResponse = await managerClient.PostAsJsonAsync("/api/salons", new
         {
             Name = "Notification Test Salon",
-            Slug = "notif-test-salon",
+            Slug = $"notif-test-salon-{Guid.NewGuid().ToString("N")[..8]}",
             ManagerId = managerId
         });
-        var salonResult = await salonResponse.Content.ReadFromJsonAsync<dynamic>();
-        int salonId = salonResult!.id;
+        salonResponse.EnsureSuccessStatusCode();
+        var salonResult = await salonResponse.Content.ReadFromJsonAsync<JsonElement>();
+        int salonId = salonResult.GetProperty("id").GetInt32();
 
-        // Create user + artist
         var userClient = _fixture.CreateClient();
-        var regResponse = await userClient.PostAsJsonAsync("/api/auth/register", new SmartSalon.DTOs.RegisterDto
+        var regResponse = await userClient.PostAsJsonAsync("/api/auth/register", new
         {
             Mobile = "09127771111",
             Password = "Test1234",
@@ -103,20 +148,20 @@ public class NotificationTests : IClassFixture<TestFixture>
             LastName = "Artist",
             NationalCode = "7771111111"
         });
-        var regResult = await regResponse.Content.ReadFromJsonAsync<SmartSalon.DTOs.AuthResponseDto>();
+        var regResult = await regResponse.Content.ReadFromJsonAsync<AuthResponseDto>();
 
-        var artistResponse = await managerClient.PostAsJsonAsync("/api/artists", new SmartSalon.DTOs.CreateArtistDto
+        var artistResponse = await managerClient.PostAsJsonAsync("/api/artists", new
         {
             UserId = regResult!.User.Id,
             SalonId = salonId,
             BioShort = "Test",
-            ContractType = SmartSalon.Models.ContractType.FixedSalary
+            ContractType = 1
         });
-        var artistResult = await artistResponse.Content.ReadFromJsonAsync<dynamic>();
-        int artistId = artistResult!.id;
+        artistResponse.EnsureSuccessStatusCode();
+        var artistResult = await artistResponse.Content.ReadFromJsonAsync<JsonElement>();
+        int artistId = artistResult.GetProperty("id").GetInt32();
 
-        // Create service
-        var svcResponse = await managerClient.PostAsJsonAsync("/api/services", new SmartSalon.DTOs.CreateServiceDto
+        var svcResponse = await managerClient.PostAsJsonAsync("/api/services", new
         {
             Name = "Notif Service",
             Category = "Test",
@@ -124,12 +169,12 @@ public class NotificationTests : IClassFixture<TestFixture>
             Price = 100000,
             SalonId = salonId
         });
-        var svcResult = await svcResponse.Content.ReadFromJsonAsync<dynamic>();
-        int serviceId = svcResult!.id;
+        svcResponse.EnsureSuccessStatusCode();
+        var svcResult = await svcResponse.Content.ReadFromJsonAsync<JsonElement>();
+        int serviceId = svcResult.GetProperty("id").GetInt32();
 
-        // Client creates appointment (triggers notification to manager)
         var client = _fixture.CreateClient();
-        var clientReg = await client.PostAsJsonAsync("/api/auth/register", new SmartSalon.DTOs.RegisterDto
+        var clientReg = await client.PostAsJsonAsync("/api/auth/register", new
         {
             Mobile = "09127772222",
             Password = "Test1234",
@@ -137,12 +182,12 @@ public class NotificationTests : IClassFixture<TestFixture>
             LastName = "Client",
             NationalCode = "7772222222"
         });
-        var clientResult = await clientReg.Content.ReadFromJsonAsync<SmartSalon.DTOs.AuthResponseDto>();
+        var clientResult = await clientReg.Content.ReadFromJsonAsync<AuthResponseDto>();
         client.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", clientResult!.Token);
 
         var tomorrow = DateTime.Today.AddDays(1).AddHours(14);
-        await client.PostAsJsonAsync("/api/appointments", new SmartSalon.DTOs.CreateAppointmentDto
+        await client.PostAsJsonAsync("/api/appointments", new
         {
             ArtistId = artistId,
             SalonId = salonId,
@@ -152,19 +197,18 @@ public class NotificationTests : IClassFixture<TestFixture>
             EstimatedPrice = 100000
         });
 
-        // Manager checks notifications
         var notifResponse = await managerClient.GetAsync("/api/notifications");
         notifResponse.EnsureSuccessStatusCode();
-        var notifResult = await notifResponse.Content.ReadFromJsonAsync<dynamic>();
-        Assert.True((int)notifResult.unreadCount > 0);
+        var notifResult = await notifResponse.Content.ReadFromJsonAsync<NotificationsResponseDto>();
+        Assert.True(notifResult!.UnreadCount > 0);
 
-        // Manager marks all as read
         var readAllResponse = await managerClient.PutAsJsonAsync("/api/notifications/read-all", new { });
         readAllResponse.EnsureSuccessStatusCode();
 
-        // Verify unread count is 0
         var countResponse = await managerClient.GetAsync("/api/notifications/unread-count");
-        var countResult = await countResponse.Content.ReadFromJsonAsync<dynamic>();
-        Assert.Equal(0, (int)countResult.count);
+        var countResult = await countResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(0, countResult.GetProperty("count").GetInt32());
     }
+
+    #endregion
 }

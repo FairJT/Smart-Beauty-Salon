@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/app_colors.dart';
-import 'screens/splash_screen.dart';
+import 'presentation/pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -26,6 +26,14 @@ namespace SmartSalon.Controllers
             return Ok(services);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var service = await _serviceService.GetByIdAsync(id);
+            if (service == null) return NotFound(new { message = "Service not found" });
+            return Ok(service);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateServiceDto dto)

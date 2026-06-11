@@ -60,5 +60,20 @@ namespace SmartSalon.Controllers
 
             return Ok(new { message = "Salon updated successfully" });
         }
+
+        [HttpDelete("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var salon = await _salonService.GetSalonByIdAsync(id);
+            if (salon == null) return NotFound(new { message = "Salon not found" });
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var isManager = await _salonService.IsSalonManagerAsync(id, userId);
+            if (!isManager) return Forbid();
+
+            await _salonService.DeleteSalonAsync(id, userId);
+            return Ok(new { message = "Salon deleted successfully" });
+        }
     }
 }

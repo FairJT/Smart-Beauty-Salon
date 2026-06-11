@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.Core" Version="1.8.14" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SalonOS.Shared\SalonOS.Shared.csproj" />
+    <ProjectReference Include="..\Modules\Booking\SalonOS.Booking.csproj" />
+    <ProjectReference Include="..\Modules\Inventory\SalonOS.Inventory.csproj" />
+    <ProjectReference Include="..\Modules\Catalog\SalonOS.Catalog.csproj" />
+    <ProjectReference Include="..\Modules\Marketplace\SalonOS.Marketplace.csproj" />
+    <ProjectReference Include="..\Modules\Identity\SalonOS.Identity.csproj" />
+  </ItemGroup>
+
+</Project>

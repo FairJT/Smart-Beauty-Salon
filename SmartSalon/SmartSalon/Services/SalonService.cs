@@ -135,6 +135,16 @@ namespace SmartSalon.Services
             return true;
         }
 
+        public async Task<bool> DeleteSalonAsync(int id, string userId)
+        {
+            var salon = await _db.Salons.FindAsync(id);
+            if (salon == null) return false;
+
+            salon.IsActive = false;
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<bool> IsSalonManagerAsync(int salonId, string userId)
         {
             return await _db.Salons.AnyAsync(s => s.Id == salonId && s.ManagerId == userId);

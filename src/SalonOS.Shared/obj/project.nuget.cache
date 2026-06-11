@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "hxCSt83BnPQ=",
+  "success": true,
+  "projectFilePath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Fair\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.11\\microsoft.netcore.app.ref.9.0.11.nupkg.sha512",
+    "C:\\Users\\Fair\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.11\\microsoft.windowsdesktop.app.ref.9.0.11.nupkg.sha512",
+    "C:\\Users\\Fair\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.11\\microsoft.aspnetcore.app.ref.9.0.11.nupkg.sha512"
+  ],
+  "logs": []
+}

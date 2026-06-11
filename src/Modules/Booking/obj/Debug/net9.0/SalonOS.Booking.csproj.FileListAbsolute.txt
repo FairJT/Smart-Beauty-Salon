@@ -1,0 +1,16 @@
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.csproj.AssemblyReference.cache
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.GeneratedMSBuildEditorConfig.editorconfig
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.AssemblyInfoInputs.cache
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.AssemblyInfo.cs
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.csproj.CoreCompileInputs.cache
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.sourcelink.json
+D:\PR\SmartSalon\src\Modules\Booking\bin\Debug\net9.0\SalonOS.Booking.deps.json
+D:\PR\SmartSalon\src\Modules\Booking\bin\Debug\net9.0\SalonOS.Booking.dll
+D:\PR\SmartSalon\src\Modules\Booking\bin\Debug\net9.0\SalonOS.Booking.pdb
+D:\PR\SmartSalon\src\Modules\Booking\bin\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\Modules\Booking\bin\Debug\net9.0\SalonOS.Shared.pdb
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS..E673C556.Up2Date
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.dll
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\refint\SalonOS.Booking.dll
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\SalonOS.Booking.pdb
+D:\PR\SmartSalon\src\Modules\Booking\obj\Debug\net9.0\ref\SalonOS.Booking.dll

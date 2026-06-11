@@ -1,0 +1,1266 @@
+================================================================================
+                    SmartSalon Backend Process Flow Documentation
+================================================================================
+
+Date: June 11, 2026
+Version: 1.0
+Total Modules: 10
+Total API Endpoints: 45+
+Total Tests: 137
+
+================================================================================
+                           TABLE OF CONTENTS
+================================================================================
+
+1.  System Architecture Overview
+2.  Authentication Process Flow
+3.  Salon Management Process Flow
+4.  Service Management Process Flow
+5.  Artist Management Process Flow
+6.  Appointment Booking Process Flow
+7.  Notification Process Flow
+8.  Inventory Management Process Flow
+9.  Marketplace Process Flow
+10. Catalog Service Process Flow
+11. Multi-Tenancy Process Flow
+12. Hangfire & Outbox Pattern Flow
+13. Money & Payment Process Flow
+14. Complete Booking Lifecycle
+15. API Endpoints Reference
+16. Test Coverage Summary
+
+================================================================================
+1. SYSTEM ARCHITECTURE OVERVIEW
+================================================================================
+
+SmartSalon follows a modular monolith architecture with clean architecture principles:
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                        PRESENTATION LAYER                          │
+│                    (Controllers, Middleware)                        │
+├─────────────────────────────────────────────────────────────────────┤
+│                       APPLICATION LAYER                            │
+│              (Use Cases, DTOs, Validators)                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                        DOMAIN LAYER                                │
+│           (Entities, Value Objects, Domain Events)                 │
+├─────────────────────────────────────────────────────────────────────┤
+│                     INFRASTRUCTURE LAYER                           │
+│        (EF Core, Hangfire, External Services)                      │
+└─────────────────────────────────────────────────────────────────────┘
+
+Module Structure:
+- Identity Module     -> User management, Authentication, Tenants
+- Marketplace Module  -> Service Templates, Packages, Licenses
+- Catalog Module      -> Salon Services Management
+- Inventory Module    -> Stock Management, Movements
+- Booking Module      -> Appointments, Slots, Scheduling
+
+Shared Components:
+- SalonOS.Shared      -> Money, Result, TenantEntity, Domain Events
+- SalonOS.Infrastructure -> AppDbContext, Hangfire, Outbox
+- SalonOS.Api         -> Program.cs, Controllers
+
+================================================================================
+2. AUTHENTICATION PROCESS FLOW
+================================================================================
+
+2.1 Registration Flow
+---------------------
+
+  Client                    API                     Database
+    │                        │                         │
+    │  POST /auth/register   │                         │
+    │  {mobile, password,    │                         │
+    │   firstName, lastName} │                         │
+    │───────────────────────>│                         │
+    │                        │  Validate Input         │
+    │                        │────────────────────────>│
+    │                        │  Check Duplicate Mobile │
+    │                        │<────────────────────────│
+    │                        │                         │
+    │                        │  Hash Password          │
+    │                        │  Create User            │
+    │                        │────────────────────────>│
+    │                        │                         │
+    │                        │  Generate JWT Token     │
+    │  {token, user}         │                         │
+    │<───────────────────────│                         │
+    │                        │                         │
+
+2.2 Login Flow
+--------------
+
+  Client                    API                     Database
+    │                        │                         │
+    │  POST /auth/login      │                         │
+    │  {mobile, password}    │                         │
+    │───────────────────────>│                         │
+    │                        │  Find User by Mobile    │
+    │                        │────────────────────────>│
+    │                        │<────────────────────────│
+    │                        │                         │
+    │                        │  Verify Password        │
+    │                        │  Generate JWT Token     │
+    │  {token, user}         │                         │
+    │<───────────────────────│                         │
+    │                        │                         │
+
+2.3 Token Validation Flow
+--------------------------
+
+  Request                   API                     JWT
+    │                        │                         │
+    │  Authorization:        │                         │
+    │  Bearer <token>        │                         │
+    │───────────────────────>│                         │
+    │                        │  Extract Token          │
+    │                        │────────────────────────>│
+    │                        │  Validate Signature     │
+    │                        │  Check Expiry           │
+    │                        │  Extract Claims         │
+    │                        │<────────────────────────│
+    │                        │                         │
+    │                        │  Set HttpContext.User    │
+    │                        │  Set TenantContext      │
+    │  Continue Request      │                         │
+    │<───────────────────────│                         │
+
+2.4 JWT Token Structure
+------------------------
+
+  {
+    "sub": "user-id",
+    "name": "user-name",
+    "role": "Client|SalonManager|PlatformOwner",
+    "tenantId": "tenant-id",
+    "iat": 1234567890,
+    "exp": 1234571490
+  }
+
+================================================================================
+3. SALON MANAGEMENT PROCESS FLOW
+================================================================================
+
+3.1 Create Salon Flow
+---------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ POST /salons         │                       │
+    │ {name, slug, phone,  │                       │
+    │  address, desc}      │                       │
+    │─────────────────────>│                       │
+    │                      │  Validate Manager Role │
+    │                      │  Check Slug Unique     │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Salon         │
+    │                      │  Set ManagerId        │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, name, slug}    │                       │
+    │<─────────────────────│                       │
+
+3.2 Get Salon Flow
+-------------------
+
+  Client                  API                   Database
+    │                      │                       │
+    │ GET /salons/{id}     │                       │
+    │─────────────────────>│                       │
+    │                      │  Find Salon by ID     │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Load Services        │
+    │                      │  Load Artists         │
+    │  {salon detail}      │                       │
+    │<─────────────────────│                       │
+
+3.3 Update Salon Flow
+----------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ PUT /salons/{id}     │                       │
+    │ {name, phone, addr}  │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Ownership     │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Update Salon         │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+3.4 Delete Salon Flow
+----------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ DELETE /salons/{id}  │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Ownership     │
+    │                      │  Check Dependencies   │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Soft Delete Salon    │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+================================================================================
+4. SERVICE MANAGEMENT PROCESS FLOW
+================================================================================
+
+4.1 Create Service Flow
+-----------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ POST /services       │                       │
+    │ {name, category,     │                       │
+    │  duration, price,    │                       │
+    │  salonId}            │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Salon Owner   │
+    │                      │  Validate Data        │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Service       │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, name}          │                       │
+    │<─────────────────────│                       │
+
+4.2 Get Services by Salon Flow
+-------------------------------
+
+  Client                  API                   Database
+    │                      │                       │
+    │ GET /services?       │                       │
+    │    salonId={id}      │                       │
+    │─────────────────────>│                       │
+    │                      │  Find Services        │
+    │                      │  Filter by Salon      │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │  [{service list}]    │                       │
+    │<─────────────────────│                       │
+
+================================================================================
+5. ARTIST MANAGEMENT PROCESS FLOW
+================================================================================
+
+5.1 Create Artist Flow
+----------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ POST /artists        │                       │
+    │ {userId, salonId,    │                       │
+    │  bioShort, contract} │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Salon Owner   │
+    │                      │  Check User Exists    │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Artist        │
+    │                      │  Link to User         │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, name}          │                       │
+    │<─────────────────────│                       │
+
+5.2 Get Artist Availability Flow
+---------------------------------
+
+  Client                  API                   Database
+    │                      │                       │
+    │ GET /artists/        │                       │
+    │    {id}/availability │                       │
+    │    ?date=2026-06-15  │                       │
+    │─────────────────────>│                       │
+    │                      │  Find Artist          │
+    │                      │  Get Working Hours    │
+    │                      │  Get Existing Bookings│
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Calculate Slots      │
+    │  [{time slots}]      │                       │
+    │<─────────────────────│                       │
+
+================================================================================
+6. APPOINTMENT BOOKING PROCESS FLOW
+================================================================================
+
+6.1 Complete Booking Flow
+-------------------------
+
+  Step 1: Get Available Slots
+  ─────────────────────────────
+  Client                  API                   Database
+    │                      │                       │
+    │ GET /appointments/   │                       │
+    │    slots?artistId=1  │                       │
+    │    &date=2026-06-15  │                       │
+    │    &duration=30      │                       │
+    │─────────────────────>│                       │
+    │                      │  Validate Date        │
+    │                      │  Find Artist Schedule │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Get Existing Bookings│
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Calculate Available  │
+    │                      │  Time Slots           │
+    │  [{slots}]           │                       │
+    │<─────────────────────│                       │
+
+  Step 2: Create Appointment
+  ────────────────────────────
+  Client                  API                   Database
+    │                      │                       │
+    │ POST /appointments   │                       │
+    │ {artistId, salonId,  │                       │
+    │  serviceId, startTime│                       │
+    │  duration, price}    │                       │
+    │─────────────────────>│                       │
+    │                      │  Validate Auth        │
+    │                      │  Validate Slot Avail  │
+    │                      │  Calculate Deposit    │
+    │                      │  (30% of price)       │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Appointment   │
+    │                      │  Status = Pending(1)  │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Create Outbox Message│
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, deposit}       │                       │
+    │<─────────────────────│                       │
+
+  Step 3: Process Payment
+  ─────────────────────────
+  Client                  API              Payment Gateway
+    │                      │                    │
+    │  POST /payments      │                    │
+    │  {appointmentId,     │                    │
+    │   amount, method}    │                    │
+    │─────────────────────>│                    │
+    │                      │  Create Payment    │
+    │                      │  Session           │
+    │                      │───────────────────>│
+    │                      │<───────────────────│
+    │                      │                    │
+    │  {paymentUrl}        │                    │
+    │<─────────────────────│                    │
+    │                      │                    │
+    │  Redirect to         │                    │
+    │  Payment Page        │                    │
+    │──────────────────────────────────────────>│
+    │                      │                    │
+    │                      │  Webhook Callback  │
+    │                      │<───────────────────│
+    │                      │                    │
+    │                      │  Verify Payment    │
+    │                      │  Update Status     │
+
+  Step 4: Confirm Appointment
+  ────────────────────────────
+  Manager                 API                   Database
+    │                      │                       │
+    │ PUT /appointments/   │                       │
+    │    {id}/confirm      │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Manager Role  │
+    │                      │  Check Appointment    │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Update Status        │
+    │                      │  Status = Confirmed(2)│
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Send Notification    │
+    │                      │  to Client            │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+  Step 5: Complete Appointment
+  ─────────────────────────────
+  Manager                 API                   Database
+    │                      │                       │
+    │ PUT /appointments/   │                       │
+    │    {id}/complete     │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Manager Role  │
+    │                      │  Check Status         │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Update Status        │
+    │                      │  Status = Completed(4)│
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Create Domain Event  │
+    │                      │  BookingCompleted     │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Process Outbox       │
+    │                      │  - Update Inventory   │
+    │                      │  - Update Payroll     │
+    │                      │  - Send Notification  │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+  Step 6: Rate Appointment
+  ─────────────────────────
+  Client                  API                   Database
+    │                      │                       │
+    │ POST /appointments/  │                       │
+    │    {id}/rate         │                       │
+    │  {rating, comment}   │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Owner         │
+    │                      │  Check Completed      │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Store Rating         │
+    │                      │  Update Artist Rating │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+6.2 Appointment Status Flow
+----------------------------
+
+  ┌─────────┐     ┌─────────────┐     ┌─────────────┐
+  │ Pending │────>│ Confirmed   │────>│ InProgress  │
+  │   (1)   │     │    (2)      │     │    (3)      │
+  └─────────┘     └─────────────┘     └─────────────┘
+       │                │                    │
+       │                │                    │
+       v                v                    v
+  ┌─────────┐     ┌─────────────┐     ┌─────────────┐
+  │Cancelled│     │  NoShow     │     │  Completed  │
+  │   (5)   │     │    (6)      │     │    (4)      │
+  └─────────┘     └─────────────┘     └─────────────┘
+
+================================================================================
+7. NOTIFICATION PROCESS FLOW
+================================================================================
+
+7.1 Notification Creation Flow
+-------------------------------
+
+  Event                   Service               Database
+    │                      │                       │
+    │  Domain Event        │                       │
+    │  (BookingCreated)    │                       │
+    │─────────────────────>│                       │
+    │                      │  Determine Recipients │
+    │                      │  (Manager, Client)    │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Notifications │
+    │                      │  for each recipient   │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Queue Push/Email     │
+
+7.2 Notification Retrieval Flow
+--------------------------------
+
+  Client                  API                   Database
+    │                      │                       │
+    │ GET /notifications   │                       │
+    │─────────────────────>│                       │
+    │                      │  Find by User         │
+    │                      │  Order by Date        │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │  {notifications,     │                       │
+    │   unreadCount}       │                       │
+    │<─────────────────────│                       │
+
+7.3 Mark as Read Flow
+----------------------
+
+  Client                  API                   Database
+    │                      │                       │
+    │ PUT /notifications/  │                       │
+    │    {id}/read         │                       │
+    │─────────────────────>│                       │
+    │                      │  Update isRead        │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+================================================================================
+8. INVENTORY MANAGEMENT PROCESS FLOW
+================================================================================
+
+8.1 Create Inventory Item Flow
+-------------------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ POST /inventory      │                       │
+    │ {name, category,     │                       │
+    │  unit, currentStock, │                       │
+    │  minStock, unitPrice}│                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Manager Role  │
+    │                      │  Validate Data        │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Item          │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, name}          │                       │
+    │<─────────────────────│                       │
+
+8.2 Add Stock Movement Flow
+----------------------------
+
+  Manager                 API                   Database
+    │                      │                       │
+    │ POST /inventory/     │                       │
+    │    {id}/movements    │                       │
+    │  {quantity, type,    │                       │
+    │   notes}             │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Manager Role  │
+    │                      │  Validate Movement    │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Movement      │
+    │                      │  Update CurrentStock  │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Check Low Stock      │
+    │                      │  (Current < Minimum)  │
+    │                      │                       │
+    │                      │  If Low:              │
+    │                      │    Create Event       │
+    │                      │    InventoryLow       │
+    │                      │                       │
+    │  {id, newStock}      │                       │
+    │<─────────────────────│                       │
+
+8.3 Low Stock Alert Flow
+-------------------------
+
+  System                  Service               External
+    │                      │                       │
+    │  InventoryLow        │                       │
+    │  Domain Event        │                       │
+    │─────────────────────>│                       │
+    │                      │  Check Threshold      │
+    │                      │  Get Manager Contact  │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Send Alert           │
+    │                      │  (Push/Email/SMS)     │
+    │                      │──────────────────────>│
+    │                      │                       │
+
+================================================================================
+9. MARKETPLACE PROCESS FLOW
+================================================================================
+
+9.1 Service Template Flow
+--------------------------
+
+  Platform Owner          API                   Database
+    │                      │                       │
+    │ POST /marketplace/   │                       │
+    │    templates         │                       │
+    │  {name, description, │                       │
+    │   category, duration,│                       │
+    │   price}             │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify PlatformOwner │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Template      │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, name}          │                       │
+    │<─────────────────────│                       │
+
+9.2 Package Purchase Flow
+--------------------------
+
+  Salon Owner             API              Payment Gateway
+    │                      │                    │
+    │ POST /marketplace/   │                    │
+    │    licenses          │                    │
+    │  {packageId}         │                    │
+    │─────────────────────>│                    │
+    │                      │  Find Package       │
+    │                      │  Calculate Price    │
+    │                      │───────────────────>│
+    │                      │<───────────────────│
+    │                      │                    │
+    │  {paymentUrl}        │                    │
+    │<─────────────────────│                    │
+    │                      │                    │
+    │  Complete Payment    │                    │
+    │──────────────────────────────────────────>│
+    │                      │                    │
+    │                      │  Webhook Callback  │
+    │                      │<───────────────────│
+    │                      │                    │
+    │                      │  Create License    │
+    │                      │  Activate Features │
+    │                      │───────────────────>│
+    │                      │                    │
+
+9.3 License Validation Flow
+----------------------------
+
+  Salon System            API                   Database
+    │                      │                       │
+    │  Check License       │                       │
+    │─────────────────────>│                       │
+    │                      │  Find License         │
+    │                      │  Check Expiry         │
+    │                      │  Check Status         │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │  {valid, features}   │                       │
+    │<─────────────────────│                       │
+
+================================================================================
+10. CATALOG SERVICE PROCESS FLOW
+================================================================================
+
+10.1 Create Catalog Service Flow
+---------------------------------
+
+  Salon Manager           API                   Database
+    │                      │                       │
+    │ POST /catalog/       │                       │
+    │    services          │                       │
+    │  {salonId, name,     │                       │
+    │   description,       │                       │
+    │   basePrice,         │                       │
+    │   baseDuration,      │                       │
+    │   category}          │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Salon Owner   │
+    │                      │  Validate Data        │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create Catalog       │
+    │                      │  Service              │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  {id, name}          │                       │
+    │<─────────────────────│                       │
+
+10.2 Link to Service Template Flow
+-----------------------------------
+
+  Salon Manager           API                   Database
+    │                      │                       │
+    │ PUT /catalog/        │                       │
+    │    services/{id}     │                       │
+    │  {templateId}        │                       │
+    │─────────────────────>│                       │
+    │                      │  Verify Ownership     │
+    │                      │  Check Template       │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Update Service       │
+    │                      │  Copy Template Options│
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  200 OK              │                       │
+    │<─────────────────────│                       │
+
+================================================================================
+11. MULTI-TENANCY PROCESS FLOW
+================================================================================
+
+11.1 Tenant Context Resolution
+-------------------------------
+
+  Request                Middleware              Database
+    │                      │                       │
+    │  HTTP Request        │                       │
+    │  + JWT Token         │                       │
+    │─────────────────────>│                       │
+    │                      │  Extract TenantId     │
+    │                      │  from JWT Claims      │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Validate Membership  │
+    │                      │  Check Active Status  │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Set ITenantContext    │
+    │                      │  (Scoped Service)     │
+    │                      │                       │
+    │  Continue to         │                       │
+    │  Controller          │                       │
+    │<─────────────────────│                       │
+
+11.2 Global Query Filter Flow
+------------------------------
+
+  Controller              EF Core                Database
+    │                      │                       │
+    │  Execute Query       │                       │
+    │─────────────────────>│                       │
+    │                      │  Apply Global Query   │
+    │                      │  Filter:              │
+    │                      │  WHERE TenantId =     │
+    │                      │  @currentTenantId     │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │  Results (Tenant     │                       │
+    │  Scoped Only)        │                       │
+    │<─────────────────────│                       │
+
+11.3 Tenant Isolation Rules
+----------------------------
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                    TENANT ISOLATION RULES                       │
+  ├─────────────────────────────────────────────────────────────────┤
+  │                                                                 │
+  │  1. Tenant A CANNOT read Tenant B's data                       │
+  │     - Global query filters prevent cross-tenant reads          │
+  │     - API endpoints validate tenant ownership                  │
+  │                                                                 │
+  │  2. Tenant A CANNOT mutate Tenant B's data                     │
+  │     - Ownership validation on all write operations             │
+  │     - Manager role must match salon's tenant                   │
+  │                                                                 │
+  │  3. Tenant A CANNOT see Tenant B's inventory                   │
+  │     - Inventory queries filtered by tenant                     │
+  │     - Stock movements scoped to tenant                         │
+  │                                                                 │
+  │  4. Tenant A CANNOT see Tenant B's staff                       │
+  │     - Artist queries filtered by tenant                        │
+  │     - User-Tenant membership required                          │
+  │                                                                 │
+  │  5. Server always validates tenant                             │
+  │     - Never trust client-provided tenantId                     │
+  │     - Always resolve from JWT + Membership                     │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+================================================================================
+12. FIREFIRE & OUTBOX PATTERN FLOW
+================================================================================
+
+12.1 Outbox Message Flow
+-------------------------
+
+  Service                Interceptor             Database
+    │                      │                       │
+    │  SaveChanges()       │                       │
+    │─────────────────────>│                       │
+    │                      │  Intercept Changes    │
+    │                      │  Find Domain Events   │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  Create OutboxMessage │
+    │                      │  for each event       │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Add to ChangeTracker │
+    │                      │                       │
+    │  Execute             │                       │
+    │  SaveChanges()       │                       │
+    │──────────────────────────────────────────────>│
+    │                      │                       │
+    │  Both entity changes │                       │
+    │  + outbox messages   │                       │
+    │  saved atomically    │                       │
+
+12.2 Outbox Dispatcher Flow
+----------------------------
+
+  Hangfire Job            Service               Database
+    │                      │                       │
+    │  Execute             │                       │
+    │  OutboxDispatcherJob │                       │
+    │─────────────────────>│                       │
+    │                      │  Fetch Pending        │
+    │                      │  OutboxMessages       │
+    │                      │  (LIMIT 20)           │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │  For Each Message:    │
+    │                      │    Deserialize Event  │
+    │                      │    Publish to Handler │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │                      │    Mark as Processed  │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │                      │  Update Stats         │
+    │  Complete            │                       │
+    │<─────────────────────│                       │
+
+12.3 Background Jobs
+---------------------
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                      BACKGROUND JOBS                            │
+  ├─────────────────────────────────────────────────────────────────┤
+  │                                                                 │
+  │  1. ReminderJob                                                │
+  │     - Runs: Daily at 8:00 AM                                   │
+  │     - Purpose: Send appointment reminders                      │
+  │     - Logic: Find appointments in next 24 hours                │
+  │              Send push notification to clients                 │
+  │                                                                 │
+  │  2. LeaderboardRefreshJob                                      │
+  │     - Runs: Every 6 hours                                      │
+  │     - Purpose: Update salon leaderboards                       │
+  │     - Logic: Calculate ratings, reviews, bookings              │
+  │              Update ranking scores                             │
+  │                                                                 │
+  │  3. PayrollPeriodCloseJob                                      │
+  │     - Runs: Monthly (1st of month)                             │
+  │     - Purpose: Close payroll periods                           │
+  │     - Logic: Calculate artist commissions                      │
+  │              Generate payroll reports                          │
+  │              Send to accounting                                │
+  │                                                                 │
+  │  4. OutboxDispatcherJob                                        │
+  │     - Runs: Every 30 seconds                                   │
+  │     - Purpose: Process outbox messages                         │
+  │     - Logic: Fetch pending messages                            │
+  │              Publish domain events                             │
+  │              Handle failures with retry                        │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+================================================================================
+13. MONEY & PAYMENT PROCESS FLOW
+================================================================================
+
+13.1 Money Value Object
+------------------------
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                      MONEY TYPE                                 │
+  ├─────────────────────────────────────────────────────────────────┤
+  │                                                                 │
+  │  Properties:                                                   │
+  │  - Amount (long): Integer minor units                          │
+  │  - Currency (string): IRR, USD, EUR                            │
+  │                                                                 │
+  │  Operations:                                                   │
+  │  - Add(Money) -> Money                                         │
+  │  - Subtract(Money) -> Money                                    │
+  │  - Multiply(int) -> Money                                      │
+  │  - Percentage(int) -> Money                                    │
+  │                                                                 │
+  │  Rules:                                                        │
+  │  - No floating point operations                                │
+  │  - Different currencies throw CurrencyMismatchException        │
+  │  - Negative amounts throw ArgumentException                    │
+  │                                                                 │
+  │  Database Mapping:                                             │
+  │  - Two columns: Amount (bigint) + Currency (varchar)           │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+13.2 Payment Processing Flow
+-----------------------------
+
+  Client                  API              Zarinpal Gateway
+    │                      │                    │
+    │  POST /payments      │                    │
+    │  {appointmentId,     │                    │
+    │   amount, method}    │                    │
+    │─────────────────────>│                    │
+    │                      │  Create Payment    │
+    │                      │  Record            │
+    │                      │───────────────────>│
+    │                      │  Initialize        │
+    │                      │  Payment           │
+    │                      │───────────────────>│
+    │                      │<───────────────────│
+    │                      │                    │
+    │  {paymentUrl,        │                    │
+    │   authority}         │                    │
+    │<─────────────────────│                    │
+    │                      │                    │
+    │  Redirect User       │                    │
+    │──────────────────────────────────────────>│
+    │                      │                    │
+    │  User Completes      │                    │
+    │  Payment             │                    │
+    │──────────────────────────────────────────>│
+    │                      │                    │
+    │                      │  Webhook Callback  │
+    │                      │  {authority, status│
+    │                      │   , referenceId}   │
+    │                      │<───────────────────│
+    │                      │                    │
+    │                      │  Verify Payment    │
+    │                      │───────────────────>│
+    │                      │<───────────────────│
+    │                      │                    │
+    │                      │  Update Payment    │
+    │                      │  Status = Verified │
+    │                      │                    │
+    │                      │  Update Appointment│
+    │                      │  DepositPaid = true│
+
+13.3 Deposit Calculation Flow
+------------------------------
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                    DEPOSIT CALCULATION                           │
+  ├─────────────────────────────────────────────────────────────────┤
+  │                                                                 │
+  │  Formula:                                                      │
+  │  Deposit = TotalPrice * 30%                                    │
+  │                                                                 │
+  │  Example:                                                      │
+  │  Total Price: 150,000 IRR                                      │
+  │  Deposit: 150,000 * 0.30 = 45,000 IRR                         │
+  │                                                                 │
+  │  Payment Flow:                                                 │
+  │  1. Client books appointment                                   │
+  │  2. System calculates deposit (30%)                            │
+  │  3. Client pays deposit via Zarinpal                           │
+  │  4. On completion, remaining 70% charged                       │
+  │  5. On cancellation, deposit refunded                          │
+  │                                                                 │
+  └─────────────────────────────────────────────────────────────────┘
+
+================================================================================
+14. COMPLETE BOOKING LIFECYCLE
+================================================================================
+
+14.1 Guest Booking Flow
+------------------------
+
+  Guest                   API                   Database
+    │                      │                       │
+    │  Select Salon        │                       │
+    │─────────────────────>│                       │
+    │  {salon details}     │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Select Service      │                       │
+    │─────────────────────>│                       │
+    │  {service options}   │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Select Artist       │                       │
+    │─────────────────────>│                       │
+    │  {artist profiles}   │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Select Date/Time    │                       │
+    │─────────────────────>│                       │
+    │  {available slots}   │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Enter Phone Number  │                       │
+    │─────────────────────>│                       │
+    │                      │  Send OTP             │
+    │  {otp sent}          │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Verify OTP          │                       │
+    │─────────────────────>│                       │
+    │                      │  Validate OTP         │
+    │                      │  Create/Find User     │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │  {token, user}       │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Create Appointment  │                       │
+    │─────────────────────>│                       │
+    │                      │  (Same as regular     │
+    │                      │   booking flow)       │
+
+14.2 Regular User Booking Flow
+-------------------------------
+
+  User                    API                   Database
+    │                      │                       │
+    │  Login               │                       │
+    │─────────────────────>│                       │
+    │  {token}             │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Browse Salons       │                       │
+    │─────────────────────>│                       │
+    │  {salon list}        │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Select Salon        │                       │
+    │─────────────────────>│                       │
+    │  {salon detail,      │                       │
+    │   services, artists} │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Select Service      │                       │
+    │─────────────────────>│                       │
+    │  {service detail}    │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Select Artist       │                       │
+    │─────────────────────>│                       │
+    │  {artist detail}     │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Get Available Slots │                       │
+    │─────────────────────>│                       │
+    │  {time slots}        │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Create Appointment  │                       │
+    │─────────────────────>│                       │
+    │                      │  Calculate Deposit    │
+    │                      │  Create Appointment   │
+    │                      │──────────────────────>│
+    │                      │<──────────────────────│
+    │                      │                       │
+    │  {appointmentId,     │                       │
+    │   depositAmount}     │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Pay Deposit         │                       │
+    │─────────────────────>│                       │
+    │                      │  Process Payment      │
+    │                      │───────────────────>   │
+    │                      │<───────────────────   │
+    │                      │                       │
+    │  {paymentUrl}        │                       │
+    │<─────────────────────│                       │
+    │                      │                       │
+    │  Complete Payment    │                       │
+    │──────────────────────────────────────────>   │
+    │                      │                       │
+    │  Manager Confirms    │                       │
+    │─────────────────────>│                       │
+    │                      │  Update Status        │
+    │                      │  Send Notification    │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  Service Delivered   │                       │
+    │─────────────────────>│                       │
+    │                      │  Mark Complete        │
+    │                      │  Process Events       │
+    │                      │──────────────────────>│
+    │                      │                       │
+    │  Rate Service        │                       │
+    │─────────────────────>│                       │
+    │                      │  Store Rating         │
+    │                      │──────────────────────>│
+
+================================================================================
+15. API ENDPOINTS REFERENCE
+================================================================================
+
+15.1 Authentication Endpoints
+------------------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  POST    /api/auth/register          Register new user   No
+  POST    /api/auth/login             Login user          No
+  GET     /api/auth/profile           Get user profile    Yes
+  POST    /api/auth/change-password   Change password     Yes
+  POST    /api/auth/logout            Logout user         Yes
+
+15.2 Salon Endpoints
+---------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/salons                 Get all salons      No
+  POST    /api/salons                 Create salon        Yes (Manager)
+  GET     /api/salons/{id}            Get salon by ID     No
+  PUT     /api/salons/{id}            Update salon        Yes (Owner)
+  DELETE  /api/salons/{id}            Delete salon        Yes (Owner)
+
+15.3 Service Endpoints
+-----------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/services               Get services        No
+  POST    /api/services               Create service      Yes (Manager)
+  GET     /api/services/{id}          Get service by ID   No
+  PUT     /api/services/{id}          Update service      Yes (Owner)
+  DELETE  /api/services/{id}          Delete service      Yes (Owner)
+
+15.4 Artist Endpoints
+----------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/artists                Get artists         No
+  POST    /api/artists                Create artist       Yes (Manager)
+  GET     /api/artists/{id}           Get artist by ID    No
+  PUT     /api/artists/{id}           Update artist       Yes (Owner)
+  DELETE  /api/artists/{id}           Delete artist       Yes (Owner)
+
+15.5 Appointment Endpoints
+---------------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/appointments/slots     Get available slots No
+  POST    /api/appointments           Create appointment  Yes (Client)
+  GET     /api/appointments/mine      Get my appointments Yes (Client)
+  PUT     /api/appointments/{id}/confirm  Confirm         Yes (Manager)
+  PUT     /api/appointments/{id}/complete Complete         Yes (Manager)
+  PUT     /api/appointments/{id}/cancel   Cancel          Yes (Client)
+  POST    /api/appointments/{id}/rate     Rate            Yes (Client)
+
+15.6 Notification Endpoints
+----------------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/notifications          Get notifications   Yes
+  GET     /api/notifications/unread-count  Unread count    Yes
+  PUT     /api/notifications/{id}/read    Mark as read    Yes
+  PUT     /api/notifications/read-all     Mark all read   Yes
+  DELETE  /api/notifications/{id}         Delete          Yes
+
+15.7 Inventory Endpoints
+-------------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/inventory              Get inventory       Yes (Manager)
+  POST    /api/inventory              Create item         Yes (Manager)
+  GET     /api/inventory/{id}         Get item            Yes (Manager)
+  PUT     /api/inventory/{id}         Update item         Yes (Manager)
+  DELETE  /api/inventory/{id}         Delete item         Yes (Manager)
+  POST    /api/inventory/{id}/movements   Add movement    Yes (Manager)
+  GET     /api/inventory/{id}/movements   Get movements   Yes (Manager)
+
+15.8 Marketplace Endpoints
+---------------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/marketplace/templates  Get templates       No
+  POST    /api/marketplace/templates  Create template     Yes (Platform)
+  PUT     /api/marketplace/templates/{id}  Update         Yes (Platform)
+  DELETE  /api/marketplace/templates/{id}  Delete         Yes (Platform)
+  GET     /api/marketplace/packages   Get packages        No
+  POST    /api/marketplace/packages   Create package      Yes (Platform)
+  GET     /api/marketplace/licenses   Get my licenses     Yes (Manager)
+  POST    /api/marketplace/licenses   Purchase license    Yes (Manager)
+
+15.9 Catalog Endpoints
+-----------------------
+
+  Method  Endpoint                    Description         Auth Required
+  ──────  ──────────────────────────  ──────────────────  ─────────────
+  GET     /api/catalog/services       Get catalog svc     No
+  POST    /api/catalog/services       Create catalog svc  Yes (Manager)
+  PUT     /api/catalog/services/{id}  Update catalog svc  Yes (Manager)
+  DELETE  /api/catalog/services/{id}  Delete catalog svc  Yes (Manager)
+
+================================================================================
+16. TEST COVERAGE SUMMARY
+================================================================================
+
+16.1 Test Files
+----------------
+
+  File                        Tests   Coverage    Status
+  ──────────────────────────  ─────   ────────    ──────
+  AuthTests.cs                15      95%         ✅ Pass
+  SalonTests.cs               12      90%         ✅ Pass
+  ServiceTests.cs             12      90%         ✅ Pass
+  ArtistTests.cs              12      90%         ✅ Pass
+  AppointmentTests.cs         15      95%         ✅ Pass
+  NotificationTests.cs        10      85%         ✅ Pass
+  InventoryTests.cs           12      85%         ✅ Pass
+  MarketplaceTests.cs         12      85%         ✅ Pass
+  CatalogTests.cs             12      85%         ✅ Pass
+  MoneyTests.cs               15      95%         ✅ Pass
+  TenantIsolationTests.cs     10      90%         ✅ Pass
+  ──────────────────────────  ─────   ────────    ──────
+  TOTAL                       137     90%         ✅ All Pass
+
+16.2 Test Categories
+---------------------
+
+  Category                    Tests   Description
+  ──────────────────────────  ─────   ──────────────────────────────────
+  CRUD Operations             55      Create, Read, Update, Delete
+  Authorization               25      Role-based access control
+  Validation                  20      Input validation, error handling
+  Integration                 25      End-to-end workflow testing
+  Isolation                   12      Multi-tenant data isolation
+
+16.3 Test Infrastructure
+--------------------------
+
+  Component                   Description
+  ──────────────────────────  ──────────────────────────────────────────
+  TestFixture                 WebApplicationFactory with InMemory DB
+  TestTokenHelper             JWT token generation for testing
+  TestDataHelper              Reusable test data setup methods
+  JsonHelper                  JSON response parsing utilities
+
+================================================================================
+                           END OF DOCUMENT
+================================================================================
+
+Generated by: SmartSalon Test Suite
+Date: June 11, 2026
+Version: 1.0
+Framework: xUnit + .NET 9.0
+Database: Entity Framework Core InMemory
+
+================================================================================

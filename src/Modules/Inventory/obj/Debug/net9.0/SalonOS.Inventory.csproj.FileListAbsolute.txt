@@ -1,0 +1,16 @@
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.csproj.AssemblyReference.cache
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.GeneratedMSBuildEditorConfig.editorconfig
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.AssemblyInfoInputs.cache
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.AssemblyInfo.cs
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.csproj.CoreCompileInputs.cache
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.sourcelink.json
+d:\PR\SmartSalon\src\Modules\Inventory\bin\Debug\net9.0\SalonOS.Inventory.deps.json
+D:\PR\SmartSalon\src\Modules\Inventory\bin\Debug\net9.0\SalonOS.Inventory.dll
+D:\PR\SmartSalon\src\Modules\Inventory\bin\Debug\net9.0\SalonOS.Inventory.pdb
+D:\PR\SmartSalon\src\Modules\Inventory\bin\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\Modules\Inventory\bin\Debug\net9.0\SalonOS.Shared.pdb
+d:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS..3F7F1E25.Up2Date
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.dll
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\refint\SalonOS.Inventory.dll
+D:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\SalonOS.Inventory.pdb
+d:\PR\SmartSalon\src\Modules\Inventory\obj\Debug\net9.0\ref\SalonOS.Inventory.dll

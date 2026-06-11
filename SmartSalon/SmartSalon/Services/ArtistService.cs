@@ -30,6 +30,24 @@ namespace SmartSalon.Services
                 .ToListAsync();
         }
 
+        public async Task<ArtistListItemDto?> GetByIdAsync(int id)
+        {
+            var artist = await _db.Artists.Include(a => a.User).FirstOrDefaultAsync(a => a.Id == id && a.IsActive);
+            if (artist == null) return null;
+
+            return new ArtistListItemDto
+            {
+                Id = artist.Id,
+                FirstName = artist.User?.FirstName ?? "",
+                LastName = artist.User?.LastName ?? "",
+                PhotoUrl = artist.PhotoUrl,
+                BioShort = artist.BioShort,
+                RatingAvg = artist.RatingAvg,
+                RatingCount = artist.RatingCount,
+                ContractType = artist.ContractType.ToString()
+            };
+        }
+
         public async Task<ArtistReportDto?> GetReportAsync(int id, DateTime? from, DateTime? to, int page = 1, int size = 30)
         {
             var artist = await _db.Artists.Include(a => a.User).FirstOrDefaultAsync(a => a.Id == id);

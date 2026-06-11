@@ -1,0 +1,16 @@
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.csproj.AssemblyReference.cache
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.GeneratedMSBuildEditorConfig.editorconfig
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.AssemblyInfoInputs.cache
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.AssemblyInfo.cs
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.csproj.CoreCompileInputs.cache
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.sourcelink.json
+D:\PR\SmartSalon\src\Modules\Identity\bin\Debug\net9.0\SalonOS.Identity.deps.json
+D:\PR\SmartSalon\src\Modules\Identity\bin\Debug\net9.0\SalonOS.Identity.dll
+D:\PR\SmartSalon\src\Modules\Identity\bin\Debug\net9.0\SalonOS.Identity.pdb
+D:\PR\SmartSalon\src\Modules\Identity\bin\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\Modules\Identity\bin\Debug\net9.0\SalonOS.Shared.pdb
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS..221654C9.Up2Date
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.dll
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\refint\SalonOS.Identity.dll
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\SalonOS.Identity.pdb
+D:\PR\SmartSalon\src\Modules\Identity\obj\Debug\net9.0\ref\SalonOS.Identity.dll

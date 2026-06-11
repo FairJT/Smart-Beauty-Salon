@@ -1,0 +1,12 @@
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.AssemblyInfoInputs.cache
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.AssemblyInfo.cs
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.csproj.CoreCompileInputs.cache
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.sourcelink.json
+D:\PR\SmartSalon\src\SalonOS.Shared\bin\Debug\net9.0\SalonOS.Shared.deps.json
+D:\PR\SmartSalon\src\SalonOS.Shared\bin\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\SalonOS.Shared\bin\Debug\net9.0\SalonOS.Shared.pdb
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\refint\SalonOS.Shared.dll
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\SalonOS.Shared.pdb
+D:\PR\SmartSalon\src\SalonOS.Shared\obj\Debug\net9.0\ref\SalonOS.Shared.dll
