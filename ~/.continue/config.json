@@ -1,0 +1,20 @@
+{
+  "models": [
+    {
+      "title": "deepseek-coder",
+      "provider": "ollama",
+      "model": "deepseek-coder:6.7b",
+      "apiBase": "http://localhost:11434"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "deepseek-coder",
+    "provider": "ollama",
+    "model": "deepseek-coder:6.7b",
+    "apiBase": "http://localhost:11434"
+  },
+  "embeddingsProvider": {
+    "provider": "ollama",
+    "model": "nomic-embed-text"
+  }
+}
