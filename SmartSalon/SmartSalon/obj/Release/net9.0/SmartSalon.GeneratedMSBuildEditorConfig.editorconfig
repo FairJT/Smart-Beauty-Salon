@@ -1,0 +1,101 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = SmartSalon
+build_property.RootNamespace = SmartSalon
+build_property.ProjectDir = I:\Projects\SmartSalon\SmartSalon\SmartSalon\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = I:\Projects\SmartSalon\SmartSalon\SmartSalon
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Appointments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQXBwb2ludG1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/ArtistReport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQXJ0aXN0UmVwb3J0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Artists.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQXJ0aXN0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Packages.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUGFja2FnZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Services.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cU2VydmljZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Admin/Settings.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cU2V0dGluZ3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Salon/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2Fsb25cRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Salon/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2Fsb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Shared/_AdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/Shared/_SuperAdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9TdXBlckFkbWluTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/SuperAdmin/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXJBZG1pblxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/SuperAdmin/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXJBZG1pblxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/SuperAdmin/Reports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXJBZG1pblxSZXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/SuperAdmin/Salons.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXJBZG1pblxTYWxvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/SuperAdmin/Subscriptions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXJBZG1pblxTdWJzY3JpcHRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[I:/Projects/SmartSalon/SmartSalon/SmartSalon/Pages/SuperAdmin/Users.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VwZXJBZG1pblxVc2Vycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

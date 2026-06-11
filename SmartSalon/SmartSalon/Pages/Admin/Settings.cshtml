@@ -1,0 +1,211 @@
+﻿@page
+@model SmartSalon.Pages.Admin.SettingsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "تنظیمات";
+    ViewData["ActivePage"] = "Settings";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:16px;font-weight:500;color:var(--txt);">تنظیمات سالن</div>
+        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+            اطلاعات و ظاهر پنل مدیریت
+        </div>
+    </div>
+    <span style="font-size:12px;background:var(--sb3);color:var(--sb2);
+                 padding:6px 14px;border-radius:20px;border:0.5px solid var(--sb4);">
+        ⚙️ تنظیمات
+    </span>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.Message.StartsWith("✅") ? "alert-success" : "alert-warning") mb-4">
+        @Model.Message
+    </div>
+}
+
+<div class="row g-4">
+
+    <!-- اطلاعات سالن -->
+    <div class="col-12">
+        <div class="card p-4">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+                <span class="table-bar"></span>
+                <span style="font-size:14px;font-weight:500;color:var(--txt);">اطلاعات سالن</span>
+            </div>
+            <form method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            نام سالن
+                        </label>
+                        <input type="text" name="Name" class="form-control"
+                               value="@Model.Salon?.Name" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            آدرس URL (slug)
+                        </label>
+                        <input type="text" name="Slug" class="form-control"
+                               value="@Model.Salon?.Slug" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            شماره تلفن
+                        </label>
+                        <input type="text" name="Phone" class="form-control"
+                               value="@Model.Salon?.Phone" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            رنگ تم سایت عمومی
+                        </label>
+                        <input type="color" name="ThemeColor"
+                               class="form-control form-control-color"
+                               value="@(Model.Salon?.ThemeColor ?? "#1B3A5C")" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            آدرس
+                        </label>
+                        <input type="text" name="Address" class="form-control"
+                               value="@Model.Salon?.Address" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            توضیحات
+                        </label>
+                        <textarea name="Description" class="form-control"
+                                  rows="3">@Model.Salon?.Description</textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary px-5">
+                            💾 ذخیره تغییرات
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- انتخاب تم پنل -->
+    <div class="col-12">
+        <div class="card p-4">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                <span class="table-bar"></span>
+                <span style="font-size:14px;font-weight:500;color:var(--txt);">تم پنل مدیریت</span>
+            </div>
+            <p style="font-size:12px;color:var(--ctxt);margin-bottom:20px;">
+                رنگ‌بندی پنل مدیریت را انتخاب کنید — بلافاصله اعمال می‌شود
+            </p>
+
+            <form method="post" asp-page-handler="SetTheme">
+                <input type="hidden" name="themeName" id="selectedTheme"
+                       value="@(Model.Salon?.AdminTheme ?? "gold")" />
+
+                @{
+                    var themes = new[]
+                    {
+                new { id="gold",    name="طلایی Luxury",   sb="#0A0A0A", acc="#D4AF37", mg="#F9F8F4" },
+                new { id="blue",    name="آبی نیمه‌شب",    sb="#060E1A", acc="#60A5FA", mg="#EFF6FF" },
+                new { id="purple",  name="بنفش اشرافی",    sb="#0F0518", acc="#C084FC", mg="#FAF5FF" },
+                new { id="teal",    name="فیروزه‌ای مدرن", sb="#061212", acc="#2DD4BF", mg="#F0FDFB" },
+                new { id="crimson", name="مشکی قرمز",      sb="#0A0404", acc="#F87171", mg="#FFF5F5" },
+                new { id="amber",   name="عنبری گرم",      sb="#0C0A09", acc="#FCD34D", mg="#FFFBEB" },
+                new { id="slate",   name="سفید مینیمال",   sb="#F8FAFC", acc="#334155", mg="#ffffff" },
+                new { id="coral",   name="مرجانی غروب",    sb="#120604", acc="#FB923C", mg="#FFF7ED" },
+                };
+                    var currentTheme = Model.Salon?.AdminTheme ?? "gold";
+                }
+
+                <div class="row g-3 mb-4">
+                    @foreach (var t in themes)
+                    {
+                        <div class="col-md-3 col-6">
+                            <div class="theme-card"
+                                 data-theme="@t.id"
+                                 onclick="selectTheme('@t.id')"
+                                 style="cursor:pointer;border-radius:12px;overflow:hidden;
+                                        border:2px solid @(t.id == currentTheme ? t.acc : "rgba(0,0,0,0.08)");
+                                        transition:all 0.2s;
+                                        transform:@(t.id == currentTheme ? "scale(1.03)" : "scale(1)");">
+
+                                <!-- پیش‌نمایش -->
+                                <div style="display:flex;height:75px;">
+                                    <div style="width:38%;background:@t.sb;padding:7px 5px;">
+                                        <div style="width:18px;height:18px;border-radius:5px;
+                                                    background:@t.acc;margin-bottom:7px;"></div>
+                                        <div style="height:4px;border-radius:2px;background:@t.acc;
+                                                    margin-bottom:4px;opacity:0.9;"></div>
+                                        <div style="height:4px;border-radius:2px;
+                                                    background:rgba(255,255,255,0.12);margin-bottom:4px;"></div>
+                                        <div style="height:4px;border-radius:2px;
+                                                    background:rgba(255,255,255,0.12);margin-bottom:4px;"></div>
+                                        <div style="height:4px;border-radius:2px;
+                                                    background:rgba(255,255,255,0.12);"></div>
+                                    </div>
+                                    <div style="flex:1;background:@t.mg;padding:7px;">
+                                        <div style="height:5px;border-radius:2px;
+                                                    background:rgba(0,0,0,0.1);margin-bottom:5px;width:55%;"></div>
+                                        <div style="display:flex;gap:3px;margin-bottom:5px;">
+                                            <div style="flex:1;height:18px;border-radius:4px;
+                                                        background:#fff;border:0.5px solid rgba(0,0,0,0.06);"></div>
+                                            <div style="flex:1;height:18px;border-radius:4px;
+                                                        background:@t.sb;"></div>
+                                        </div>
+                                        <div style="height:3px;border-radius:2px;background:@t.acc;
+                                                    margin-bottom:3px;width:35%;"></div>
+                                        <div style="height:3px;border-radius:2px;
+                                                    background:rgba(0,0,0,0.08);margin-bottom:3px;width:80%;"></div>
+                                        <div style="height:3px;border-radius:2px;
+                                                    background:rgba(0,0,0,0.05);width:60%;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- نام -->
+                                <div style="padding:8px 12px;background:#fff;
+                                            border-top:0.5px solid rgba(0,0,0,0.06);
+                                            display:flex;align-items:center;justify-content:space-between;">
+                                    <span style="font-size:12px;color:#333;font-weight:500;">@t.name</span>
+                                    @if (t.id == currentTheme)
+                                    {
+                                        <span style="font-size:10px;background:@t.acc;
+                                                     color:@(t.id=="amber"||t.id=="slate"?"#000":"#fff");
+                                                     padding:2px 8px;border-radius:10px;font-weight:500;">
+                                            فعال ✓
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <button type="submit" class="btn btn-primary px-5">
+                    🎨 اعمال تم انتخابی
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function selectTheme(id) {
+            document.getElementById('selectedTheme').value = id;
+            document.querySelectorAll('.theme-card').forEach(c => {
+                c.style.borderColor = 'rgba(0,0,0,0.08)';
+                c.style.transform   = 'scale(1)';
+            });
+            const sel = document.querySelector('[data-theme="' + id + '"]');
+            if (sel) {
+                sel.style.borderColor = '#333';
+                sel.style.transform   = 'scale(1.03)';
+            }
+        }
+    </script>
+}

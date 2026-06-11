@@ -1,0 +1,79 @@
+﻿@page
+@model SmartSalon.Pages.SuperAdmin.LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود مدیر پلتفرم</title>
+    <link href="~/lib/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .card {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .btn-teal {
+            background: #64ffda;
+            color: #1a1a2e;
+            border: none;
+            font-weight: bold;
+        }
+
+            .btn-teal:hover {
+                background: #4cd9b8;
+                color: #1a1a2e;
+            }
+
+        .logo {
+            color: #64ffda;
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card p-4">
+                    <div class="text-center mb-4">
+                        <div class="logo">🌐</div>
+                        <h4 class="mt-2">پنل مدیریت پلتفرم</h4>
+                        <p class="text-muted small">فقط SuperAdmin دسترسی دارد</p>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                    }
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label">شماره موبایل</label>
+                            <input type="text" name="Mobile" class="form-control"
+                                   placeholder="09121234567" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">رمز عبور</label>
+                            <input type="password" name="Password" class="form-control"
+                                   placeholder="رمز عبور" required />
+                        </div>
+                        <button type="submit" class="btn btn-teal w-100 py-2">
+                            ورود به پنل مدیریت
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

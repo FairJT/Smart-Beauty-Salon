@@ -1,0 +1,1280 @@
+{
+  "Version": 1,
+  "ManifestType": "Build",
+  "Endpoints": [
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js",
+      "AssetFile": "lib/bootstrap/bootstrap.bundle.min.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000042923982"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js",
+      "AssetFile": "lib/bootstrap/bootstrap.bundle.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "80421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js.gz",
+      "AssetFile": "lib/bootstrap/bootstrap.bundle.min.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js",
+      "AssetFile": "lib/bootstrap/bootstrap.bundle.min.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000042923982"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js",
+      "AssetFile": "lib/bootstrap/bootstrap.bundle.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "80421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js.gz",
+      "AssetFile": "lib/bootstrap/bootstrap.bundle.min.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js.gz"
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css",
+      "AssetFile": "lib/bootstrap/bootstrap.rtl.min.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000032064642"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css"
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css",
+      "AssetFile": "lib/bootstrap/bootstrap.rtl.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "233021"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css"
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css.gz",
+      "AssetFile": "lib/bootstrap/bootstrap.rtl.min.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css.gz"
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css",
+      "AssetFile": "lib/bootstrap/bootstrap.rtl.min.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000032064642"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css",
+      "AssetFile": "lib/bootstrap/bootstrap.rtl.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "233021"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css.gz",
+      "AssetFile": "lib/bootstrap/bootstrap.rtl.min.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js",
+      "AssetFile": "lib/moment/moment-jalaali.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000116754232"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js",
+      "AssetFile": "lib/moment/moment-jalaali.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31210"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js.gz",
+      "AssetFile": "lib/moment/moment-jalaali.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js.gz"
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js",
+      "AssetFile": "lib/moment/moment-jalaali.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000116754232"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js",
+      "AssetFile": "lib/moment/moment-jalaali.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31210"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js.gz",
+      "AssetFile": "lib/moment/moment-jalaali.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js",
+      "AssetFile": "lib/moment/moment.min.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000053978193"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js",
+      "AssetFile": "lib/moment/moment.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "58024"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js"
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js.gz",
+      "AssetFile": "lib/moment/moment.min.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo="
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js.gz"
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js",
+      "AssetFile": "lib/moment/moment.min.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000053978193"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js",
+      "AssetFile": "lib/moment/moment.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "58024"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js.gz",
+      "AssetFile": "lib/moment/moment.min.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.dilw3nhkvf.jpg",
+      "AssetFile": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "484309"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Feb 2026 15:49:04 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dilw3nhkvf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "AssetFile": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "484309"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Feb 2026 15:49:04 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA="
+        }
+      ]
+    }
+  ]
+}

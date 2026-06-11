@@ -1,0 +1,64 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/bootstrap/bootstrap.bundle.min.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\bootstrap.bundle.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-qlPVgvl\u002BtZTCpcxYJFdHB/m6mDe84wRr\u002Bl81VoYPTgQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"80421"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022qlPVgvl\u002BtZTCpcxYJFdHB/m6mDe84wRr\u002Bl81VoYPTgQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:40:11 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\bootstrap.bundle.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"y58g3z9xkb"},{"Name":"integrity","Value":"sha256-qlPVgvl\u002BtZTCpcxYJFdHB/m6mDe84wRr\u002Bl81VoYPTgQ="},{"Name":"label","Value":"_content/SmartSalon/lib/bootstrap/bootstrap.bundle.min.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"80421"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022qlPVgvl\u002BtZTCpcxYJFdHB/m6mDe84wRr\u002Bl81VoYPTgQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:40:11 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\bootstrap.rtl.min.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"3znty0tv6w"},{"Name":"integrity","Value":"sha256-Ye8eYwDq1nmwDuSpodd\u002B8RCoUd5Q5Yv\u002BsL\u002B2anuk57k="},{"Name":"label","Value":"_content/SmartSalon/lib/bootstrap/bootstrap.rtl.min.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"233021"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Ye8eYwDq1nmwDuSpodd\u002B8RCoUd5Q5Yv\u002BsL\u002B2anuk57k=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:39:51 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/bootstrap/bootstrap.rtl.min.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\bootstrap.rtl.min.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Ye8eYwDq1nmwDuSpodd\u002B8RCoUd5Q5Yv\u002BsL\u002B2anuk57k="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"233021"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Ye8eYwDq1nmwDuSpodd\u002B8RCoUd5Q5Yv\u002BsL\u002B2anuk57k=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:39:51 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/moment/moment-jalaali.9qvxp1mfrh.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\moment\moment-jalaali.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"9qvxp1mfrh"},{"Name":"integrity","Value":"sha256-4Zsz2GPWeHkOl\u002BU\u002BrP9kuC5inOSepVzqzit8W6FjtaY="},{"Name":"label","Value":"_content/SmartSalon/lib/moment/moment-jalaali.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"31210"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00224Zsz2GPWeHkOl\u002BU\u002BrP9kuC5inOSepVzqzit8W6FjtaY=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:41:58 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/moment/moment-jalaali.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\moment\moment-jalaali.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-4Zsz2GPWeHkOl\u002BU\u002BrP9kuC5inOSepVzqzit8W6FjtaY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"31210"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00224Zsz2GPWeHkOl\u002BU\u002BrP9kuC5inOSepVzqzit8W6FjtaY=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:41:58 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/moment/moment.min.4d6bsuq67g.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\moment\moment.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4d6bsuq67g"},{"Name":"integrity","Value":"sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF\u002BQLzcZCjl0="},{"Name":"label","Value":"_content/SmartSalon/lib/moment/moment.min.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"58024"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF\u002BQLzcZCjl0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:41:45 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/lib/moment/moment.min.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\moment\moment.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF\u002BQLzcZCjl0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"58024"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF\u002BQLzcZCjl0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 23 May 2026 13:41:45 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.dilw3nhkvf.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\artists\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"dilw3nhkvf"},{"Name":"integrity","Value":"sha256-5ePgkUNLInkNVpItQmZbHuNSsqNsrr\u002BZ2XBTq1hYccA="},{"Name":"label","Value":"_content/SmartSalon/uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"484309"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00225ePgkUNLInkNVpItQmZbHuNSsqNsrr\u002BZ2XBTq1hYccA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 27 Feb 2026 15:49:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/SmartSalon/uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\artists\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-5ePgkUNLInkNVpItQmZbHuNSsqNsrr\u002BZ2XBTq1hYccA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"484309"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u00225ePgkUNLInkNVpItQmZbHuNSsqNsrr\u002BZ2XBTq1hYccA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 27 Feb 2026 15:49:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

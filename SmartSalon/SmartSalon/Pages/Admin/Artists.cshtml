@@ -1,0 +1,265 @@
+﻿@page
+@model SmartSalon.Pages.Admin.ArtistsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "پرسنل";
+    ViewData["ActivePage"] = "Artists";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:16px;font-weight:500;color:var(--txt);">مدیریت پرسنل</div>
+        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+            @Model.Artists.Count نفر پرسنل
+        </div>
+    </div>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+        ＋ افزودن پرسنل
+    </button>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.Message.StartsWith("✅") ? "alert-success" : "alert-warning") mb-4">
+        @Model.Message
+    </div>
+}
+
+@if (!Model.Artists.Any())
+{
+    <div class="card p-5 text-center" style="color:var(--ctxt);">
+        <div style="font-size:48px;margin-bottom:12px;">👤</div>
+        <div style="font-size:15px;font-weight:500;color:var(--txt);">هنوز پرسنلی اضافه نشده</div>
+        <div style="font-size:12px;margin-top:6px;">برای افزودن پرسنل روی دکمه بالا کلیک کنید</div>
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var a in Model.Artists)
+        {
+            <div class="col-md-6 col-xl-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <!-- آواتار -->
+                        @if (!string.IsNullOrEmpty(a.PhotoUrl))
+                        {
+                            <img src="@a.PhotoUrl" width="52" height="52"
+                                 style="border-radius:50%;object-fit:cover;
+                                        border:2px solid var(--sb4);flex-shrink:0;" />
+                        }
+                        else
+                        {
+                            <div style="width:52px;height:52px;border-radius:50%;
+                                        background:var(--sb3);
+                                        display:flex;align-items:center;justify-content:center;
+                                        font-size:20px;font-weight:600;color:var(--sb2);
+                                        border:2px solid var(--sb4);flex-shrink:0;">
+                                @(a.User?.FirstName?.Length > 0 ? a.User.FirstName[0].ToString() : "؟")
+                            </div>
+                        }
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-weight:500;color:var(--txt);font-size:14px;">
+                                @a.User?.FirstName @a.User?.LastName
+                            </div>
+                            <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+                                @a.BioShort
+                            </div>
+                        </div>
+                        <span class="badge @(a.IsActive ? "bg-success" : "bg-danger")">
+                            @(a.IsActive ? "فعال" : "غیرفعال")
+                        </span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3"
+                         style="padding:10px;background:var(--mg);border-radius:8px;">
+                        <div style="text-align:center;">
+                            <div style="font-size:11px;color:var(--ctxt);">نوع قرارداد</div>
+                            <div style="font-size:12px;font-weight:500;color:var(--txt);margin-top:2px;">
+                                @(a.ContractType switch
+                                {
+                                    SmartSalon.Models.ContractType.FixedSalary => "حقوق ثابت",
+                                    SmartSalon.Models.ContractType.LineRent => "اجاره لاین",
+                                    SmartSalon.Models.ContractType.RoomRent => "اجاره اتاق",
+                                    _ => "نامشخص"
+                                })
+                            </div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:11px;color:var(--ctxt);">امتیاز</div>
+                            <div style="font-size:12px;font-weight:500;color:#F59E0B;margin-top:2px;">
+                                ⭐ @a.RatingAvg.ToString("F1")
+                                <span style="color:var(--ctxt);font-weight:400;">(@a.RatingCount)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <form method="post" asp-page-handler="Toggle"
+                              asp-route-id="@a.Id" class="flex-fill">
+                            <button class="btn btn-sm w-100"
+                                    style="background:@(a.IsActive ? "#FEF2F2" : "#F0FDF4");
+                                           border:0.5px solid @(a.IsActive ? "#FECACA" : "#BBF7D0");
+                                           color:@(a.IsActive ? "#DC2626" : "#16A34A");
+                                           font-size:11px;">
+                                @(a.IsActive ? "غیرفعال کن" : "فعال کن")
+                            </button>
+                        </form>
+                        <button class="btn btn-sm"
+                                style="background:var(--sb3);border:0.5px solid var(--sb4);
+                                       color:var(--sb2);font-size:11px;"
+                                data-bs-toggle="modal"
+                                data-bs-target="#photoModal"
+                                data-artist-id="@a.Id"
+                                data-artist-name="@a.User?.FirstName @a.User?.LastName">
+                            📷
+                        </button>
+                        <a href="/Admin/ArtistReport/@a.Id"
+                           class="btn btn-sm"
+                           style="background:#F0FDF4;border:0.5px solid #BBF7D0;
+                                  color:#16A34A;font-size:11px;">
+                            📊
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<!-- Modal افزودن پرسنل -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom:0.5px solid rgba(0,0,0,0.06);">
+                <h5 class="modal-title" style="font-size:15px;">افزودن پرسنل جدید</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Add">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            شماره موبایل کاربر
+                        </label>
+                        <input type="text" name="Mobile" class="form-control"
+                               placeholder="09121234567" required />
+                        <small style="color:var(--ctxt);">کاربر باید قبلاً در سیستم ثبت‌نام کرده باشد</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            بیوگرافی کوتاه
+                        </label>
+                        <input type="text" name="BioShort" class="form-control"
+                               placeholder="متخصص رنگ و هایلایت" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            نوع قرارداد
+                        </label>
+                        <select name="ContractType" class="form-select">
+                            <option value="1">حقوق ثابت</option>
+                            <option value="2">اجاره لاین</option>
+                            <option value="3">اجاره اتاق</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:0.5px solid rgba(0,0,0,0.06);">
+                    <button type="button" class="btn btn-sm btn-secondary"
+                            data-bs-dismiss="modal">
+                        انصراف
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary">افزودن</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal آپلود عکس -->
+<div class="modal fade" id="photoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom:0.5px solid rgba(0,0,0,0.06);">
+                <h5 class="modal-title" style="font-size:15px;">آپلود عکس پروفایل</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="artistNameLabel" class="mb-3"
+                   style="color:var(--ctxt);font-size:13px;"></p>
+                <div class="mb-3">
+                    <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                        انتخاب عکس (JPG، PNG — حداکثر ۵ مگابایت)
+                    </label>
+                    <input type="file" id="photoFile" class="form-control"
+                           accept="image/jpeg,image/png,image/webp" />
+                </div>
+                <div id="photoPreview" class="text-center mb-3" style="display:none;">
+                    <img id="previewImg" src="" width="100" height="100"
+                         style="border-radius:50%;object-fit:cover;
+                                border:3px solid var(--sb4);" />
+                </div>
+                <div id="uploadMessage"></div>
+            </div>
+            <div class="modal-footer" style="border-top:0.5px solid rgba(0,0,0,0.06);">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-bs-dismiss="modal">
+                    انصراف
+                </button>
+                <button type="button" class="btn btn-sm btn-primary"
+                        onclick="uploadPhoto()">
+                    آپلود عکس
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentArtistId = null;
+
+        document.getElementById('photoModal').addEventListener('show.bs.modal', function(e) {
+            const btn = e.relatedTarget;
+            currentArtistId = btn.dataset.artistId;
+            document.getElementById('artistNameLabel').textContent = 'هنرمند: ' + btn.dataset.artistName;
+            document.getElementById('photoPreview').style.display = 'none';
+            document.getElementById('uploadMessage').innerHTML = '';
+            document.getElementById('photoFile').value = '';
+        });
+
+        document.getElementById('photoFile').addEventListener('change', function() {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('photoPreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        async function uploadPhoto() {
+            const file = document.getElementById('photoFile').files[0];
+            if (!file) { alert('لطفاً یک عکس انتخاب کنید'); return; }
+            const formData = new FormData();
+            formData.append('file', file);
+            const msgDiv = document.getElementById('uploadMessage');
+            msgDiv.innerHTML = '<div class="alert alert-info">در حال آپلود...</div>';
+            try {
+                const res = await fetch(`/api/artists/${currentArtistId}/photo`, {
+                    method: 'POST', body: formData
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    msgDiv.innerHTML = '<div class="alert alert-success">✅ عکس با موفقیت آپلود شد</div>';
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    msgDiv.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+                }
+            } catch(e) {
+                msgDiv.innerHTML = '<div class="alert alert-danger">خطا در آپلود</div>';
+            }
+        }
+    </script>
+}

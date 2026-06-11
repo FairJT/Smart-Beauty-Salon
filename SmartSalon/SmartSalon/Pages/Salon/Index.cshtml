@@ -1,0 +1,108 @@
+﻿@page
+@model SmartSalon.Pages.Salon.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سالن‌های زیبایی | سالن هوشمند</title>
+    <link href="~/lib/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #F4F6F7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1B3A5C, #2C5F8A);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .salon-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+            .salon-card:hover {
+                transform: translateY(-4px);
+            }
+
+        .vip-badge {
+            background: linear-gradient(135deg, #9A6F0A, #F0C040);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- هدر -->
+    <div class="hero text-center">
+        <h1>✂ سالن هوشمند ابری</h1>
+        <p class="lead">بهترین سالن‌های زیبایی را پیدا کنید و آنلاین نوبت بگیرید</p>
+        <div class="col-md-6 mx-auto mt-3">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control form-control-lg"
+                           placeholder="جستجوی سالن..." value="@Model.Search" />
+                    <button type="submit" class="btn btn-warning btn-lg">جستجو</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- لیست سالن‌ها -->
+    <div class="container py-5">
+        <h4 class="mb-4">سالن‌های برتر</h4>
+
+        @if (!Model.Salons.Any())
+        {
+            <div class="text-center py-5 text-muted">
+                <h5>سالنی یافت نشد</h5>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var s in Model.Salons)
+                {
+                    <div class="col-md-4">
+                        <div class="card salon-card p-3"
+                             onclick="window.location='/Salon/@s.Slug'">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-circle bg-primary text-white d-flex align-items-center
+                                            justify-content-center me-3"
+                                     style="width:56px;height:56px;font-size:24px">
+                                    ✂
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">@s.Name</h6>
+                                    @if (s.IsVip)
+                                    {
+                                        <span class="vip-badge">⭐ VIP</span>
+                                    }
+                                </div>
+                            </div>
+                            <p class="text-muted small mb-2">📍 @s.Address</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-warning">⭐ @s.RatingAvg.ToString("F1")</span>
+                                <a href="/Salon/@s.Slug" class="btn btn-primary btn-sm">
+                                    رزرو نوبت
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

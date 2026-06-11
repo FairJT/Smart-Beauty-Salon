@@ -1,0 +1,155 @@
+﻿@page "/Admin/ArtistReport/{artistId:int}"
+@model SmartSalon.Pages.Admin.ArtistReportModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "گزارش هنرمند";
+    ViewData["ActivePage"] = "Artists";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">📊 گزارش درآمد هنرمند</h5>
+    <a href="/Admin/Artists" class="btn btn-sm btn-secondary">← برگشت</a>
+</div>
+
+@if (Model.Report == null)
+{
+    <div class="alert alert-warning">اطلاعاتی یافت نشد</div>
+}
+else
+{
+    <!-- هدر هنرمند -->
+    <div class="card p-4 mb-4">
+        <div class="d-flex align-items-center gap-3">
+            @if (!string.IsNullOrEmpty(Model.Report.PhotoUrl))
+            {
+                <img src="@Model.Report.PhotoUrl" width="70" height="70"
+                     style="border-radius:50%; object-fit:cover;" />
+            }
+            else
+            {
+                <div class="rounded-circle bg-primary text-white d-flex
+                            align-items-center justify-content-center"
+                     style="width:70px;height:70px;font-size:28px">
+                    @(Model.Report.ArtistName?.Substring(0, 1) ?? "؟")
+                </div>
+            }
+            <div>
+                <h5 class="mb-1">@Model.Report.ArtistName</h5>
+                <div class="text-warning">
+                    ⭐ @Model.Report.RatingAvg.ToString("F1")
+                    <small class="text-muted">(@Model.Report.RatingCount نظر)</small>
+                </div>
+            </div>
+
+            <!-- فیلتر تاریخ -->
+            <div class="me-auto">
+                <form method="get" class="d-flex gap-2 align-items-center">
+                    <label class="mb-0 text-muted small">از:</label>
+                    <input type="date" name="from" value="@Model.From"
+                           class="form-control form-control-sm" />
+                    <label class="mb-0 text-muted small">تا:</label>
+                    <input type="date" name="to" value="@Model.To"
+                           class="form-control form-control-sm" />
+                    <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- کارت‌های آمار -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card" style="background: linear-gradient(135deg, #667eea, #764ba2)">
+                <div class="small opacity-75">کل نوبت‌ها</div>
+                <div class="fs-2 fw-bold">@Model.Report.TotalAppointments</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="background: linear-gradient(135deg, #43e97b, #38f9d7)">
+                <div class="small opacity-75">نوبت‌های تمام شده</div>
+                <div class="fs-2 fw-bold">@Model.Report.CompletedAppointments</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="background: linear-gradient(135deg, #f093fb, #f5576c)">
+                <div class="small opacity-75">نوبت‌های لغو شده</div>
+                <div class="fs-2 fw-bold">@Model.Report.CancelledAppointments</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="background: linear-gradient(135deg, #4facfe, #00f2fe)">
+                <div class="small opacity-75">درآمد کل (تومان)</div>
+                <div class="fs-2 fw-bold">@Model.Report.TotalRevenue.ToString("N0")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- گزارش بر اساس خدمت -->
+        <div class="col-md-5">
+            <div class="card p-4">
+                <h6 class="mb-3">💅 درآمد بر اساس خدمت</h6>
+                @if (!Model.Report.ServiceReport.Any())
+                {
+                    <p class="text-muted">داده‌ای وجود ندارد</p>
+                }
+                else
+                {
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>خدمت</th>
+                                <th>تعداد</th>
+                                <th>درآمد</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model.Report.ServiceReport)
+                            {
+                                <tr>
+                                    <td>@s.ServiceName</td>
+                                    <td>@s.Count</td>
+                                    <td>@s.Revenue.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+        <!-- گزارش روزانه -->
+        <div class="col-md-7">
+            <div class="card p-4">
+                <h6 class="mb-3">📅 گزارش روزانه</h6>
+                @if (!Model.Report.DailyReport.Any())
+                {
+                    <p class="text-muted">داده‌ای وجود ندارد</p>
+                }
+                else
+                {
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>تاریخ</th>
+                                <th>تعداد نوبت</th>
+                                <th>درآمد (تومان)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var d in Model.Report.DailyReport)
+                            {
+                                <tr>
+                                    <td>@d.Date</td>
+                                    <td>@d.Count</td>
+                                    <td>@d.Revenue.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+}

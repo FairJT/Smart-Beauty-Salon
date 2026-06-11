@@ -1,0 +1,2433 @@
+{
+  "Version": 1,
+  "Hash": "e/0K5HWBKgLvbQ574A89ToiXbd7Ngy8neOaJkRvgiZI=",
+  "Source": "SmartSalon",
+  "BasePath": "_content/SmartSalon",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "SmartSalon\\wwwroot",
+      "Source": "SmartSalon",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\",
+      "BasePath": "_content/SmartSalon",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\3tew2jm5n6-3znty0tv6w.gz",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/bootstrap/bootstrap.rtl.min#[.{fingerprint=3znty0tv6w}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "aw0nbwdo1n",
+      "Integrity": "Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\4r361f2zd1-4d6bsuq67g.gz",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/moment/moment.min#[.{fingerprint=4d6bsuq67g}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "jjadkl6auz",
+      "Integrity": "n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\7nvj2f8t06-9qvxp1mfrh.gz",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/moment/moment-jalaali#[.{fingerprint=9qvxp1mfrh}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "jb6s0crtgd",
+      "Integrity": "/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\l1xoc6io96-y58g3z9xkb.gz",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/bootstrap/bootstrap.bundle.min#[.{fingerprint=y58g3z9xkb}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "l7d5oiioz9",
+      "Integrity": "IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\3tew2jm5n6-3znty0tv6w.br",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/bootstrap/bootstrap.rtl.min#[.{fingerprint=3znty0tv6w}]?.css.br",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "Fingerprint": "ihwvkkvcum",
+      "Integrity": "yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\4r361f2zd1-4d6bsuq67g.br",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/moment/moment.min#[.{fingerprint=4d6bsuq67g}]?.js.br",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "Fingerprint": "6cdzhj78u5",
+      "Integrity": "uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\7nvj2f8t06-9qvxp1mfrh.br",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/moment/moment-jalaali#[.{fingerprint=9qvxp1mfrh}]?.js.br",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "Fingerprint": "z9jwxvd4d0",
+      "Integrity": "aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\l1xoc6io96-y58g3z9xkb.br",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/bootstrap/bootstrap.bundle.min#[.{fingerprint=y58g3z9xkb}]?.js.br",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "Fingerprint": "nsxiznha07",
+      "Integrity": "aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/bootstrap/bootstrap.bundle.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "y58g3z9xkb",
+      "Integrity": "qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/bootstrap/bootstrap.rtl.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3znty0tv6w",
+      "Integrity": "Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/moment/moment.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "4d6bsuq67g",
+      "Integrity": "CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\moment\\moment.min.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "lib/moment/moment-jalaali#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9qvxp1mfrh",
+      "Integrity": "4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\moment\\moment-jalaali.js"
+    },
+    {
+      "Identity": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\uploads\\artists\\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "SourceId": "SmartSalon",
+      "SourceType": "Discovered",
+      "ContentRoot": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\",
+      "BasePath": "_content/SmartSalon",
+      "RelativePath": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dilw3nhkvf",
+      "Integrity": "5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\artists\\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\l1xoc6io96-y58g3z9xkb.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000042923982"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\l1xoc6io96-y58g3z9xkb.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000048197417"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20747"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "80421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\l1xoc6io96-y58g3z9xkb.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20747"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.js.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\l1xoc6io96-y58g3z9xkb.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\l1xoc6io96-y58g3z9xkb.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000042923982"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\l1xoc6io96-y58g3z9xkb.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000048197417"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20747"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "80421"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qlPVgvl+tZTCpcxYJFdHB/m6mDe84wRr+l81VoYPTgQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\l1xoc6io96-y58g3z9xkb.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20747"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js.br"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-aTWyQLiAd43jG8za2hKItZeLp7V/Pi1/z5AozR10keY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.bundle.min.y58g3z9xkb.js.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\l1xoc6io96-y58g3z9xkb.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "23296"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:40:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y58g3z9xkb"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.bundle.min.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IZJ2IN2atY5ZL6XxiOoncabaOCKm+BaIpt3OwcUvbyQ="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\3tew2jm5n6-3znty0tv6w.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000032064642"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\3tew2jm5n6-3znty0tv6w.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000043834656"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22812"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "233021"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\3tew2jm5n6-3znty0tv6w.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22812"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css.br"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.3znty0tv6w.css.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\3tew2jm5n6-3znty0tv6w.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3znty0tv6w"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/bootstrap/bootstrap.rtl.min.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\3tew2jm5n6-3znty0tv6w.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000032064642"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\3tew2jm5n6-3znty0tv6w.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000043834656"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22812"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "233021"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ye8eYwDq1nmwDuSpodd+8RCoUd5Q5Yv+sL+2anuk57k="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\3tew2jm5n6-3znty0tv6w.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22812"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yvUPgc2vXrH67omx40qs5wcaqMqlclx3ipS6lDRKhNY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/bootstrap/bootstrap.rtl.min.css.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\3tew2jm5n6-3znty0tv6w.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:39:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Sp+1+NYMEnJt4jEWHQ0VwBaALn1zNjEwwM0/vSZxxuI="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\4r361f2zd1-4d6bsuq67g.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000053978193"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\4r361f2zd1-4d6bsuq67g.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000059389476"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16837"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "58024"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\4r361f2zd1-4d6bsuq67g.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16837"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js.br"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.4d6bsuq67g.js.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\4r361f2zd1-4d6bsuq67g.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4d6bsuq67g"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment.min.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\4r361f2zd1-4d6bsuq67g.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000053978193"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\4r361f2zd1-4d6bsuq67g.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000059389476"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16837"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "58024"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CBc3mFM1r0vhX8Z27UzMBwPHRGxrXLyTF+QLzcZCjl0="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\4r361f2zd1-4d6bsuq67g.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16837"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-uoRbYqgrAF7+QgSBy9hp88E/A1wxYrbXz3ExICixpDE="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment.min.js.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\4r361f2zd1-4d6bsuq67g.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18525"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-n168i06rSfZfT5FZsWUw/F1IIKe+1/dTdLPOaBoaRQo="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\7nvj2f8t06-9qvxp1mfrh.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000116754232"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\7nvj2f8t06-9qvxp1mfrh.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000132205182"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7563"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31210"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\7nvj2f8t06-9qvxp1mfrh.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7563"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js.br"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.9qvxp1mfrh.js.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\7nvj2f8t06-9qvxp1mfrh.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9qvxp1mfrh"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/moment/moment-jalaali.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\7nvj2f8t06-9qvxp1mfrh.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000116754232"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\7nvj2f8t06-9qvxp1mfrh.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000132205182"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7563"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31210"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4Zsz2GPWeHkOl+U+rP9kuC5inOSepVzqzit8W6FjtaY="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js.br",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\publish\\7nvj2f8t06-9qvxp1mfrh.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7563"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-aWmHekcVwYTtSyDgRo4DgnjmZATpj3Z28oJzJEhJ6EM="
+        }
+      ]
+    },
+    {
+      "Route": "lib/moment/moment-jalaali.js.gz",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\obj\\Release\\net9.0\\compressed\\7nvj2f8t06-9qvxp1mfrh.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8564"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 23 May 2026 13:41:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/67bTK0qfbV/pyq4DCzU1nLZN/lYmLaHnFpIa+g3MCo="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.dilw3nhkvf.jpg",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\uploads\\artists\\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "484309"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Feb 2026 15:49:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dilw3nhkvf"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/artists/artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "AssetFile": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\uploads\\artists\\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "484309"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Feb 2026 15:49:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5ePgkUNLInkNVpItQmZbHuNSsqNsrr+Z2XBTq1hYccA="
+        }
+      ]
+    }
+  ]
+}

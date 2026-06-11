@@ -1,0 +1,169 @@
+﻿@page
+@model SmartSalon.Pages.Admin.ServicesModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "خدمات";
+    ViewData["ActivePage"] = "Services";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:16px;font-weight:500;color:var(--txt);">مدیریت خدمات</div>
+        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+            @Model.Services.Count خدمت ثبت شده
+        </div>
+    </div>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+        ＋ افزودن خدمت
+    </button>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.Message.StartsWith("✅") ? "alert-success" : "alert-warning") mb-4">
+        @Model.Message
+    </div>
+}
+
+@if (!Model.Services.Any())
+{
+    <div class="card p-5 text-center" style="color:var(--ctxt);">
+        <div style="font-size:48px;margin-bottom:12px;">💅</div>
+        <div style="font-size:15px;font-weight:500;color:var(--txt);">هنوز خدماتی اضافه نشده</div>
+        <div style="font-size:12px;margin-top:6px;">برای افزودن خدمت روی دکمه بالا کلیک کنید</div>
+    </div>
+}
+else
+{
+    <!-- گروه‌بندی بر اساس دسته‌بندی -->
+    @foreach (var group in Model.Services.GroupBy(s => s.Category))
+    {
+        <div class="mb-4">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <span class="table-bar"></span>
+                <span style="font-size:14px;font-weight:500;color:var(--txt);">@group.Key</span>
+                <span style="font-size:11px;background:var(--sb3);color:var(--sb2);
+                             padding:2px 8px;border-radius:10px;border:0.5px solid var(--sb4);">
+                    @group.Count() خدمت
+                </span>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-accent mb-0">
+                        <thead>
+                            <tr>
+                                <th>نام خدمت</th>
+                                <th>مدت (دقیقه)</th>
+                                <th>قیمت (تومان)</th>
+                                <th>وضعیت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in group.OrderBy(x => x.Name))
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <div style="width:8px;height:8px;border-radius:50%;
+                                                        background:@(s.IsActive ? "var(--acc)" : "#CBD5E1");
+                                                        flex-shrink:0;"></div>
+                                            <span style="color:var(--txt);">@s.Name</span>
+                                        </div>
+                                    </td>
+                                    <td style="color:var(--ctxt);">@s.BaseDurationMinutes</td>
+                                    <td style="font-weight:500;color:var(--txt);">
+                                        @s.BasePrice.ToString("N0")
+                                    </td>
+                                    <td>
+                                        <span class="badge @(s.IsActive ? "bg-success" : "bg-danger")">
+                                            @(s.IsActive ? "فعال" : "غیرفعال")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <form method="post" asp-page-handler="Toggle"
+                                                  asp-route-id="@s.Id" class="d-inline">
+                                                <button class="btn btn-sm"
+                                                        style="background:@(s.IsActive ? "#FEF2F2" : "#F0FDF4");
+                                                               border:0.5px solid @(s.IsActive ? "#FECACA" : "#BBF7D0");
+                                                               color:@(s.IsActive ? "#DC2626" : "#16A34A");
+                                                               font-size:11px;">
+                                                    @(s.IsActive ? "غیرفعال" : "فعال")
+                                                </button>
+                                            </form>
+                                            <form method="post" asp-page-handler="Delete"
+                                                  asp-route-id="@s.Id" class="d-inline">
+                                                <button class="btn btn-sm"
+                                                        style="background:#FEF2F2;border:0.5px solid #FECACA;
+                                                               color:#DC2626;font-size:11px;"
+                                                        onclick="return confirm('حذف شود؟')">
+                                                    🗑
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<!-- Modal افزودن خدمت -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom:0.5px solid rgba(0,0,0,0.06);">
+                <h5 class="modal-title" style="font-size:15px;">افزودن خدمت جدید</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Add">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            نام خدمت
+                        </label>
+                        <input type="text" name="name" class="form-control"
+                               placeholder="مثلاً: رنگ مو" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                            دسته‌بندی
+                        </label>
+                        <input type="text" name="category" class="form-control"
+                               placeholder="مثلاً: مو، ناخن، پوست" required />
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                                مدت زمان (دقیقه)
+                            </label>
+                            <input type="number" name="duration" class="form-control"
+                                   value="60" min="5" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" style="color:var(--ctxt);font-size:13px;">
+                                قیمت (تومان)
+                            </label>
+                            <input type="number" name="price" class="form-control"
+                                   value="500000" min="0" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:0.5px solid rgba(0,0,0,0.06);">
+                    <button type="button" class="btn btn-sm btn-secondary"
+                            data-bs-dismiss="modal">
+                        انصراف
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary">افزودن</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

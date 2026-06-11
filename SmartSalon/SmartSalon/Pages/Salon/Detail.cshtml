@@ -1,0 +1,421 @@
+﻿@page "/Salon/{slug}"
+@model SmartSalon.Pages.Salon.DetailModel
+@using SmartSalon.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Salon?.Name | سالن هوشمند</title>
+    <link href="~/lib/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
+    <script src="~/lib/moment/moment.min.js"></script>
+    <script src="~/lib/moment/moment-jalaali.js"></script>
+    <style>
+        body {
+            background: #F4F6F7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1B3A5C, #2C5F8A);
+            color: white;
+            padding: 40px 0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .artist-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+            .artist-card:hover {
+                transform: translateY(-3px);
+            }
+
+        .slot-btn {
+            border-radius: 10px;
+            min-width: 80px;
+        }
+
+            .slot-btn.selected {
+                background: #1B3A5C;
+                color: white;
+                border-color: #1B3A5C;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- هدر -->
+    <div class="hero">
+        <div class="container">
+            <a href="/Salon" class="text-white text-decoration-none">← برگشت</a>
+            <h2 class="mt-3">@Model.Salon?.Name</h2>
+            <p class="mb-1">📍 @Model.Salon?.Address</p>
+            <p class="mb-1">📞 @Model.Salon?.Phone</p>
+            <span class="text-warning">⭐ @Model.Salon?.RatingAvg.ToString("F1")</span>
+        </div>
+    </div>
+
+    <div class="container py-4">
+        @if (Model.Salon == null)
+        {
+            <div class="alert alert-danger">سالن یافت نشد</div>
+        }
+        else
+        {
+            <!-- توضیحات -->
+            @if (!string.IsNullOrEmpty(Model.Salon.Description))
+            {
+                <div class="card p-4 mb-4">
+                    <p class="mb-0 text-muted">@Model.Salon.Description</p>
+                </div>
+            }
+
+            <div class="row g-4">
+                <!-- خدمات -->
+                <div class="col-md-4">
+                    <div class="card p-4">
+                        <h5 class="mb-3">💅 خدمات</h5>
+                        @if (!Model.Salon.Services.Any())
+                        {
+                            <p class="text-muted">خدماتی ثبت نشده</p>
+                        }
+                        else
+                        {
+                            @foreach (var s in Model.Salon.Services.Where(s => s.IsActive))
+                            {
+                                <div class="d-flex justify-content-between align-items-center
+                                            border-bottom py-2">
+                                    <div>
+                                        <div class="fw-bold">@s.Name</div>
+                                        <small class="text-muted">@s.BaseDurationMinutes دقیقه</small>
+                                    </div>
+                                    <span class="text-success fw-bold">
+                                        @s.BasePrice.ToString("N0") تومان
+                                    </span>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <!-- پرسنل -->
+                <div class="col-md-8">
+                    <div class="card p-4">
+                        <h5 class="mb-3">👤 پرسنل</h5>
+                        @if (!Model.Salon.Artists.Any())
+                        {
+                            <p class="text-muted">پرسنلی ثبت نشده</p>
+                        }
+                        else
+                        {
+                            <div class="row g-3">
+                                @foreach (var a in Model.Salon.Artists.Where(a => a.IsActive))
+                                {
+                                    <div class="col-md-6">
+                                        <div class="card artist-card p-3"
+                                             data-bs-toggle="modal"
+                                             data-bs-target="#bookModal"
+                                             data-artist-id="@a.Id"
+                                             data-artist-name="@a.User?.FirstName @a.User?.LastName">
+                                            <div class="d-flex align-items-center">
+                                                <div class="rounded-circle bg-primary text-white
+                                                            d-flex align-items-center justify-content-center me-3"
+                                                     style="width:48px;height:48px;font-size:20px">
+                                                    @(a.User?.FirstName?.Substring(0, 1) ?? "؟")
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold">
+                                                        @a.User?.FirstName @a.User?.LastName
+                                                    </div>
+                                                    <small class="text-muted">@a.BioShort</small>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 text-warning">
+                                                ⭐ @a.RatingAvg.ToString("F1")
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Modal رزرو -->
+    <div class="modal fade" id="bookModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">رزرو نوبت</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="bookingContent">
+                        <!-- قدم ۱: انتخاب خدمت -->
+                        <div id="step1">
+                            <h6>انتخاب خدمت:</h6>
+                            <div class="row g-2" id="serviceList">
+                                @foreach (var s in (Model.Salon?.Services ?? new()).Where(s => s.IsActive))
+                                {
+                                    <div class="col-md-6">
+                                        <div class="card p-3 service-item"
+                                             style="cursor:pointer"
+                                             data-service-id="@s.Id"
+                                             data-service-name="@s.Name"
+                                             data-duration="@s.BaseDurationMinutes"
+                                             data-price="@s.BasePrice">
+                                            <div class="fw-bold">@s.Name</div>
+                                            <small class="text-muted">@s.BaseDurationMinutes دقیقه</small>
+                                            <div class="text-success">@s.BasePrice.ToString("N0") تومان</div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- قدم ۲: انتخاب تاریخ و تایم -->
+                        <div id="step2" style="display:none">
+                            <div class="mb-3">
+                                <label class="form-label">انتخاب تاریخ (شمسی):</label>
+                                <div class="d-flex flex-wrap gap-2" id="dateSelector"></div>
+                                <input type="hidden" id="bookDate" value="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div id="slotsContainer">
+                                <p class="text-muted">تاریخ را انتخاب کنید...</p>
+                            </div>
+                        </div>
+
+                        <!-- قدم ۳: تایید -->
+                        <div id="step3" style="display:none">
+                            <div class="alert alert-info">
+                                <div id="summaryText"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">شماره موبایل:</label>
+                                <input type="text" id="clientMobile" class="form-control"
+                                       placeholder="09121234567" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">رمز عبور:</label>
+                                <input type="password" id="clientPassword" class="form-control"
+                                       placeholder="رمز عبور" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="btnBack" style="display:none"
+                            onclick="goBack()">
+                        ← برگشت
+                    </button>
+                    <button class="btn btn-primary" id="btnNext" onclick="goNext()">
+                        بعدی →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentStep = 1;
+        let selectedArtistId = null;
+        let selectedArtistName = '';
+        let selectedServiceId = null;
+        let selectedServiceName = '';
+        let selectedDuration = 0;
+        let selectedPrice = 0;
+        let selectedSlot = null;
+        let salonId = @(Model.Salon != null ? Model.Salon.Id.ToString() : "0");
+
+        // باز کردن modal با اطلاعات هنرمند
+                document.querySelectorAll('.artist-card').forEach(card => {
+            card.addEventListener('click', function() {
+                selectedArtistId   = this.dataset.artistId;
+                selectedArtistName = this.dataset.artistName;
+                selectedServiceId  = null;
+                selectedSlot       = null;
+                currentStep        = 1;
+                // reset انتخاب خدمت
+                document.querySelectorAll('.service-item').forEach(i =>
+                    i.classList.remove('border-primary', 'border', 'bg-light'));
+                showStep(1);
+            });
+        });
+
+        // انتخاب خدمت
+        document.querySelectorAll('.service-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.service-item').forEach(i =>
+                    i.classList.remove('border-primary', 'border', 'bg-light'));
+                this.classList.add('border-primary', 'border', 'bg-light');
+                selectedServiceId  = this.dataset.serviceId;
+                selectedServiceName = this.dataset.serviceName;
+                selectedDuration   = this.dataset.duration;
+                selectedPrice      = this.dataset.price;
+            });
+        });
+
+        
+                // ساخت تقویم شمسی
+        function buildDateSelector() {
+            const container = document.getElementById('dateSelector');
+            const days = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+            const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور',
+                            'مهر','آبان','آذر','دی','بهمن','اسفند'];
+
+            for (let i = 1; i <= 14; i++) {
+                const date = moment().add(i, 'days');
+                const jDate = moment(date).format('jYYYY-jMM-jDD');
+                const jDay = date.jDate();
+                const jMonth = months[date.jMonth()];
+                const weekDay = days[date.day()];
+                const isoDate = date.format('YYYY-MM-DD');
+
+                const btn = document.createElement('div');
+                btn.style.cssText = 'cursor:pointer;border-radius:12px;padding:8px 12px;text-align:center;min-width:65px;border:1px solid #dee2e6;background:white;';
+                btn.innerHTML = `<div style="font-size:11px;color:gray">${weekDay}</div>
+                                 <div style="font-size:20px;font-weight:bold;color:#1B3A5C">${jDay}</div>
+                                 <div style="font-size:11px;color:gray">${jMonth}</div>`;
+                btn.dataset.iso = isoDate;
+
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#dateSelector > div').forEach(b => {
+                        b.style.background = 'white';
+                        b.style.color = '';
+                        b.style.borderColor = '#dee2e6';
+                    });
+                    this.style.background = '#1B3A5C';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#1B3A5C';
+                    this.querySelectorAll('div').forEach(d => d.style.color = 'white');
+                    document.getElementById('bookDate').value = this.dataset.iso;
+                    loadSlots();
+                });
+
+                container.appendChild(btn);
+            }
+        }
+                async function loadSlots() {
+            if (!selectedArtistId) return;
+            const date = document.getElementById('bookDate').value;
+            const res = await fetch(
+                `/api/appointments/slots?artistId=${selectedArtistId}&date=${date}&duration=${selectedDuration}`
+            );
+            const data = await res.json();
+            const slots = data.slots ?? [];
+            const container = document.getElementById('slotsContainer');
+
+            if (slots.length === 0) {
+                container.innerHTML = '<p class="text-muted">تایم خالی وجود ندارد</p>';
+                return;
+            }
+
+            container.innerHTML = '<h6>انتخاب تایم:</h6><div class="d-flex flex-wrap gap-2">' +
+                slots.map(s => `
+                    <button class="btn btn-outline-primary slot-btn"
+                            onclick="selectSlot('${s.start}', '${s.startFull}')"
+                            id="slot-${s.start}">
+                        ${s.start}
+                    </button>`).join('') + '</div>';
+        }
+
+        function selectSlot(start, startFull) {
+            document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+            document.getElementById('slot-' + start)?.classList.add('selected');
+            selectedSlot = { start, startFull };
+        }
+
+                function goNext() {
+            if (currentStep === 1) {
+                if (!selectedServiceId) { alert('لطفاً یک خدمت انتخاب کنید'); return; }
+                currentStep = 2;
+                showStep(2);
+                // پاک کردن تقویم قبلی
+                document.getElementById('dateSelector').innerHTML = '';
+                buildDateSelector();
+            } else if (currentStep === 2) {
+                if (!selectedSlot) { alert('لطفاً یک تایم انتخاب کنید'); return; }
+                currentStep = 3;
+                document.getElementById('summaryText').innerHTML = `
+                    <b>هنرمند:</b> ${selectedArtistName}<br>
+                    <b>خدمت:</b> ${selectedServiceName}<br>
+                    <b>تایم:</b> ${selectedSlot.start}<br>
+                    <b>مبلغ:</b> ${Number(selectedPrice).toLocaleString()} تومان
+                `;
+                showStep(3);
+            } else if (currentStep === 3) {
+                bookAppointment();
+            }
+        }
+
+        function goBack() {
+            if (currentStep > 1) { currentStep--; showStep(currentStep); }
+        }
+
+        function showStep(step) {
+            document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
+            document.getElementById('step2').style.display = step === 2 ? 'block' : 'none';
+            document.getElementById('step3').style.display = step === 3 ? 'block' : 'none';
+            document.getElementById('btnBack').style.display = step > 1 ? 'block' : 'none';
+            document.getElementById('btnNext').textContent =
+                step === 3 ? '✓ ثبت رزرو' : 'بعدی →';
+        }
+
+        async function bookAppointment() {
+            const mobile   = document.getElementById('clientMobile').value;
+            const password = document.getElementById('clientPassword').value;
+
+            if (!mobile || !password) { alert('موبایل و رمز عبور را وارد کنید'); return; }
+
+            // ورود
+            const loginRes = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile, password })
+            });
+
+            if (!loginRes.ok) { alert('موبایل یا رمز عبور اشتباه است'); return; }
+            const loginData = await loginRes.json();
+            const token = loginData.token;
+
+            // ثبت رزرو
+            const bookRes = await fetch('/api/appointments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    artistId:        parseInt(selectedArtistId),
+                    salonId:         salonId,
+                    serviceId:       parseInt(selectedServiceId),
+                    startTime:       selectedSlot.startFull,
+                    durationMinutes: parseInt(selectedDuration),
+                    estimatedPrice:  parseInt(selectedPrice),
+                    notes:           null
+                })
+            });
+
+            if (bookRes.ok) {
+                const data = await bookRes.json();
+                alert(`✅ رزرو موفق!\nمبلغ بیعانه: ${data.deposit} تومان`);
+                bootstrap.Modal.getInstance(document.getElementById('bookModal')).hide();
+            } else {
+                const err = await bookRes.json();
+                alert('خطا: ' + (err.message ?? 'مشکلی پیش آمد'));
+            }
+        }
+    </script>
+</body>
+</html>

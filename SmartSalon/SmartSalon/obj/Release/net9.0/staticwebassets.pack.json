@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\bootstrap\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment-jalaali.js",
+      "PackagePath": "staticwebassets\\lib\\moment\\moment-jalaali.js"
+    },
+    {
+      "Id": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\lib\\moment\\moment.min.js",
+      "PackagePath": "staticwebassets\\lib\\moment\\moment.min.js"
+    },
+    {
+      "Id": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\wwwroot\\uploads\\artists\\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\artists\\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.SmartSalon.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.SmartSalon.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.build.SmartSalon.props",
+      "PackagePath": "build\\SmartSalon.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.SmartSalon.props",
+      "PackagePath": "buildMultiTargeting\\SmartSalon.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.buildTransitive.SmartSalon.props",
+      "PackagePath": "buildTransitive\\SmartSalon.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

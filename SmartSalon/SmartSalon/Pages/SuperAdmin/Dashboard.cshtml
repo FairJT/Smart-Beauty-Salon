@@ -1,0 +1,182 @@
+﻿@page
+@model SmartSalon.Pages.SuperAdmin.DashboardModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_SuperAdminLayout.cshtml";
+    ViewData["Title"] = "داشبورد";
+    ViewData["ActivePage"] = "Dashboard";
+}
+
+<div class="topbar">
+    <div>
+        <div style="font-size:16px;font-weight:500;color:#0A0A1A;">داشبورد کل پلتفرم</div>
+        <div style="font-size:12px;color:#64748B;margin-top:2px;">خوش آمدید، @Model.AdminName</div>
+    </div>
+    <span style="font-size:12px;background:rgba(129,140,248,0.1);color:#6366F1;
+                 padding:6px 14px;border-radius:20px;border:0.5px solid rgba(129,140,248,0.3);">
+        🌐 پنل پلتفرم
+    </span>
+</div>
+
+<!-- آمار -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">کل سالن‌ها</div>
+                <div style="width:32px;height:32px;border-radius:8px;background:#F3F0FF;
+                            display:flex;align-items:center;justify-content:center;">
+                    ✂
+                </div>
+            </div>
+            <div class="stat-num">@Model.TotalSalons</div>
+            <div style="font-size:11px;color:#16A34A;margin-top:6px;">@Model.ActiveSalons فعال</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">کل کاربران</div>
+                <div style="width:32px;height:32px;border-radius:8px;background:#FFF0F0;
+                            display:flex;align-items:center;justify-content:center;">
+                    👥
+                </div>
+            </div>
+            <div class="stat-num">@Model.TotalUsers</div>
+            <div style="font-size:11px;color:#64748B;margin-top:6px;">@Model.TotalArtists هنرمند</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">کل نوبت‌ها</div>
+                <div style="width:32px;height:32px;border-radius:8px;background:#EFF6FF;
+                            display:flex;align-items:center;justify-content:center;">
+                    📅
+                </div>
+            </div>
+            <div class="stat-num">@Model.TotalAppointments</div>
+            <div style="font-size:11px;color:#6366F1;margin-top:6px;">@Model.TodayAppointments امروز</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-dark">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">درآمد کل</div>
+                <div style="width:32px;height:32px;border-radius:8px;background:rgba(129,140,248,0.15);
+                            display:flex;align-items:center;justify-content:center;">
+                    💰
+                </div>
+            </div>
+            <div class="stat-num">@Model.TotalRevenue.ToString("N0")</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">تومان</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- آخرین سالن‌ها -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="p-3 d-flex justify-content-between align-items-center"
+                 style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
+                <div style="display:flex;align-items:center;">
+                    <span class="table-bar"></span>
+                    <span style="font-size:14px;font-weight:500;color:#0A0A1A;">آخرین سالن‌ها</span>
+                </div>
+                <a href="/SuperAdmin/Salons"
+                   style="font-size:11px;color:#6366F1;text-decoration:none;">مشاهده همه</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>نام سالن</th>
+                            <th>وضعیت</th>
+                            <th>VIP</th>
+                            <th>امتیاز</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model.LatestSalons)
+                        {
+                            <tr>
+                                <td style="color:#0A0A1A;">@s.Name</td>
+                                <td>
+                                    <span class="badge @(s.IsActive ? "bg-success" : "bg-danger")">
+                                        @(s.IsActive ? "فعال" : "غیرفعال")
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (s.IsVip)
+                                    {
+                                        <span class="vip-badge">⭐ VIP</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:#CBD5E1;font-size:12px;">—</span>
+                                    }
+                                </td>
+                                <td style="color:#64748B;">@s.RatingAvg.ToString("F1")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- آخرین نوبت‌ها -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="p-3 d-flex justify-content-between align-items-center"
+                 style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
+                <div style="display:flex;align-items:center;">
+                    <span class="table-bar"></span>
+                    <span style="font-size:14px;font-weight:500;color:#0A0A1A;">آخرین نوبت‌ها</span>
+                </div>
+                <a href="/SuperAdmin/Reports"
+                   style="font-size:11px;color:#6366F1;text-decoration:none;">گزارش کامل</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>سالن</th>
+                            <th>مشتری</th>
+                            <th>ساعت</th>
+                            <th>وضعیت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var a in Model.LatestAppointments)
+                        {
+                            var badge = a.Status switch
+                            {
+                                SmartSalon.Models.AppointmentStatus.Pending => "bg-warning",
+                                SmartSalon.Models.AppointmentStatus.Confirmed => "bg-success",
+                                SmartSalon.Models.AppointmentStatus.Cancelled => "bg-danger",
+                                _ => "bg-secondary"
+                            };
+                            var txt = a.Status switch
+                            {
+                                SmartSalon.Models.AppointmentStatus.Pending => "انتظار",
+                                SmartSalon.Models.AppointmentStatus.Confirmed => "تایید",
+                                SmartSalon.Models.AppointmentStatus.Cancelled => "لغو",
+                                _ => "سایر"
+                            };
+                            <tr>
+                                <td style="color:#0A0A1A;">@a.Salon?.Name</td>
+                                <td style="color:#64748B;">
+                                    @a.Client?.FirstName @a.Client?.LastName
+                                </td>
+                                <td style="color:#64748B;">@a.StartTime.ToString("HH:mm")</td>
+                                <td><span class="badge @badge">@txt</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

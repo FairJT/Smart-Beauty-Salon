@@ -1,0 +1,168 @@
+﻿@page
+@model SmartSalon.Pages.Admin.DashboardModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "داشبورد";
+    ViewData["ActivePage"] = "Dashboard";
+}
+
+<!-- topbar -->
+<div class="topbar">
+    <div>
+        <div style="font-size:16px;font-weight:500;color:var(--txt);">داشبورد مدیریت</div>
+        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+            خوش آمدید، @Model.AdminName
+        </div>
+    </div>
+    <a href="/Admin/Appointments" class="btn btn-primary btn-sm">
+        ＋ مشاهده نوبت‌ها
+    </a>
+</div>
+
+<!-- کارت‌های آمار -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">نوبت‌های امروز</div>
+                <div class="stat-icon" style="background:rgba(0,0,0,0.04);">📅</div>
+            </div>
+            <div class="stat-num">@Model.TodayCount</div>
+            <div style="font-size:11px;color:#16A34A;margin-top:6px;">کل نوبت‌های امروز</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">در انتظار تایید</div>
+                <div class="stat-icon" style="background:#FFF8E8;">⏳</div>
+            </div>
+            <div class="stat-num" style="color:#B07D2A;">@Model.PendingCount</div>
+            <div style="font-size:11px;color:#EA580C;margin-top:6px;">نیاز به بررسی</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">تایید شده</div>
+                <div class="stat-icon" style="background:#F0FDF4;">✅</div>
+            </div>
+            <div class="stat-num" style="color:#16A34A;">@Model.ConfirmedCount</div>
+            <div style="font-size:11px;color:#16A34A;margin-top:6px;">
+                @(Model.TodayCount > 0 ? $"{Model.ConfirmedCount * 100 / Model.TodayCount}٪ از کل" : "---")
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-dark">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="stat-lbl">درآمد امروز</div>
+                <div class="stat-icon" style="background:var(--sb3);">💰</div>
+            </div>
+            <div class="stat-num">@Model.TodayRevenue.ToString("N0")</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">تومان</div>
+        </div>
+    </div>
+</div>
+
+<!-- جدول نوبت‌های امروز -->
+<div class="card">
+    <div class="p-3 d-flex justify-content-between align-items-center"
+         style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
+        <div style="display:flex;align-items:center;">
+            <span class="table-bar"></span>
+            <span style="font-size:14px;font-weight:500;color:var(--txt);">نوبت‌های امروز</span>
+        </div>
+        <span style="font-size:11px;background:var(--sb3);color:var(--sb2);
+                     padding:3px 10px;border-radius:20px;border:0.5px solid var(--sb4);">
+            @Model.TodayCount نوبت
+        </span>
+    </div>
+
+    @if (!Model.TodayAppointments.Any())
+    {
+        <div class="text-center py-5" style="color:var(--ctxt);">
+            <div style="font-size:40px;margin-bottom:8px;">📅</div>
+            <div>امروز نوبتی ثبت نشده</div>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-accent mb-0">
+                <thead>
+                    <tr>
+                        <th>مشتری</th>
+                        <th>خدمت</th>
+                        <th>هنرمند</th>
+                        <th>ساعت</th>
+                        <th>مبلغ</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model.TodayAppointments)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div style="width:30px;height:30px;border-radius:50%;
+                                                background:var(--sb3);
+                                                display:flex;align-items:center;justify-content:center;
+                                                font-size:12px;color:var(--sb2);font-weight:500;
+                                                border:0.5px solid var(--sb4);flex-shrink:0;">
+                                        @(a.ClientName.Length > 0 ? a.ClientName[0].ToString() : "؟")
+                                    </div>
+                                    <span>@a.ClientName</span>
+                                </div>
+                            </td>
+                            <td>@a.ServiceName</td>
+                            <td>@a.ArtistName</td>
+                            <td>@a.StartTime.ToString("HH:mm")</td>
+                            <td style="font-weight:500;">@a.EstimatedPrice.ToString("N0")</td>
+                            <td>
+                                <span class="badge @a.StatusBadge">@a.StatusText</span>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    @if (a.Status == 1)
+                                    {
+                                        <form method="post" asp-page-handler="Confirm"
+                                              asp-route-id="@a.Id" class="d-inline">
+                                            <button class="btn btn-sm"
+                                                    style="background:#F0FDF4;border:0.5px solid #BBF7D0;
+                                                           color:#16A34A;font-size:11px;">
+                                                تایید
+                                            </button>
+                                        </form>
+                                        <form method="post" asp-page-handler="Cancel"
+                                              asp-route-id="@a.Id" class="d-inline">
+                                            <button class="btn btn-sm"
+                                                    style="background:#FEF2F2;border:0.5px solid #FECACA;
+                                                           color:#DC2626;font-size:11px;">
+                                                لغو
+                                            </button>
+                                        </form>
+                                    }
+                                    @if (a.Status == 2)
+                                    {
+                                        <form method="post" asp-page-handler="Cancel"
+                                              asp-route-id="@a.Id" class="d-inline">
+                                            <button class="btn btn-sm"
+                                                    style="background:#FEF2F2;border:0.5px solid #FECACA;
+                                                           color:#DC2626;font-size:11px;">
+                                                لغو
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

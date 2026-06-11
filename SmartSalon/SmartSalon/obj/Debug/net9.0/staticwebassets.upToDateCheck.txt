@@ -1,0 +1,9 @@
+I:\Projects\SmartSalon\SmartSalon\SmartSalon\wwwroot\lib\bootstrap\bootstrap.rtl.min.css
+I:\Projects\SmartSalon\SmartSalon\SmartSalon\wwwroot\lib\moment\moment.min.js
+I:\Projects\SmartSalon\SmartSalon\SmartSalon\wwwroot\lib\moment\moment-jalaali.js
+I:\Projects\SmartSalon\SmartSalon\SmartSalon\wwwroot\lib\bootstrap\bootstrap.bundle.min.js
+wwwroot\lib\bootstrap\bootstrap.bundle.min.js
+wwwroot\lib\bootstrap\bootstrap.rtl.min.css
+wwwroot\lib\moment\moment.min.js
+wwwroot\lib\moment\moment-jalaali.js
+wwwroot\uploads\artists\artist_1_a9a96f15c1aa47cfa6d35eb1e0feda4c.jpg
