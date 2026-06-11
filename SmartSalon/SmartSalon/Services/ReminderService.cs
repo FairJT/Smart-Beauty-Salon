@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartSalon.Data;
 using SmartSalon.Models;
+using SmartSalon.Services;
 
 namespace SmartSalon.Services
 {
@@ -22,7 +23,6 @@ namespace SmartSalon.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 await SendReminders();
-                // هر ۱ ساعت یکبار چک کن
                 await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
             }
         }
@@ -32,8 +32,8 @@ namespace SmartSalon.Services
             using var scope = _services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var sms = scope.ServiceProvider.GetRequiredService<ISmsService>();
+            var notificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
 
-            // نوبت‌هایی که ۲ ساعت دیگر شروع می‌شوند
             var reminderTime = DateTime.Now.AddHours(2);
             var from = reminderTime.AddMinutes(-30);
             var to = reminderTime.AddMinutes(30);
@@ -50,26 +50,41 @@ namespace SmartSalon.Services
 
             foreach (var apt in appointments)
             {
-                if (apt.Client?.PhoneNumber == null) continue;
+                if (apt.Client == null) continue;
 
-                var artistName = apt.Artist?.User?.FirstName + " " +
-                                 apt.Artist?.User?.LastName;
+                var artistName = (apt.Artist?.User?.FirstName ?? "") + " " +
+                                 (apt.Artist?.User?.LastName ?? "");
                 var dateTime = apt.StartTime.ToString("yyyy/MM/dd HH:mm");
+                var salonName = apt.Salon?.Name ?? "";
 
-                var sent = await sms.SendAppointmentReminderAsync(
-                    apt.Client.PhoneNumber,
-                    apt.Client.FirstName,
-                    apt.Salon?.Name ?? "",
-                    artistName,
+                // Send SMS if phone number available
+                if (apt.Client.PhoneNumber != null)
+                {
+                    var smsSent = await sms.SendAppointmentReminderAsync(
+                        apt.Client.PhoneNumber,
+                        apt.Client.FirstName,
+                        salonName,
+                        artistName,
+                        dateTime
+                    );
+
+                    if (smsSent)
+                    {
+                        _logger.LogInformation(
+                            "SMS reminder sent to {mobile}", apt.Client.PhoneNumber);
+                    }
+                }
+
+                // Send in-app notification
+                await notificationService.SendAppointmentReminderAsync(
+                    apt.Client.Id,
+                    salonName,
                     dateTime
                 );
 
-                if (sent)
-                {
-                    apt.ReminderSent = true;
-                    _logger.LogInformation(
-                        "Reminder sent to {mobile}", apt.Client.PhoneNumber);
-                }
+                apt.ReminderSent = true;
+                _logger.LogInformation(
+                    "In-app reminder sent to user {userId}", apt.Client.Id);
             }
 
             await db.SaveChangesAsync();

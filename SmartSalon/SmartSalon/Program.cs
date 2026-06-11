@@ -1,19 +1,25 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Threading.RateLimiting;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SmartSalon.Data;
 using SmartSalon.Models;
+using SmartSalon.Services;
+using SmartSalon.Validation;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ─── ۱. اتصال به SQL Server ───────────────────────────────────
+// ─── Database ────────────────────────────────────────────────
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ─── ۲. سیستم کاربران ────────────────────────────────────────
+// ─── Identity ────────────────────────────────────────────────
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -24,8 +30,12 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// ─── ۳. JWT برای اپ موبایل ───────────────────────────────────
-var jwtKey = builder.Configuration["JwtSettings:Key"]!;
+// ─── JWT Authentication ──────────────────────────────────────
+var jwtKey = builder.Configuration["JwtSettings:Key"]
+    ?? Environment.GetEnvironmentVariable("JWT_SECRET")
+    ?? throw new InvalidOperationException(
+        "JWT secret not found. Set JwtSettings:Key or JWT_SECRET env var.");
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -36,8 +46,7 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtKey)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
         ValidateIssuer = true,
         ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
         ValidateAudience = true,
@@ -46,24 +55,65 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// ─── ۴. CORS برای اپ موبایل ──────────────────────────────────
+// ─── CORS ────────────────────────────────────────────────────
 builder.Services.AddCors(options =>
+{
     options.AddPolicy("AllowAll", policy =>
         policy.AllowAnyOrigin()
               .AllowAnyMethod()
-              .AllowAnyHeader()));
+              .AllowAnyHeader());
 
+    options.AddPolicy("Production", policy =>
+    {
+        var origins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>()
+            ?? new[] { "https://smartsalon.ir" };
+        policy.WithOrigins(origins)
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// ─── Rate Limiting ───────────────────────────────────────────
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddFixedWindowLimiter("auth", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 10;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit = 2;
+    });
+
+    options.AddFixedWindowLimiter("api", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 60;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+    });
+});
+
+// ─── Services ────────────────────────────────────────────────
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ISalonService, SmartSalon.Services.SalonService>();
+builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<ISmsService, SmsService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddHostedService<ReminderService>();
+
+// ─── FluentValidation ────────────────────────────────────────
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+// ─── MVC + Swagger ───────────────────────────────────────────
 builder.Services.AddRazorPages();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(8);
     options.Cookie.HttpOnly = true;
 });
-builder.Services.AddScoped<SmartSalon.Services.ISmsService,
-                           SmartSalon.Services.SmsService>();
-builder.Services.AddScoped<SmartSalon.Services.INotificationService,
-                           SmartSalon.Services.NotificationService>();
-builder.Services.AddHostedService<SmartSalon.Services.ReminderService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -73,6 +123,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DefaultIgnoreCondition =
             System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -83,7 +134,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "توکن JWT را اینجا وارد کنید: Bearer {token}"
+        Description = "Bearer {token}"
     });
 
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
@@ -102,13 +153,36 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// ─── Global Exception Handler ────────────────────────────────
+builder.Services.AddExceptionHandler(options =>
+{
+    options.ExceptionHandler = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+        return context.Response.WriteAsJsonAsync(new
+        {
+            message = "خطای داخلی سرور",
+            detail = builder.Environment.IsDevelopment()
+                ? context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error.Message
+                : null
+        });
+    };
+});
+
 var app = builder.Build();
 
-// ─── ترتیب Middleware ─────────────────────────────────────────
-app.UseSwagger();
-app.UseSwaggerUI();
-//app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+// ─── Middleware Pipeline ─────────────────────────────────────
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseExceptionHandler();
+app.UseHttpsRedirection();
+app.UseCors(app.Environment.IsDevelopment() ? "AllowAll" : "Production");
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SmartSalon.Data;
-using SmartSalon.Models;
+using SmartSalon.DTOs;
+using SmartSalon.Services;
+using System.Security.Claims;
 
 namespace SmartSalon.Controllers
 {
@@ -10,14 +10,10 @@ namespace SmartSalon.Controllers
     [ApiController]
     public class SalonsController : ControllerBase
     {
-        private readonly ApplicationDbContext _db;
+        private readonly ISalonService _salonService;
 
-        public SalonsController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
+        public SalonsController(ISalonService salonService) => _salonService = salonService;
 
-        // ─── لیست سالن‌ها ─────────────────────────────────────
         [HttpGet]
         public async Task<IActionResult> GetAll(
             [FromQuery] string? search,
@@ -26,117 +22,43 @@ namespace SmartSalon.Controllers
             [FromQuery] int page = 1,
             [FromQuery] int size = 10)
         {
-            var query = _db.Salons
-                .Include(s => s.Services)
-                .Where(s => s.IsActive);
-
-            if (!string.IsNullOrWhiteSpace(search))
-                query = query.Where(s => s.Name.Contains(search));
-
-            if (!string.IsNullOrWhiteSpace(service))
-                query = query.Where(s => s.Services.Any(sv =>
-                    sv.Name.Contains(service) && sv.IsActive));
-
-            if (vipOnly == true)
-                query = query.Where(s => s.IsVip);
-
-            var total = await query.CountAsync();
-
-            var data = await query
-                .OrderByDescending(s => s.IsVip)
-                .ThenByDescending(s => s.RatingAvg)
-                .Skip((page - 1) * size)
-                .Take(size)
-                .Select(s => new
-                {
-                    s.Id,
-                    s.Name,
-                    s.Slug,
-                    s.LogoUrl,
-                    s.RatingAvg,
-                    s.IsVip,
-                    s.Address
-                })
-                .ToListAsync();
-
-            return Ok(new { total, page, size, data });
+            var result = await _salonService.GetSalonsAsync(search, service, vipOnly, page, size);
+            return Ok(result);
         }
 
-        // ─── جزئیات یک سالن ───────────────────────────────────
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var salon = await _db.Salons
-                .Include(s => s.Artists)
-                    .ThenInclude(a => a.User)
-                .Include(s => s.Services)
-                .FirstOrDefaultAsync(s => s.Id == id && s.IsActive);
-
-            if (salon is null)
-                return NotFound(new { message = "سالن یافت نشد" });
-
+            var salon = await _salonService.GetSalonByIdAsync(id);
+            if (salon == null) return NotFound(new { message = "Salon not found" });
             return Ok(salon);
         }
 
-        // ─── ساخت سالن جدید ───────────────────────────────────
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateSalonDto dto)
         {
-            if (await _db.Salons.AnyAsync(s => s.Slug == dto.Slug))
-                return BadRequest(new { message = "این آدرس قبلاً استفاده شده است" });
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var salon = new Salon
-            {
-                Name = dto.Name,
-                Slug = dto.Slug,
-                Phone = dto.Phone,
-                Address = dto.Address,
-                Description = dto.Description,
-                ManagerId = dto.ManagerId
-            };
-
-            _db.Salons.Add(salon);
-            await _db.SaveChangesAsync();
-
-            return Ok(new { message = "سالن با موفقیت ساخته شد", id = salon.Id });
+            var id = await _salonService.CreateSalonAsync(dto);
+            return Ok(new { message = "Salon created successfully", id });
         }
 
-        // ─── ویرایش سالن ──────────────────────────────────────
         [HttpPut("{id:int}")]
         [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateSalonDto dto)
         {
-            var salon = await _db.Salons.FindAsync(id);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (salon is null)
-                return NotFound(new { message = "سالن یافت نشد" });
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var isManager = await _salonService.IsSalonManagerAsync(id, userId);
+            if (!isManager)
+                return Forbid();
 
-            salon.Name = dto.Name;
-            salon.Phone = dto.Phone;
-            salon.Address = dto.Address;
-            salon.Description = dto.Description;
+            var updated = await _salonService.UpdateSalonAsync(id, dto, userId);
+            if (!updated) return NotFound(new { message = "Salon not found" });
 
-            await _db.SaveChangesAsync();
-
-            return Ok(new { message = "سالن با موفقیت ویرایش شد" });
+            return Ok(new { message = "Salon updated successfully" });
         }
     }
-
-    // ─── DTOs ─────────────────────────────────────────────────
-    public record CreateSalonDto(
-        string Name,
-        string Slug,
-        string? Phone,
-        string? Address,
-        string? Description,
-        string ManagerId
-    );
-
-    public record UpdateSalonDto(
-        string Name,
-        string? Phone,
-        string? Address,
-        string? Description
-    );
 }

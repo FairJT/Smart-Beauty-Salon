@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
-import '../core/api_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/app_colors.dart';
+import '../providers/auth_provider.dart';
 import 'auth/login_screen.dart';
 import 'home/home_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkLogin();
+    _navigate();
   }
 
-  Future<void> _checkLogin() async {
-    // ۲ ثانیه صبر می‌کنیم
+  Future<void> _navigate() async {
     await Future.delayed(const Duration(seconds: 2));
-
-    // بررسی می‌کنیم توکن داریم یا نه
-    final token = await ApiService.getToken();
-
     if (!mounted) return;
 
-    // اگر توکن داریم → خانه، اگر نه → ورود
+    final auth = ref.read(authProvider);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) =>
-            token != null ? const HomeScreen() : const LoginScreen(),
+        builder: (_) => auth.isLoggedIn ? const HomeScreen() : const LoginScreen(),
       ),
     );
   }
@@ -45,50 +40,24 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // آیکون
             Container(
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
+                color: Colors.white.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: const Icon(
-                Icons.content_cut_rounded,
-                size: 70,
-                color: Colors.amber,
-              ),
+              child: const Icon(Icons.content_cut_rounded, size: 70, color: Colors.amber),
             ),
-
             const SizedBox(height: 24),
-
-            // اسم اپ
             const Text(
               'سالن هوشمند ابری',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 8),
-
-            const Text(
-              'Smart Cloud Salon',
-              style: TextStyle(
-                color: Colors.white60,
-                fontSize: 16,
-              ),
-            ),
-
+            const Text('Smart Cloud Salon', style: TextStyle(color: Colors.white60, fontSize: 16)),
             const SizedBox(height: 60),
-
-            // لودینگ
-            const CircularProgressIndicator(
-              color: Colors.amber,
-              strokeWidth: 3,
-            ),
+            const CircularProgressIndicator(color: Colors.amber, strokeWidth: 3),
           ],
         ),
       ),

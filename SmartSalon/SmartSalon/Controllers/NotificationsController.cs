@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SmartSalon.Data;
+using SmartSalon.DTOs;
+using SmartSalon.Services;
 using System.Security.Claims;
 
 namespace SmartSalon.Controllers
@@ -11,100 +11,60 @@ namespace SmartSalon.Controllers
     [Authorize]
     public class NotificationsController : ControllerBase
     {
-        private readonly ApplicationDbContext _db;
+        private readonly INotificationService _notificationService;
 
-        public NotificationsController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
+        public NotificationsController(INotificationService notificationService)
+            => _notificationService = notificationService;
 
-        // ─── لیست نوتیفیکیشن‌های من ───────────────────────────
         [HttpGet]
         public async Task<IActionResult> GetMine()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-            var notifications = await _db.Notifications
-                .Where(n => n.UserId == userId)
-                .OrderByDescending(n => n.CreatedAt)
-                .Take(50)
-                .Select(n => new
-                {
-                    n.Id,
-                    n.Title,
-                    n.Message,
-                    n.Type,
-                    n.IsRead,
-                    n.CreatedAt
-                })
-                .ToListAsync();
+            var notifications = await _notificationService.GetMineAsync(userId);
+            var unreadCount = await _notificationService.GetUnreadCountAsync(userId);
 
-            var unreadCount = await _db.Notifications
-                .CountAsync(n => n.UserId == userId && !n.IsRead);
-
-            return Ok(new { notifications, unreadCount });
+            return Ok(new NotificationsResponseDto
+            {
+                Notifications = notifications,
+                UnreadCount = unreadCount
+            });
         }
 
-        // ─── خواندن یک نوتیفیکیشن ─────────────────────────────
         [HttpPut("{id:int}/read")]
         public async Task<IActionResult> MarkAsRead(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var success = await _notificationService.MarkAsReadAsync(id, userId);
 
-            var notification = await _db.Notifications
-                .FirstOrDefaultAsync(n => n.Id == id && n.UserId == userId);
-
-            if (notification == null)
-                return NotFound();
-
-            notification.IsRead = true;
-            await _db.SaveChangesAsync();
-
-            return Ok(new { message = "خوانده شد" });
+            if (!success) return NotFound();
+            return Ok(new { message = "Marked as read" });
         }
 
-        // ─── خواندن همه نوتیفیکیشن‌ها ─────────────────────────
         [HttpPut("read-all")]
         public async Task<IActionResult> MarkAllAsRead()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var count = await _notificationService.MarkAllAsReadAsync(userId);
 
-            var unread = await _db.Notifications
-                .Where(n => n.UserId == userId && !n.IsRead)
-                .ToListAsync();
-
-            unread.ForEach(n => n.IsRead = true);
-            await _db.SaveChangesAsync();
-
-            return Ok(new { message = "همه خوانده شد", count = unread.Count });
+            return Ok(new { message = "All marked as read", count });
         }
 
-        // ─── حذف یک نوتیفیکیشن ────────────────────────────────
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var success = await _notificationService.DeleteAsync(id, userId);
 
-            var notification = await _db.Notifications
-                .FirstOrDefaultAsync(n => n.Id == id && n.UserId == userId);
-
-            if (notification == null)
-                return NotFound();
-
-            _db.Notifications.Remove(notification);
-            await _db.SaveChangesAsync();
-
-            return Ok(new { message = "حذف شد" });
+            if (!success) return NotFound();
+            return Ok(new { message = "Deleted" });
         }
 
-        // ─── تعداد نوتیفیکیشن‌های خوانده نشده ────────────────
         [HttpGet("unread-count")]
         public async Task<IActionResult> GetUnreadCount()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var count = await _db.Notifications
-                .CountAsync(n => n.UserId == userId && !n.IsRead);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var count = await _notificationService.GetUnreadCountAsync(userId);
 
             return Ok(new { count });
         }

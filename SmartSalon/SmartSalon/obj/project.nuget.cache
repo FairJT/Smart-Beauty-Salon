@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "M3bM0L2rnpU=",
+  "dgSpecHash": "ezTGDZxeIUY=",
   "success": true,
   "projectFilePath": "D:\\PR\\SmartSalon\\SmartSalon\\SmartSalon\\SmartSalon.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Fair\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\firebaseadmin\\3.5.0\\firebaseadmin.3.5.0.nupkg.sha512",
+    "C:\\Users\\Fair\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\Fair\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "C:\\Users\\Fair\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\google.api.gax\\4.13.1\\google.api.gax.4.13.1.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\google.api.gax.rest\\4.13.1\\google.api.gax.rest.4.13.1.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\google.apis\\1.73.0\\google.apis.1.73.0.nupkg.sha512",

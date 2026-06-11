@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/api_constants.dart';
 import '../../core/api_service.dart';
 import '../../core/app_colors.dart';
+import '../../models/artist.dart';
+import '../../models/salon.dart';
+import '../../models/service_item.dart';
 import '../booking/booking_screen.dart';
 
 class SalonDetailScreen extends StatefulWidget {
@@ -14,11 +18,11 @@ class SalonDetailScreen extends StatefulWidget {
 
 class _SalonDetailScreenState extends State<SalonDetailScreen>
     with SingleTickerProviderStateMixin {
-  dynamic _salon;
+  Salon? _salon;
   bool _loading = true;
   String? _error;
   late TabController _tabController;
-  dynamic _selectedService;
+  ServiceItem? _selectedService;
 
   @override
   void initState() {
@@ -37,11 +41,9 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     setState(() { _loading = true; _error = null; });
     try {
       final res = await ApiService.get('${ApiConstants.salons}/${widget.salonId}');
-      setState(() => _salon = res);
+      setState(() { _salon = Salon.fromJson(res); _loading = false; });
     } catch (e) {
-      setState(() => _error = e.toString().replaceAll('Exception: ', ''));
-    } finally {
-      setState(() => _loading = false);
+      setState(() { _error = e.toString().replaceAll('Exception: ', ''); _loading = false; });
     }
   }
 
@@ -57,6 +59,10 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
   }
 
   Widget _buildBody() {
+    final salon = _salon!;
+    final activeServices = salon.services.where((s) => s.basePrice > 0).toList();
+    final activeArtists = salon.artists;
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -64,7 +70,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
-              _salon['name'] ?? '',
+              salon.name,
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             background: Container(
@@ -75,37 +81,33 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: const Center(
-                child: Icon(Icons.content_cut_rounded, size: 80, color: Colors.white24),
-              ),
+              child: salon.logoUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: '${ApiConstants.baseUrl.replaceAll('/api', '')}${salon.logoUrl}',
+                      fit: BoxFit.cover,
+                      color: Colors.black26,
+                      colorBlendMode: BlendMode.darken,
+                    )
+                  : const Center(
+                      child: Icon(Icons.content_cut_rounded, size: 80, color: Colors.white24),
+                    ),
             ),
           ),
         ),
-
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (_salon['address'] != null)
-                  _buildInfoRow(Icons.location_on_outlined, _salon['address']),
-                if (_salon['phone'] != null)
-                  _buildInfoRow(Icons.phone_outlined, _salon['phone']),
-                _buildInfoRow(
-                  Icons.star_outline,
-                  'امتیاز: ${(_salon['ratingAvg'] ?? 0.0).toStringAsFixed(1)}',
-                ),
-                if (_salon['description'] != null) ...[
+                if (salon.address != null) _infoRow(Icons.location_on_outlined, salon.address!),
+                if (salon.phone != null) _infoRow(Icons.phone_outlined, salon.phone!),
+                _infoRow(Icons.star_outline, 'امتیاز: ${salon.ratingAvg.toStringAsFixed(1)}'),
+                if (salon.description != null) ...[
                   const SizedBox(height: 12),
-                  Text(
-                    _salon['description'],
-                    style: const TextStyle(color: Colors.grey, fontSize: 14, height: 1.6),
-                  ),
+                  Text(salon.description!, style: const TextStyle(color: Colors.grey, fontSize: 14, height: 1.6)),
                 ],
-
                 const SizedBox(height: 20),
-
                 TabBar(
                   controller: _tabController,
                   labelColor: AppColors.primary,
@@ -113,51 +115,42 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                   indicatorColor: AppColors.primary,
                   tabs: const [Tab(text: 'خدمات'), Tab(text: 'پرسنل')],
                 ),
-
                 const SizedBox(height: 16),
-
-                // راهنما
                 if (_selectedService != null)
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.1),
+                      color: AppColors.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline,
-                            color: AppColors.primary, size: 18),
+                        const Icon(Icons.info_outline, color: AppColors.primary, size: 18),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'خدمت «${_selectedService['name']}» انتخاب شد. حالا پرسنل را انتخاب کنید.',
-                            style: const TextStyle(
-                                color: AppColors.primary, fontSize: 13),
+                            'خدمت «${_selectedService!.name}» انتخاب شد. حالا پرسنل را انتخاب کنید.',
+                            style: const TextStyle(color: AppColors.primary, fontSize: 13),
                           ),
                         ),
                         GestureDetector(
                           onTap: () => setState(() => _selectedService = null),
-                          child: const Icon(Icons.close,
-                              color: AppColors.primary, size: 18),
+                          child: const Icon(Icons.close, color: AppColors.primary, size: 18),
                         ),
                       ],
                     ),
                   ),
-
                 if (_selectedService != null) const SizedBox(height: 8),
-
                 SizedBox(
                   height: 350,
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      _buildServices(),
-                      _buildArtists(),
+                      _buildServices(activeServices),
+                      _buildArtists(activeArtists),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 80),
               ],
             ),
@@ -167,7 +160,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text) {
+  Widget _infoRow(IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -180,59 +173,36 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     );
   }
 
-  // ─── لیست خدمات ───────────────────────────────────────
-  Widget _buildServices() {
-    final services = (_salon['services'] as List? ?? [])
-        .where((s) => s['isActive'] == true)
-        .toList();
-
+  Widget _buildServices(List<ServiceItem> services) {
     if (services.isEmpty) {
-      return const Center(
-        child: Text('خدماتی ثبت نشده', style: TextStyle(color: Colors.grey)),
-      );
+      return const Center(child: Text('خدماتی ثبت نشده', style: TextStyle(color: Colors.grey)));
     }
 
     return ListView.builder(
       itemCount: services.length,
       itemBuilder: (_, i) {
         final s = services[i];
-        final isSelected = _selectedService != null &&
-            _selectedService['id'] == s['id'];
+        final isSelected = _selectedService?.id == s.id;
 
         return Card(
           margin: const EdgeInsets.only(bottom: 8),
-          color: isSelected ? AppColors.primary.withOpacity(0.1) : null,
+          color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
-            side: isSelected
-                ? const BorderSide(color: AppColors.primary)
-                : BorderSide.none,
+            side: isSelected ? const BorderSide(color: AppColors.primary) : BorderSide.none,
           ),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: isSelected
-                  ? AppColors.primary
-                  : AppColors.primary.withOpacity(0.1),
-              child: Icon(
-                Icons.spa_outlined,
-                color: isSelected ? Colors.white : AppColors.primary,
-                size: 20,
-              ),
+              backgroundColor: isSelected ? AppColors.primary : AppColors.primary.withValues(alpha: 0.1),
+              child: Icon(Icons.spa_outlined, color: isSelected ? Colors.white : AppColors.primary, size: 20),
             ),
-            title: Text(
-              s['name'] ?? '',
-              style: TextStyle(
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-            subtitle: Text('${s['baseDurationMinutes']} دقیقه'),
+            title: Text(s.name, style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+            subtitle: Text('${s.baseDurationMinutes} دقیقه - ${s.basePrice.toStringAsFixed(0)} تومان'),
             trailing: isSelected
                 ? const Icon(Icons.check_circle, color: AppColors.primary)
-                : const Icon(Icons.arrow_forward_ios,
-                    size: 14, color: Colors.grey),
+                : const Icon(Icons.arrow_back_ios, size: 14, color: Colors.grey),
             onTap: () {
               setState(() => _selectedService = s);
-              // رفتن به تب پرسنل
               _tabController.animateTo(1);
             },
           ),
@@ -241,16 +211,9 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
     );
   }
 
-  // ─── لیست پرسنل ───────────────────────────────────────
-  Widget _buildArtists() {
-    final allArtists = (_salon['artists'] as List? ?? [])
-        .where((a) => a['isActive'] == true)
-        .toList();
-
+  Widget _buildArtists(List<Artist> allArtists) {
     if (allArtists.isEmpty) {
-      return const Center(
-        child: Text('پرسنلی ثبت نشده', style: TextStyle(color: Colors.grey)),
-      );
+      return const Center(child: Text('پرسنلی ثبت نشده', style: TextStyle(color: Colors.grey)));
     }
 
     if (_selectedService == null) {
@@ -258,14 +221,10 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.touch_app_outlined,
-                size: 50, color: Colors.grey.shade400),
+            Icon(Icons.touch_app_outlined, size: 50, color: Colors.grey.shade400),
             const SizedBox(height: 12),
-            const Text(
-              'ابتدا از تب «خدمات» یک خدمت انتخاب کنید',
-              style: TextStyle(color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
+            const Text('ابتدا از تب «خدمات» یک خدمت انتخاب کنید',
+                style: TextStyle(color: Colors.grey), textAlign: TextAlign.center),
           ],
         ),
       );
@@ -275,41 +234,30 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
       itemCount: allArtists.length,
       itemBuilder: (_, i) {
         final a = allArtists[i];
-        final user = a['user'];
-        final name = user != null
-            ? '${user['firstName']} ${user['lastName']}'
-            : 'نامشخص';
+        final photoUrl = a.photoUrl != null
+            ? '${ApiConstants.baseUrl.replaceAll('/api', '')}${a.photoUrl}'
+            : null;
 
         return Card(
           margin: const EdgeInsets.only(bottom: 8),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: AppColors.primary,
-              backgroundImage: a['photoUrl'] != null
-                  ? NetworkImage(
-                      '${ApiConstants.baseUrl.replaceAll('/api', '')}${a['photoUrl']}')
-                  : null,
-              child: a['photoUrl'] == null
-                  ? Text(
-                      name.isNotEmpty ? name[0] : '؟',
-                      style: const TextStyle(color: Colors.white),
-                    )
+              backgroundImage: photoUrl != null ? CachedNetworkImageProvider(photoUrl) : null,
+              child: photoUrl == null
+                  ? Text(a.initial, style: const TextStyle(color: Colors.white))
                   : null,
             ),
-            title: Text(name,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(a['bioShort'] ?? ''),
+            title: Text(a.fullName, style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(a.bioShort ?? ''),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.star_rounded,
-                    color: Colors.amber, size: 16),
-                Text((a['ratingAvg'] ?? 0.0).toStringAsFixed(1)),
+                const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+                Text(a.ratingAvg.toStringAsFixed(1)),
                 const SizedBox(width: 4),
-                const Icon(Icons.arrow_forward_ios,
-                    size: 14, color: Colors.grey),
+                const Icon(Icons.arrow_back_ios, size: 14, color: Colors.grey),
               ],
             ),
             onTap: () {
@@ -317,13 +265,13 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                 context,
                 MaterialPageRoute(
                   builder: (_) => BookingScreen(
-                    salonId:         _salon['id'],
-                    artistId:        a['id'],
-                    artistName:      name,
-                    serviceId:       _selectedService['id'],
-                    serviceName:     _selectedService['name'],
-                    durationMinutes: _selectedService['baseDurationMinutes'],
-                    price: (_selectedService['basePrice'] as num).toDouble(),
+                    salonId: _salon!.id,
+                    artistId: a.id,
+                    artistName: a.fullName,
+                    serviceId: _selectedService!.id,
+                    serviceName: _selectedService!.name,
+                    durationMinutes: _selectedService!.baseDurationMinutes,
+                    price: _selectedService!.basePrice,
                   ),
                 ),
               );

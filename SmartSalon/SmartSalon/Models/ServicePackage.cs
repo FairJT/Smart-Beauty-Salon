@@ -17,13 +17,13 @@
         public int Id { get; set; }
         public int SalonId { get; set; }
         public int PackageId { get; set; }
-        public DateTime StartDate { get; set; } = DateTime.Now;
+        public DateTime StartDate { get; set; } = DateTime.UtcNow;
         public DateTime EndDate { get; set; }
-        public bool IsActive => EndDate >= DateTime.Now;
+        public bool IsActive { get; set; } = true;
         public decimal PaidAmount { get; set; }
 
         // Navigation
-        public SmartSalon.Models.Salon? Salon { get; set; }
+        public Salon? Salon { get; set; }
         public ServicePackage? Package { get; set; }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using SmartSalon.Models;
-using System.IdentityModel.Tokens.Jwt;
+using SmartSalon.DTOs;
+using SmartSalon.Services;
 using System.Security.Claims;
-using System.Text;
 
 namespace SmartSalon.Controllers
 {
@@ -13,132 +10,71 @@ namespace SmartSalon.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IConfiguration _config;
+        private readonly IAuthService _auth;
 
-        public AuthController(
-            UserManager<ApplicationUser> userManager,
-            IConfiguration config)
-        {
-            _userManager = userManager;
-            _config = config;
-        }
+        public AuthController(IAuthService auth) => _auth = auth;
 
-        // ─── ثبت‌نام ──────────────────────────────────────────
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
-            if (await _userManager.FindByNameAsync(dto.Mobile) != null)
-                return BadRequest(new { message = "این شماره موبایل قبلاً ثبت شده است" });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var user = new ApplicationUser
-            {
-                UserName = dto.Mobile,
-                PhoneNumber = dto.Mobile,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                NationalCode = dto.NationalCode,
-                UserType = UserType.Client
-            };
+            var result = await _auth.RegisterAsync(dto);
+            if (result == null)
+                return BadRequest(new { message = "This mobile number is already registered" });
 
-            var result = await _userManager.CreateAsync(user, dto.Password);
-
-            if (!result.Succeeded)
-                return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
-
-            return Ok(new { message = "ثبت‌نام موفق بود", userId = user.Id });
+            return Ok(result);
         }
 
-        // ─── ورود ─────────────────────────────────────────────
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = await _userManager.FindByNameAsync(dto.Mobile);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            if (user == null || !user.IsActive)
-                return Unauthorized(new { message = "کاربر یافت نشد" });
+            var result = await _auth.LoginAsync(dto);
+            if (result == null)
+                return Unauthorized(new { message = "Invalid mobile number or password" });
 
-            var passwordOk = await _userManager.CheckPasswordAsync(user, dto.Password);
-
-            if (!passwordOk)
-                return Unauthorized(new { message = "رمز عبور اشتباه است" });
-
-            var token = BuildToken(user);
-
-            return Ok(new
-            {
-                token,
-                expiresIn = 30 * 24 * 60,
-                user = new
-                {
-                    id = user.Id,
-                    firstName = user.FirstName,
-                    lastName = user.LastName,
-                    mobile = user.PhoneNumber,
-                    userType = user.UserType.ToString()
-                }
-            });
+            return Ok(result);
         }
 
-        // ─── پروفایل من ───────────────────────────────────────
         [HttpGet("profile")]
         [Authorize]
         public async Task<IActionResult> GetProfile()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userManager.FindByIdAsync(userId!);
+            if (userId == null) return Unauthorized();
 
-            if (user == null)
-                return NotFound(new { message = "کاربر یافت نشد" });
+            var profile = await _auth.GetProfileAsync(userId);
+            if (profile == null) return NotFound(new { message = "User not found" });
 
-            return Ok(new
-            {
-                id = user.Id,
-                firstName = user.FirstName,
-                lastName = user.LastName,
-                mobile = user.PhoneNumber,
-                nationalCode = user.NationalCode,
-                userType = user.UserType.ToString(),
-                loyaltyPoints = user.LoyaltyPoints,
-                totalVisits = user.TotalVisits,
-                isActive = user.IsActive
-            });
+            return Ok(profile);
         }
 
-        // ─── ساخت توکن JWT ────────────────────────────────────
-        private string BuildToken(ApplicationUser user)
+        [HttpPost("logout")]
+        [Authorize]
+        public IActionResult Logout()
         {
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName ?? ""),
-                new Claim("UserType", user.UserType.ToString()),
-            };
+            return Ok(new { message = "Logged out successfully" });
+        }
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var token = new JwtSecurityToken(
-                issuer: _config["JwtSettings:Issuer"],
-                audience: _config["JwtSettings:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddDays(30),
-                signingCredentials: creds
-            );
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) return Unauthorized();
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var (success, message) = await _auth.ChangePasswordAsync(userId, dto);
+            if (!success)
+                return BadRequest(new { message });
+
+            return Ok(new { message = "Password changed successfully" });
         }
     }
-
-    // ─── DTOs ─────────────────────────────────────────────────
-    public record RegisterDto(
-        string Mobile,
-        string Password,
-        string FirstName,
-        string LastName,
-        string NationalCode
-    );
-
-    public record LoginDto(string Mobile, string Password);
 }

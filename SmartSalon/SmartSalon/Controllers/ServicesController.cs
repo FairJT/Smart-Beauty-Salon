@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SmartSalon.Data;
-using SmartSalon.Models;
+using SmartSalon.DTOs;
+using SmartSalon.Services;
+using System.Security.Claims;
 
 namespace SmartSalon.Controllers
 {
@@ -10,112 +10,72 @@ namespace SmartSalon.Controllers
     [ApiController]
     public class ServicesController : ControllerBase
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IServiceService _serviceService;
+        private readonly ISalonService _salonService;
 
-        public ServicesController(ApplicationDbContext db)
+        public ServicesController(IServiceService serviceService, ISalonService salonService)
         {
-            _db = db;
+            _serviceService = serviceService;
+            _salonService = salonService;
         }
 
-        // ─── لیست خدمات یک سالن ───────────────────────────────
-        // GET api/services?salonId=1
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] int salonId)
         {
-            var services = await _db.SalonServices
-                .Where(s => s.SalonId == salonId && s.IsActive)
-                .Select(s => new
-                {
-                    s.Id,
-                    s.Name,
-                    s.Category,
-                    s.BaseDurationMinutes,
-                    s.BasePrice
-                })
-                .ToListAsync();
-
+            var services = await _serviceService.GetServicesBySalonAsync(salonId);
             return Ok(services);
         }
 
-        // ─── اضافه کردن خدمت جدید ─────────────────────────────
-        // POST api/services
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateServiceDto dto)
         {
-            // بررسی وجود سالن
-            var salonExists = await _db.Salons.AnyAsync(s => s.Id == dto.SalonId);
-            if (!salonExists)
-                return NotFound(new { message = "سالن یافت نشد" });
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var service = new SalonService
-            {
-                Name = dto.Name,
-                Category = dto.Category,
-                BaseDurationMinutes = dto.DurationMinutes,
-                BasePrice = dto.Price,
-                SalonId = dto.SalonId
-            };
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var isManager = await _salonService.IsSalonManagerAsync(dto.SalonId, userId);
+            if (!isManager) return Forbid();
 
-            _db.SalonServices.Add(service);
-            await _db.SaveChangesAsync();
+            var id = await _serviceService.CreateServiceAsync(dto);
+            if (id == null) return NotFound(new { message = "Salon not found" });
 
-            return Ok(new { message = "خدمت با موفقیت اضافه شد", id = service.Id });
+            return Ok(new { message = "Service added successfully", id });
         }
 
-        // ─── ویرایش خدمت ──────────────────────────────────────
-        // PUT api/services/5
         [HttpPut("{id:int}")]
         [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateServiceDto dto)
         {
-            var service = await _db.SalonServices.FindAsync(id);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (service is null)
-                return NotFound(new { message = "خدمت یافت نشد" });
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var serviceSalonId = await _serviceService.GetSalonIdAsync(id);
+            if (serviceSalonId == null) return NotFound(new { message = "Service not found" });
 
-            service.Name = dto.Name;
-            service.Category = dto.Category;
-            service.BaseDurationMinutes = dto.DurationMinutes;
-            service.BasePrice = dto.Price;
+            var isManager = await _salonService.IsSalonManagerAsync(serviceSalonId.Value, userId);
+            if (!isManager) return Forbid();
 
-            await _db.SaveChangesAsync();
+            var updated = await _serviceService.UpdateServiceAsync(id, dto);
+            if (!updated) return NotFound(new { message = "Service not found" });
 
-            return Ok(new { message = "خدمت با موفقیت ویرایش شد" });
+            return Ok(new { message = "Service updated successfully" });
         }
 
-        // ─── حذف خدمت ─────────────────────────────────────────
-        // DELETE api/services/5
         [HttpDelete("{id:int}")]
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            var service = await _db.SalonServices.FindAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var serviceSalonId = await _serviceService.GetSalonIdAsync(id);
+            if (serviceSalonId == null) return NotFound(new { message = "Service not found" });
 
-            if (service is null)
-                return NotFound(new { message = "خدمت یافت نشد" });
+            var isManager = await _salonService.IsSalonManagerAsync(serviceSalonId.Value, userId);
+            if (!isManager) return Forbid();
 
-            // حذف نمی‌کنیم — فقط غیرفعال می‌کنیم
-            service.IsActive = false;
-            await _db.SaveChangesAsync();
+            var (success, message) = await _serviceService.DeleteServiceAsync(id);
+            if (!success) return BadRequest(new { message });
 
-            return Ok(new { message = "خدمت با موفقیت حذف شد" });
+            return Ok(new { message = "Service deleted successfully" });
         }
     }
-
-    // ─── DTOs ─────────────────────────────────────────────────
-    public record CreateServiceDto(
-        string Name,
-        string Category,
-        int DurationMinutes,
-        decimal Price,
-        int SalonId
-    );
-
-    public record UpdateServiceDto(
-        string Name,
-        string Category,
-        int DurationMinutes,
-        decimal Price
-    );
 }

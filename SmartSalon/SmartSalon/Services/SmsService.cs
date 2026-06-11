@@ -18,6 +18,8 @@ namespace SmartSalon.Services
         private readonly string _apiKey;
         private readonly string _senderNumber;
         private readonly ILogger<SmsService> _logger;
+        private const int MaxRetries = 3;
+        private const int RetryDelayMs = 1000;
 
         public SmsService(IConfiguration config, ILogger<SmsService> logger)
         {
@@ -28,48 +30,77 @@ namespace SmartSalon.Services
 
         public async Task<bool> SendAsync(string mobile, string message)
         {
-            try
+            if (string.IsNullOrWhiteSpace(_apiKey) || _apiKey.StartsWith("USERNAME"))
             {
-                var parts = _apiKey.Split(':');
-                var username = parts[0];
-                var password = parts[1];
-
-                var client = new RestClient("https://rest.payamak-panel.com");
-                var request = new RestRequest("/api/SendSMS/SendSMS", Method.Post);
-
-                request.AddParameter("username", username);
-                request.AddParameter("password", password);
-                request.AddParameter("to", mobile);
-                request.AddParameter("from", _senderNumber);
-                request.AddParameter("text", message);
-                request.AddParameter("isFlash", "false");
-                request.AddParameter("udh", "");
-                request.AddParameter("recId", "");
-                request.AddParameter("status", "");
-                request.AddParameter("filterId", "");
-
-                var response = await client.ExecuteAsync(request);
-
-                _logger.LogInformation("SMS sent to {mobile}: {status}",
-                    mobile, response.StatusCode);
-                return response.IsSuccessful;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "SMS sending failed to {mobile}", mobile);
+                _logger.LogWarning("SMS API not configured, skipping send to {mobile}", mobile);
                 return false;
             }
+
+            for (int attempt = 1; attempt <= MaxRetries; attempt++)
+            {
+                try
+                {
+                    var parts = _apiKey.Split(':');
+                    if (parts.Length < 2)
+                    {
+                        _logger.LogError("Invalid SMS API key format");
+                        return false;
+                    }
+
+                    var username = parts[0];
+                    var password = parts[1];
+
+                    var client = new RestClient("https://rest.payamak-panel.com");
+                    var request = new RestRequest("/api/SendSMS/SendSMS", Method.Post);
+
+                    request.AddParameter("username", username);
+                    request.AddParameter("password", password);
+                    request.AddParameter("to", mobile);
+                    request.AddParameter("from", _senderNumber);
+                    request.AddParameter("text", message);
+                    request.AddParameter("isFlash", "false");
+                    request.AddParameter("udh", "");
+                    request.AddParameter("recId", "");
+                    request.AddParameter("status", "");
+                    request.AddParameter("filterId", "");
+
+                    var response = await client.ExecuteAsync(request);
+
+                    if (response.IsSuccessful)
+                    {
+                        _logger.LogInformation("SMS sent to {mobile} (attempt {attempt})",
+                            mobile, attempt);
+                        return true;
+                    }
+
+                    _logger.LogWarning("SMS attempt {attempt} failed to {mobile}: {status}",
+                        attempt, mobile, response.StatusCode);
+
+                    if (attempt < MaxRetries)
+                        await Task.Delay(RetryDelayMs * attempt);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "SMS attempt {attempt} failed to {mobile}",
+                        attempt, mobile);
+
+                    if (attempt < MaxRetries)
+                        await Task.Delay(RetryDelayMs * attempt);
+                }
+            }
+
+            return false;
         }
 
         public async Task<bool> SendAppointmentReminderAsync(
             string mobile, string clientName, string salonName,
             string artistName, string dateTime)
         {
-            var message = $"سلام {clientName} عزیز،\n" +
-                          $"یادآوری نوبت شما در {salonName}\n" +
-                          $"هنرمند: {artistName}\n" +
-                          $"زمان: {dateTime}\n" +
-                          $"سالن هوشمند ابری";
+            var message = $"Hi {clientName},\n" +
+                          $"Reminder: your appointment at {salonName}\n" +
+                          $"Artist: {artistName}\n" +
+                          $"Time: {dateTime}\n" +
+                          $"SmartSalon";
 
             return await SendAsync(mobile, message);
         }
@@ -77,11 +108,11 @@ namespace SmartSalon.Services
         public async Task<bool> SendAppointmentConfirmedAsync(
             string mobile, string clientName, string salonName, string dateTime)
         {
-            var message = $"سلام {clientName} عزیز،\n" +
-                          $"نوبت شما در {salonName}\n" +
-                          $"برای {dateTime}\n" +
-                          $"تایید شد ✅\n" +
-                          $"سالن هوشمند ابری";
+            var message = $"Hi {clientName},\n" +
+                          $"Your appointment at {salonName}\n" +
+                          $"for {dateTime}\n" +
+                          $"has been confirmed.\n" +
+                          $"SmartSalon";
 
             return await SendAsync(mobile, message);
         }
@@ -89,11 +120,11 @@ namespace SmartSalon.Services
         public async Task<bool> SendAppointmentCancelledAsync(
             string mobile, string clientName, string salonName)
         {
-            var message = $"سلام {clientName} عزیز،\n" +
-                          $"متاسفانه نوبت شما در {salonName}\n" +
-                          $"لغو شد ❌\n" +
-                          $"برای رزرو مجدد اقدام فرمایید.\n" +
-                          $"سالن هوشمند ابری";
+            var message = $"Hi {clientName},\n" +
+                          $"Unfortunately your appointment at {salonName}\n" +
+                          $"has been cancelled.\n" +
+                          $"Please book again.\n" +
+                          $"SmartSalon";
 
             return await SendAsync(mobile, message);
         }
