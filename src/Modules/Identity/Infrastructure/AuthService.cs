@@ -157,9 +157,8 @@ public class AuthService : IAuthService
             {
                 claims.Add(new Claim("tenant_id", membership.TenantId.ToString()));
 
-                // Receptionist is stored as MembershipRole.Staff with a future flag;
-                // for now map MembershipRole.Staff + UserType != Artist → Receptionist.
-                if (membership.Role == MembershipRole.Staff && user.UserType != UserType.Artist)
+                // Receptionist has its own MembershipRole value (Task 7.2).
+                if (membership.Role == MembershipRole.Receptionist)
                     roleName = "Receptionist";
             }
 
