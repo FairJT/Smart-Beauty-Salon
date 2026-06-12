@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SalonOS.Api.Authorization;
 using SalonOS.Infrastructure.Identity;
+using SalonOS.Infrastructure.MultiTenancy;
 using SalonOS.Shared.Identity;
 using SalonOS.Identity.API.Middleware;
 using SalonOS.Identity.Domain;
@@ -93,7 +94,8 @@ builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProv
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 // Add Tenant Context (scoped per request)
-builder.Services.AddScoped<ITenantContext, TenantContext>();
+// TenantContext now reads from ICurrentUser claims — never from request input (R3, R4)
+builder.Services.AddScoped<ITenantContext, TenantContextFromClaims>();
 
 // Add Identity Services
 builder.Services.AddScoped<IAuthService, AuthService>();
