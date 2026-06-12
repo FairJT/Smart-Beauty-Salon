@@ -7,17 +7,24 @@ using System.Security.Claims;
 namespace SalonOS.Identity.API.Controllers;
 
 /// <summary>
-/// Authentication controller for user registration, login, and profile management.
+/// Authentication controller.
+/// Task 6.1: Register and Login are [AllowAnonymous]; all other actions require [Authorize].
+/// Auth actions don't carry resource-level permissions — they operate on the caller's
+/// own identity so plain [Authorize] (valid JWT) is the correct gate here.
 /// </summary>
 [Route("api/auth")]
 [ApiController]
+[Authorize]                 // default: every action requires a valid JWT …
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _auth;
 
     public AuthController(IAuthService auth) => _auth = auth;
 
+    // ── Public endpoints ──────────────────────────────────────────────────────
+
     [HttpPost("register")]
+    [AllowAnonymous]        // … except register …
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
         if (!ModelState.IsValid)
@@ -31,6 +38,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]        // … and login.
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
         if (!ModelState.IsValid)
@@ -43,8 +51,9 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    // ── Authenticated endpoints ───────────────────────────────────────────────
+
     [HttpGet("profile")]
-    [Authorize]
     public async Task<IActionResult> GetProfile()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -57,14 +66,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
-    [Authorize]
-    public IActionResult Logout()
-    {
-        return Ok(new { message = "Logged out successfully" });
-    }
+    public IActionResult Logout() => Ok(new { message = "Logged out successfully" });
 
     [HttpPost("change-password")]
-    [Authorize]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
     {
         if (!ModelState.IsValid)
