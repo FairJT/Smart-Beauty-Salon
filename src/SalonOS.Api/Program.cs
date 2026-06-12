@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using SalonOS.Api.Authorization;
 using SalonOS.Api.Middleware;
 using SalonOS.Infrastructure.Identity;
+using SalonOS.Infrastructure.Admin;
 using SalonOS.Infrastructure.MultiTenancy;
 using SalonOS.Shared.Identity;
 using SalonOS.Identity.API.Middleware;
@@ -98,6 +99,9 @@ builder.Services.AddScoped<IAuthorizationHandler, OwnsAppointmentHandler>(); // 
 // Add Tenant Context (scoped per request)
 // TenantContext now reads from ICurrentUser claims — never from request input (R3, R4)
 builder.Services.AddScoped<ITenantContext, TenantContextFromClaims>();
+
+// PlatformAdminService — the only sanctioned cross-tenant service (Task 7.1)
+builder.Services.AddScoped<PlatformAdminService>();
 
 // Add Identity Services
 builder.Services.AddScoped<IAuthService, AuthService>();
