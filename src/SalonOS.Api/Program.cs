@@ -2,8 +2,10 @@ using FluentValidation.AspNetCore;
 using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SalonOS.Api.Authorization;
 using SalonOS.Identity.API.Middleware;
 using SalonOS.Identity.Domain;
 using SalonOS.Identity.Infrastructure;
@@ -79,6 +81,10 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
     };
 });
+
+// Add Authorization — permission-based policies (§R6.1)
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 // Add Tenant Context (scoped per request)
 builder.Services.AddScoped<ITenantContext, TenantContext>();
