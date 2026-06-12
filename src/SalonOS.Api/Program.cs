@@ -93,6 +93,7 @@ builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 // Add Authorization — permission-based policies (§R6.1)
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, OwnsAppointmentHandler>(); // Task 5.1
 
 // Add Tenant Context (scoped per request)
 // TenantContext now reads from ICurrentUser claims — never from request input (R3, R4)
