@@ -8,63 +8,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سالن‌های زیبایی | سالن هوشمند</title>
     <link href="~/lib/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
     <style>
         body {
-            background: #F4F6F7;
+            background: linear-gradient(135deg, #EDE9FE 0%, #ECFDF5 50%, #FDF2F8 100%);
+            min-height: 100vh;
         }
 
         .hero {
-            background: linear-gradient(135deg, #1B3A5C, #2C5F8A);
+            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 50%, #C4B5FD 100%);
             color: white;
-            padding: 60px 0;
+            padding: 4rem 0 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+        }
+
+        .hero .form-control {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+        }
+
+        .hero .form-control:focus {
+            background: #fff;
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+        }
+
+        .hero .btn-search {
+            background: #fff;
+            color: var(--primary);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero .btn-search:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-1px);
         }
 
         .salon-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.2s;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition-normal);
             cursor: pointer;
+            overflow: hidden;
         }
 
-            .salon-card:hover {
-                transform: translateY(-4px);
-            }
+        .salon-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-card-hover);
+        }
+
+        .salon-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary-100), #F3E8FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
 
         .vip-badge {
-            background: linear-gradient(135deg, #9A6F0A, #F0C040);
-            color: white;
+            background: linear-gradient(135deg, #D4AF37, #F0C040);
+            color: #fff;
             padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .rating-star {
+            color: #F59E0B;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <!-- هدر -->
-    <div class="hero text-center">
-        <h1>✂ سالن هوشمند ابری</h1>
-        <p class="lead">بهترین سالن‌های زیبایی را پیدا کنید و آنلاین نوبت بگیرید</p>
-        <div class="col-md-6 mx-auto mt-3">
-            <form method="get">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control form-control-lg"
-                           placeholder="جستجوی سالن..." value="@Model.Search" />
-                    <button type="submit" class="btn btn-warning btn-lg">جستجو</button>
-                </div>
-            </form>
+    <!-- Hero -->
+    <div class="hero">
+        <div class="container hero-content text-center">
+            <h1>✂ سالن هوشمند</h1>
+            <p class="lead mb-4">بهترین سالن‌های زیبایی را پیدا کنید و آنلاین نوبت بگیرید</p>
+            <div class="col-md-6 mx-auto">
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control"
+                               placeholder="جستجوی سالن..." value="@Model.Search" />
+                        <button type="submit" class="btn-search">جستجو</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- لیست سالن‌ها -->
+    <!-- Salon List -->
     <div class="container py-5">
-        <h4 class="mb-4">سالن‌های برتر</h4>
+        <div class="section-header mb-4">
+            <span class="table-bar"></span>
+            <span class="section-header-label" style="font-size:1.1rem;">سالن‌های برتر</span>
+        </div>
 
         @if (!Model.Salons.Any())
         {
-            <div class="text-center py-5 text-muted">
-                <h5>سالنی یافت نشد</h5>
+            <div class="empty-state">
+                <div class="empty-state-icon">✂</div>
+                <div class="empty-state-title">سالنی یافت نشد</div>
+                <div class="empty-state-desc">سالنی با این مشخصات وجود ندارد</div>
             </div>
         }
         else
@@ -73,26 +162,28 @@
                 @foreach (var s in Model.Salons)
                 {
                     <div class="col-md-4">
-                        <div class="card salon-card p-3"
+                        <div class="salon-card p-4"
                              onclick="window.location='/Salon/@s.Slug'">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="rounded-circle bg-primary text-white d-flex align-items-center
-                                            justify-content-center me-3"
-                                     style="width:56px;height:56px;font-size:24px">
-                                    ✂
-                                </div>
+                                <div class="salon-avatar me-3">✂</div>
                                 <div>
-                                    <h6 class="mb-0">@s.Name</h6>
+                                    <h6 class="mb-0" style="font-weight:700;color:var(--text-primary);">
+                                        @s.Name
+                                    </h6>
                                     @if (s.IsVip)
                                     {
-                                        <span class="vip-badge">⭐ VIP</span>
+                                        <span class="vip-badge mt-1">⭐ VIP</span>
                                     }
                                 </div>
                             </div>
-                            <p class="text-muted small mb-2">📍 @s.Address</p>
+                            <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:12px;">
+                                📍 @s.Address
+                            </p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-warning">⭐ @s.RatingAvg.ToString("F1")</span>
-                                <a href="/Salon/@s.Slug" class="btn btn-primary btn-sm">
+                                <span class="rating-star">⭐ @s.RatingAvg.ToString("F1")</span>
+                                <a href="/Salon/@s.Slug" class="btn btn-primary btn-sm"
+                                   style="border-radius:var(--radius-sm);"
+                                   onclick="event.stopPropagation();">
                                     رزرو نوبت
                                 </a>
                             </div>

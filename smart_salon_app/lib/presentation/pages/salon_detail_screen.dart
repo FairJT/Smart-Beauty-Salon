@@ -84,12 +84,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             background: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.primary, Color(0xFF2C5F8A)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+              decoration: BoxDecoration(
+                gradient: AppColors.darkGradient,
               ),
               child: salon.imageUrl != null
                   ? CachedNetworkImage(

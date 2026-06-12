@@ -233,7 +233,10 @@ public class ServiceTests : IClassFixture<TestFixture>
         var otherClient = _fixture.CreateClientWithToken("other-svc-update", "SalonManager");
         var response = await otherClient.PutAsJsonAsync($"/api/services/{serviceId}", new
         {
-            Name = "Hacked"
+            Name = "Hacked",
+            Category = "Bad",
+            DurationMinutes = 30,
+            Price = 0
         });
         Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
     }

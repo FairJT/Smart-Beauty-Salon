@@ -9,13 +9,13 @@
 
 <div class="topbar d-flex justify-content-between align-items-center">
     <div>
-        <div style="font-size:16px;font-weight:500;color:var(--txt);">تنظیمات سالن</div>
-        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">تنظیمات سالن</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
             اطلاعات و ظاهر پنل مدیریت
         </div>
     </div>
-    <span style="font-size:12px;background:var(--sb3);color:var(--sb2);
-                 padding:6px 14px;border-radius:20px;border:0.5px solid var(--sb4);">
+    <span style="font-size:0.75rem;background:var(--primary-100);color:var(--primary);
+                 padding:6px 14px;border-radius:var(--radius-full);">
         ⚙️ تنظیمات
     </span>
 </div>
@@ -29,60 +29,48 @@
 
 <div class="row g-4">
 
-    <!-- اطلاعات سالن -->
+    <!-- Salon Info -->
     <div class="col-12">
         <div class="card p-4">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+            <div class="section-header mb-3">
                 <span class="table-bar"></span>
-                <span style="font-size:14px;font-weight:500;color:var(--txt);">اطلاعات سالن</span>
+                <span class="section-header-label">اطلاعات سالن</span>
             </div>
             <form method="post">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            نام سالن
-                        </label>
+                        <label class="form-label">نام سالن</label>
                         <input type="text" name="Name" class="form-control"
                                value="@Model.Salon?.Name" required />
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            آدرس URL (slug)
-                        </label>
+                        <label class="form-label">آدرس URL (slug)</label>
                         <input type="text" name="Slug" class="form-control"
                                value="@Model.Salon?.Slug" required />
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            شماره تلفن
-                        </label>
+                        <label class="form-label">شماره تلفن</label>
                         <input type="text" name="Phone" class="form-control"
                                value="@Model.Salon?.Phone" />
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            رنگ تم سایت عمومی
-                        </label>
+                        <label class="form-label">رنگ تم سایت عمومی</label>
                         <input type="color" name="ThemeColor"
                                class="form-control form-control-color"
-                               value="@(Model.Salon?.ThemeColor ?? "#1B3A5C")" />
+                               value="@(Model.Salon?.ThemeColor ?? "#7C3AED")" />
                     </div>
                     <div class="col-12">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            آدرس
-                        </label>
+                        <label class="form-label">آدرس</label>
                         <input type="text" name="Address" class="form-control"
                                value="@Model.Salon?.Address" />
                     </div>
                     <div class="col-12">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            توضیحات
-                        </label>
+                        <label class="form-label">توضیحات</label>
                         <textarea name="Description" class="form-control"
                                   rows="3">@Model.Salon?.Description</textarea>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary px-5">
+                        <button type="submit" class="btn btn-primary px-4">
                             💾 ذخیره تغییرات
                         </button>
                     </div>
@@ -91,54 +79,51 @@
         </div>
     </div>
 
-    <!-- انتخاب تم پنل -->
+    <!-- Theme Selection -->
     <div class="col-12">
         <div class="card p-4">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <div class="section-header mb-1">
                 <span class="table-bar"></span>
-                <span style="font-size:14px;font-weight:500;color:var(--txt);">تم پنل مدیریت</span>
+                <span class="section-header-label">تم پنل مدیریت</span>
             </div>
-            <p style="font-size:12px;color:var(--ctxt);margin-bottom:20px;">
+            <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:20px;">
                 رنگ‌بندی پنل مدیریت را انتخاب کنید — بلافاصله اعمال می‌شود
             </p>
 
             <form method="post" asp-page-handler="SetTheme">
                 <input type="hidden" name="themeName" id="selectedTheme"
-                       value="@(Model.Salon?.AdminTheme ?? "gold")" />
+                       value="@(Model.Salon?.AdminTheme ?? "purple")" />
 
                 @{
                     var themes = new[]
                     {
-                new { id="gold",    name="طلایی Luxury",   sb="#0A0A0A", acc="#D4AF37", mg="#F9F8F4" },
-                new { id="blue",    name="آبی نیمه‌شب",    sb="#060E1A", acc="#60A5FA", mg="#EFF6FF" },
-                new { id="purple",  name="بنفش اشرافی",    sb="#0F0518", acc="#C084FC", mg="#FAF5FF" },
-                new { id="teal",    name="فیروزه‌ای مدرن", sb="#061212", acc="#2DD4BF", mg="#F0FDFB" },
-                new { id="crimson", name="مشکی قرمز",      sb="#0A0404", acc="#F87171", mg="#FFF5F5" },
-                new { id="amber",   name="عنبری گرم",      sb="#0C0A09", acc="#FCD34D", mg="#FFFBEB" },
-                new { id="slate",   name="سفید مینیمال",   sb="#F8FAFC", acc="#334155", mg="#ffffff" },
-                new { id="coral",   name="مرجانی غروب",    sb="#120604", acc="#FB923C", mg="#FFF7ED" },
-                };
-                    var currentTheme = Model.Salon?.AdminTheme ?? "gold";
+                        new { id="purple",  name="بنفش اشرافی",    accent="#7C3AED", accentLight="#A78BFA" },
+                        new { id="gold",    name="طلایی Luxury",   accent="#D4AF37", accentLight="#F0C040" },
+                        new { id="blue",    name="آبی نیمه‌شب",    accent="#3B82F6", accentLight="#60A5FA" },
+                        new { id="teal",    name="فیروزه‌ای مدرن", accent="#14B8A6", accentLight="#2DD4BF" },
+                        new { id="crimson", name="قرمز جذاب",      accent="#EF4444", accentLight="#F87171" },
+                        new { id="amber",   name="عنبری گرم",      accent="#F59E0B", accentLight="#FCD34D" },
+                        new { id="slate",   name="سفید مینیمال",   accent="#475569", accentLight="#64748B" },
+                        new { id="coral",   name="مرجانی غروب",    accent="#F97316", accentLight="#FB923C" },
+                    };
+                    var currentTheme = Model.Salon?.AdminTheme ?? "purple";
                 }
 
                 <div class="row g-3 mb-4">
                     @foreach (var t in themes)
                     {
                         <div class="col-md-3 col-6">
-                            <div class="theme-card"
+                            <div class="theme-card @(t.id == currentTheme ? "active" : "")"
                                  data-theme="@t.id"
                                  onclick="selectTheme('@t.id')"
-                                 style="cursor:pointer;border-radius:12px;overflow:hidden;
-                                        border:2px solid @(t.id == currentTheme ? t.acc : "rgba(0,0,0,0.08)");
-                                        transition:all 0.2s;
-                                        transform:@(t.id == currentTheme ? "scale(1.03)" : "scale(1)");">
+                                 style="border:2px solid @(t.id == currentTheme ? t.accent : "rgba(0,0,0,0.08)");">
 
-                                <!-- پیش‌نمایش -->
+                                <!-- Preview -->
                                 <div style="display:flex;height:75px;">
-                                    <div style="width:38%;background:@t.sb;padding:7px 5px;">
+                                    <div style="width:38%;background:linear-gradient(180deg,#0F0A1A,#1A0F2E);padding:7px 5px;">
                                         <div style="width:18px;height:18px;border-radius:5px;
-                                                    background:@t.acc;margin-bottom:7px;"></div>
-                                        <div style="height:4px;border-radius:2px;background:@t.acc;
+                                                    background:@t.accent;margin-bottom:7px;"></div>
+                                        <div style="height:4px;border-radius:2px;background:@t.accent;
                                                     margin-bottom:4px;opacity:0.9;"></div>
                                         <div style="height:4px;border-radius:2px;
                                                     background:rgba(255,255,255,0.12);margin-bottom:4px;"></div>
@@ -147,16 +132,16 @@
                                         <div style="height:4px;border-radius:2px;
                                                     background:rgba(255,255,255,0.12);"></div>
                                     </div>
-                                    <div style="flex:1;background:@t.mg;padding:7px;">
+                                    <div style="flex:1;background:linear-gradient(135deg,#EDE9FE,#ECFDF5);padding:7px;">
                                         <div style="height:5px;border-radius:2px;
                                                     background:rgba(0,0,0,0.1);margin-bottom:5px;width:55%;"></div>
                                         <div style="display:flex;gap:3px;margin-bottom:5px;">
                                             <div style="flex:1;height:18px;border-radius:4px;
-                                                        background:#fff;border:0.5px solid rgba(0,0,0,0.06);"></div>
+                                                        background:#fff;border:1px solid rgba(0,0,0,0.06);"></div>
                                             <div style="flex:1;height:18px;border-radius:4px;
-                                                        background:@t.sb;"></div>
+                                                        background:@t.accent;opacity:0.8;"></div>
                                         </div>
-                                        <div style="height:3px;border-radius:2px;background:@t.acc;
+                                        <div style="height:3px;border-radius:2px;background:@t.accent;
                                                     margin-bottom:3px;width:35%;"></div>
                                         <div style="height:3px;border-radius:2px;
                                                     background:rgba(0,0,0,0.08);margin-bottom:3px;width:80%;"></div>
@@ -165,16 +150,16 @@
                                     </div>
                                 </div>
 
-                                <!-- نام -->
+                                <!-- Name -->
                                 <div style="padding:8px 12px;background:#fff;
-                                            border-top:0.5px solid rgba(0,0,0,0.06);
+                                            border-top:1px solid var(--border-light);
                                             display:flex;align-items:center;justify-content:space-between;">
-                                    <span style="font-size:12px;color:#333;font-weight:500;">@t.name</span>
+                                    <span style="font-size:0.8rem;color:var(--text-primary);font-weight:500;">@t.name</span>
                                     @if (t.id == currentTheme)
                                     {
-                                        <span style="font-size:10px;background:@t.acc;
-                                                     color:@(t.id=="amber"||t.id=="slate"?"#000":"#fff");
-                                                     padding:2px 8px;border-radius:10px;font-weight:500;">
+                                        <span style="font-size:0.65rem;background:@t.accent;
+                                                     color:#fff;
+                                                     padding:2px 8px;border-radius:var(--radius-full);font-weight:600;">
                                             فعال ✓
                                         </span>
                                     }
@@ -184,7 +169,7 @@
                     }
                 </div>
 
-                <button type="submit" class="btn btn-primary px-5">
+                <button type="submit" class="btn btn-primary px-4">
                     🎨 اعمال تم انتخابی
                 </button>
             </form>
@@ -198,13 +183,14 @@
         function selectTheme(id) {
             document.getElementById('selectedTheme').value = id;
             document.querySelectorAll('.theme-card').forEach(c => {
+                c.classList.remove('active');
                 c.style.borderColor = 'rgba(0,0,0,0.08)';
-                c.style.transform   = 'scale(1)';
             });
             const sel = document.querySelector('[data-theme="' + id + '"]');
             if (sel) {
-                sel.style.borderColor = '#333';
-                sel.style.transform   = 'scale(1.03)';
+                sel.classList.add('active');
+                const accent = sel.querySelector('[style*="background:linear-gradient"]')?.children[0]?.children[0]?.style.background;
+                if (accent) sel.style.borderColor = accent;
             }
         }
     </script>

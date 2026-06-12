@@ -9,8 +9,8 @@
 
 <div class="topbar d-flex justify-content-between align-items-center">
     <div>
-        <div style="font-size:16px;font-weight:500;color:var(--txt);">مدیریت پرسنل</div>
-        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">مدیریت پرسنل</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
             @Model.Artists.Count نفر پرسنل
         </div>
     </div>
@@ -28,10 +28,12 @@
 
 @if (!Model.Artists.Any())
 {
-    <div class="card p-5 text-center" style="color:var(--ctxt);">
-        <div style="font-size:48px;margin-bottom:12px;">👤</div>
-        <div style="font-size:15px;font-weight:500;color:var(--txt);">هنوز پرسنلی اضافه نشده</div>
-        <div style="font-size:12px;margin-top:6px;">برای افزودن پرسنل روی دکمه بالا کلیک کنید</div>
+    <div class="card p-5">
+        <div class="empty-state">
+            <div class="empty-state-icon">👤</div>
+            <div class="empty-state-title">هنوز پرسنلی اضافه نشده</div>
+            <div class="empty-state-desc">برای افزودن پرسنل روی دکمه بالا کلیک کنید</div>
+        </div>
     </div>
 }
 else
@@ -42,28 +44,23 @@ else
             <div class="col-md-6 col-xl-4">
                 <div class="card p-4">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <!-- آواتار -->
                         @if (!string.IsNullOrEmpty(a.PhotoUrl))
                         {
                             <img src="@a.PhotoUrl" width="52" height="52"
                                  style="border-radius:50%;object-fit:cover;
-                                        border:2px solid var(--sb4);flex-shrink:0;" />
+                                        border:2px solid var(--primary-200);flex-shrink:0;" />
                         }
                         else
                         {
-                            <div style="width:52px;height:52px;border-radius:50%;
-                                        background:var(--sb3);
-                                        display:flex;align-items:center;justify-content:center;
-                                        font-size:20px;font-weight:600;color:var(--sb2);
-                                        border:2px solid var(--sb4);flex-shrink:0;">
+                            <div class="artist-avatar" style="width:52px;height:52px;font-size:20px;">
                                 @(a.User?.FirstName?.Length > 0 ? a.User.FirstName[0].ToString() : "؟")
                             </div>
                         }
                         <div style="flex:1;min-width:0;">
-                            <div style="font-weight:500;color:var(--txt);font-size:14px;">
+                            <div style="font-weight:600;color:var(--text-primary);font-size:0.9rem;">
                                 @a.User?.FirstName @a.User?.LastName
                             </div>
-                            <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
+                            <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:2px;">
                                 @a.BioShort
                             </div>
                         </div>
@@ -73,10 +70,10 @@ else
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3"
-                         style="padding:10px;background:var(--mg);border-radius:8px;">
+                         style="padding:10px;background:var(--primary-50);border-radius:var(--radius-sm);">
                         <div style="text-align:center;">
-                            <div style="font-size:11px;color:var(--ctxt);">نوع قرارداد</div>
-                            <div style="font-size:12px;font-weight:500;color:var(--txt);margin-top:2px;">
+                            <div style="font-size:0.7rem;color:var(--text-secondary);">نوع قرارداد</div>
+                            <div style="font-size:0.8rem;font-weight:600;color:var(--text-primary);margin-top:2px;">
                                 @(a.ContractType switch
                                 {
                                     SmartSalon.Models.ContractType.FixedSalary => "حقوق ثابت",
@@ -87,10 +84,10 @@ else
                             </div>
                         </div>
                         <div style="text-align:center;">
-                            <div style="font-size:11px;color:var(--ctxt);">امتیاز</div>
-                            <div style="font-size:12px;font-weight:500;color:#F59E0B;margin-top:2px;">
+                            <div style="font-size:0.7rem;color:var(--text-secondary);">امتیاز</div>
+                            <div style="font-size:0.8rem;font-weight:600;color:#F59E0B;margin-top:2px;">
                                 ⭐ @a.RatingAvg.ToString("F1")
-                                <span style="color:var(--ctxt);font-weight:400;">(@a.RatingCount)</span>
+                                <span style="color:var(--text-muted);font-weight:400;">(@a.RatingCount)</span>
                             </div>
                         </div>
                     </div>
@@ -98,17 +95,12 @@ else
                     <div class="d-flex gap-2">
                         <form method="post" asp-page-handler="Toggle"
                               asp-route-id="@a.Id" class="flex-fill">
-                            <button class="btn btn-sm w-100"
-                                    style="background:@(a.IsActive ? "#FEF2F2" : "#F0FDF4");
-                                           border:0.5px solid @(a.IsActive ? "#FECACA" : "#BBF7D0");
-                                           color:@(a.IsActive ? "#DC2626" : "#16A34A");
-                                           font-size:11px;">
+                            <button class="btn-action w-100"
+                                    style="@(a.IsActive ? "background:var(--danger-50);border-color:rgba(239,68,68,0.2);color:#DC2626;" : "background:var(--success-50);border-color:rgba(16,185,129,0.2);color:#059669;")">
                                 @(a.IsActive ? "غیرفعال کن" : "فعال کن")
                             </button>
                         </form>
-                        <button class="btn btn-sm"
-                                style="background:var(--sb3);border:0.5px solid var(--sb4);
-                                       color:var(--sb2);font-size:11px;"
+                        <button class="btn-action btn-action-accent"
                                 data-bs-toggle="modal"
                                 data-bs-target="#photoModal"
                                 data-artist-id="@a.Id"
@@ -116,9 +108,7 @@ else
                             📷
                         </button>
                         <a href="/Admin/ArtistReport/@a.Id"
-                           class="btn btn-sm"
-                           style="background:#F0FDF4;border:0.5px solid #BBF7D0;
-                                  color:#16A34A;font-size:11px;">
+                           class="btn-action btn-action-approve">
                             📊
                         </a>
                     </div>
@@ -128,35 +118,29 @@ else
     </div>
 }
 
-<!-- Modal افزودن پرسنل -->
+<!-- Add Artist Modal -->
 <div class="modal fade" id="addModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="border-bottom:0.5px solid rgba(0,0,0,0.06);">
-                <h5 class="modal-title" style="font-size:15px;">افزودن پرسنل جدید</h5>
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن پرسنل جدید</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="post" asp-page-handler="Add">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            شماره موبایل کاربر
-                        </label>
+                        <label class="form-label">شماره موبایل کاربر</label>
                         <input type="text" name="Mobile" class="form-control"
                                placeholder="09121234567" required />
-                        <small style="color:var(--ctxt);">کاربر باید قبلاً در سیستم ثبت‌نام کرده باشد</small>
+                        <small style="color:var(--text-muted);">کاربر باید قبلاً در سیستم ثبت‌نام کرده باشد</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            بیوگرافی کوتاه
-                        </label>
+                        <label class="form-label">بیوگرافی کوتاه</label>
                         <input type="text" name="BioShort" class="form-control"
                                placeholder="متخصص رنگ و هایلایت" required />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                            نوع قرارداد
-                        </label>
+                        <label class="form-label">نوع قرارداد</label>
                         <select name="ContractType" class="form-select">
                             <option value="1">حقوق ثابت</option>
                             <option value="2">اجاره لاین</option>
@@ -164,49 +148,47 @@ else
                         </select>
                     </div>
                 </div>
-                <div class="modal-footer" style="border-top:0.5px solid rgba(0,0,0,0.06);">
-                    <button type="button" class="btn btn-sm btn-secondary"
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm"
                             data-bs-dismiss="modal">
                         انصراف
                     </button>
-                    <button type="submit" class="btn btn-sm btn-primary">افزودن</button>
+                    <button type="submit" class="btn btn-primary btn-sm">افزودن</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal آپلود عکس -->
+<!-- Photo Upload Modal -->
 <div class="modal fade" id="photoModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="border-bottom:0.5px solid rgba(0,0,0,0.06);">
-                <h5 class="modal-title" style="font-size:15px;">آپلود عکس پروفایل</h5>
+            <div class="modal-header">
+                <h5 class="modal-title">آپلود عکس پروفایل</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <p id="artistNameLabel" class="mb-3"
-                   style="color:var(--ctxt);font-size:13px;"></p>
+                   style="color:var(--text-secondary);font-size:0.85rem;"></p>
                 <div class="mb-3">
-                    <label class="form-label" style="color:var(--ctxt);font-size:13px;">
-                        انتخاب عکس (JPG، PNG — حداکثر ۵ مگابایت)
-                    </label>
+                    <label class="form-label">انتخاب عکس (JPG، PNG — حداکثر ۵ مگابایت)</label>
                     <input type="file" id="photoFile" class="form-control"
                            accept="image/jpeg,image/png,image/webp" />
                 </div>
                 <div id="photoPreview" class="text-center mb-3" style="display:none;">
                     <img id="previewImg" src="" width="100" height="100"
                          style="border-radius:50%;object-fit:cover;
-                                border:3px solid var(--sb4);" />
+                                border:3px solid var(--primary-200);" />
                 </div>
                 <div id="uploadMessage"></div>
             </div>
-            <div class="modal-footer" style="border-top:0.5px solid rgba(0,0,0,0.06);">
-                <button type="button" class="btn btn-sm btn-secondary"
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm"
                         data-bs-dismiss="modal">
                     انصراف
                 </button>
-                <button type="button" class="btn btn-sm btn-primary"
+                <button type="button" class="btn btn-primary btn-sm"
                         onclick="uploadPhoto()">
                     آپلود عکس
                 </button>
@@ -252,7 +234,7 @@ else
                 });
                 const data = await res.json();
                 if (res.ok) {
-                    msgDiv.innerHTML = '<div class="alert alert-success">✅ عکس با موفقیت آپلود شد</div>';
+                    msgDiv.innerHTML = '<div class="alert alert-success">عکس با موفقیت آپلود شد</div>';
                     setTimeout(() => location.reload(), 1500);
                 } else {
                     msgDiv.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;

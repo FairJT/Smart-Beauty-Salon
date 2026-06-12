@@ -7,84 +7,82 @@
     ViewData["ActivePage"] = "Dashboard";
 }
 
-<!-- topbar -->
 <div class="topbar">
     <div>
-        <div style="font-size:16px;font-weight:500;color:var(--txt);">داشبورد مدیریت</div>
-        <div style="font-size:12px;color:var(--ctxt);margin-top:2px;">
-            خوش آمدید، @Model.AdminName
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">داشبورد مدیریت</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
+            خوش آمدید، <span style="color:var(--primary);font-weight:600;">@Model.AdminName</span>
         </div>
     </div>
-    <a href="/Admin/Appointments" class="btn btn-primary btn-sm">
+    <a href="/Admin/Appointments" class="btn btn-primary btn-sm" style="border-radius:var(--radius-sm);">
         ＋ مشاهده نوبت‌ها
     </a>
 </div>
 
-<!-- کارت‌های آمار -->
+<!-- Stat Cards -->
 <div class="row g-3 mb-4">
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">نوبت‌های امروز</div>
-                <div class="stat-icon" style="background:rgba(0,0,0,0.04);">📅</div>
+                <div class="stat-icon" style="background:var(--primary-50);">📅</div>
             </div>
-            <div class="stat-num">@Model.TodayCount</div>
-            <div style="font-size:11px;color:#16A34A;margin-top:6px;">کل نوبت‌های امروز</div>
+            <div class="stat-num" style="color:var(--primary);">@Model.TodayCount</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">کل نوبت‌های امروز</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">در انتظار تایید</div>
-                <div class="stat-icon" style="background:#FFF8E8;">⏳</div>
+                <div class="stat-icon" style="background:var(--warning-50);">⏳</div>
             </div>
-            <div class="stat-num" style="color:#B07D2A;">@Model.PendingCount</div>
-            <div style="font-size:11px;color:#EA580C;margin-top:6px;">نیاز به بررسی</div>
+            <div class="stat-num" style="color:var(--warning);">@Model.PendingCount</div>
+            <div style="font-size:0.7rem;color:#EA580C;margin-top:4px;">نیاز به بررسی</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">تایید شده</div>
-                <div class="stat-icon" style="background:#F0FDF4;">✅</div>
+                <div class="stat-icon" style="background:var(--success-50);">✅</div>
             </div>
-            <div class="stat-num" style="color:#16A34A;">@Model.ConfirmedCount</div>
-            <div style="font-size:11px;color:#16A34A;margin-top:6px;">
+            <div class="stat-num" style="color:var(--success);">@Model.ConfirmedCount</div>
+            <div style="font-size:0.7rem;color:var(--success);margin-top:4px;">
                 @(Model.TodayCount > 0 ? $"{Model.ConfirmedCount * 100 / Model.TodayCount}٪ از کل" : "---")
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card-dark">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">درآمد امروز</div>
-                <div class="stat-icon" style="background:var(--sb3);">💰</div>
+                <div class="stat-icon" style="background:rgba(255,255,255,0.15);">💰</div>
             </div>
             <div class="stat-num">@Model.TodayRevenue.ToString("N0")</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">تومان</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:4px;">تومان</div>
         </div>
     </div>
 </div>
 
-<!-- جدول نوبت‌های امروز -->
+<!-- Today's Appointments Table -->
 <div class="card">
     <div class="p-3 d-flex justify-content-between align-items-center"
-         style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
-        <div style="display:flex;align-items:center;">
+         style="border-bottom:1px solid var(--border-light);">
+        <div class="section-header" style="margin-bottom:0;">
             <span class="table-bar"></span>
-            <span style="font-size:14px;font-weight:500;color:var(--txt);">نوبت‌های امروز</span>
+            <span class="section-header-label">نوبت‌های امروز</span>
         </div>
-        <span style="font-size:11px;background:var(--sb3);color:var(--sb2);
-                     padding:3px 10px;border-radius:20px;border:0.5px solid var(--sb4);">
+        <span class="section-header-badge">
             @Model.TodayCount نوبت
         </span>
     </div>
 
     @if (!Model.TodayAppointments.Any())
     {
-        <div class="text-center py-5" style="color:var(--ctxt);">
-            <div style="font-size:40px;margin-bottom:8px;">📅</div>
-            <div>امروز نوبتی ثبت نشده</div>
+        <div class="empty-state">
+            <div class="empty-state-icon">📅</div>
+            <div class="empty-state-title">امروز نوبتی ثبت نشده</div>
         </div>
     }
     else
@@ -108,20 +106,22 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    <div style="width:30px;height:30px;border-radius:50%;
-                                                background:var(--sb3);
+                                    <div style="width:32px;height:32px;border-radius:50%;
+                                                background:var(--primary-100);
                                                 display:flex;align-items:center;justify-content:center;
-                                                font-size:12px;color:var(--sb2);font-weight:500;
-                                                border:0.5px solid var(--sb4);flex-shrink:0;">
+                                                font-size:12px;color:var(--primary);font-weight:600;
+                                                flex-shrink:0;">
                                         @(a.ClientName.Length > 0 ? a.ClientName[0].ToString() : "؟")
                                     </div>
-                                    <span>@a.ClientName</span>
+                                    <span style="font-weight:500;">@a.ClientName</span>
                                 </div>
                             </td>
                             <td>@a.ServiceName</td>
                             <td>@a.ArtistName</td>
-                            <td>@a.StartTime.ToString("HH:mm")</td>
-                            <td style="font-weight:500;">@a.EstimatedPrice.ToString("N0")</td>
+                            <td style="font-weight:500;">@a.StartTime.ToString("HH:mm")</td>
+                            <td style="font-weight:600;color:var(--text-primary);">
+                                @a.EstimatedPrice.ToString("N0")
+                            </td>
                             <td>
                                 <span class="badge @a.StatusBadge">@a.StatusText</span>
                             </td>
@@ -131,30 +131,18 @@
                                     {
                                         <form method="post" asp-page-handler="Confirm"
                                               asp-route-id="@a.Id" class="d-inline">
-                                            <button class="btn btn-sm"
-                                                    style="background:#F0FDF4;border:0.5px solid #BBF7D0;
-                                                           color:#16A34A;font-size:11px;">
-                                                تایید
-                                            </button>
+                                            <button class="btn-action btn-action-approve">تایید</button>
                                         </form>
                                         <form method="post" asp-page-handler="Cancel"
                                               asp-route-id="@a.Id" class="d-inline">
-                                            <button class="btn btn-sm"
-                                                    style="background:#FEF2F2;border:0.5px solid #FECACA;
-                                                           color:#DC2626;font-size:11px;">
-                                                لغو
-                                            </button>
+                                            <button class="btn-action btn-action-danger">لغو</button>
                                         </form>
                                     }
                                     @if (a.Status == 2)
                                     {
                                         <form method="post" asp-page-handler="Cancel"
                                               asp-route-id="@a.Id" class="d-inline">
-                                            <button class="btn btn-sm"
-                                                    style="background:#FEF2F2;border:0.5px solid #FECACA;
-                                                           color:#DC2626;font-size:11px;">
-                                                لغو
-                                            </button>
+                                            <button class="btn-action btn-action-danger">لغو</button>
                                         </form>
                                     }
                                 </div>

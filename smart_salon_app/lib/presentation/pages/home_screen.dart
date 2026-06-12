@@ -170,7 +170,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [AppColors.primary, Color(0xFF2C5F8A)]),
+        gradient: AppColors.heroGradient,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -185,8 +185,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           const SizedBox(height: 16),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.amber,
-              foregroundColor: Colors.white,
+              backgroundColor: Colors.white,
+              foregroundColor: AppColors.primary,
               minimumSize: const Size(0, 42),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             ),

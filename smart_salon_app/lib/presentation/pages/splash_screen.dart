@@ -35,30 +35,41 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(30),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(gradient: AppColors.darkGradient),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.content_cut_rounded, size: 70, color: Colors.white),
               ),
-              child: const Icon(Icons.content_cut_rounded, size: 70, color: Colors.amber),
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'سالن هوشمند ابری',
-              style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text('Smart Cloud Salon', style: TextStyle(color: Colors.white60, fontSize: 16)),
-            const SizedBox(height: 60),
-            const CircularProgressIndicator(color: Colors.amber, strokeWidth: 3),
-          ],
+              const SizedBox(height: 24),
+              const Text(
+                'سالن هوشمند',
+                style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text('SMART SALON', style: TextStyle(color: Colors.white60, fontSize: 16)),
+              const SizedBox(height: 60),
+              const CircularProgressIndicator(color: Colors.white, strokeWidth: 3),
+            ],
+          ),
         ),
       ),
     );

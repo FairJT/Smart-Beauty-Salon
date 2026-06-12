@@ -1,4 +1,5 @@
 services:
+  # ─── SQL Server (Azure SQL Edge) ─────────────────────────────
   sqlserver:
     image: mcr.microsoft.com/azure-sql-edge:latest
     container_name: SmartSalonSQL
@@ -14,6 +15,48 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - salon-network
+
+  # ─── SmartSalon Monolith (Razor Pages + API) ────────────────
+  smartsalon:
+    build:
+      context: ./SmartSalon
+      dockerfile: Dockerfile
+    container_name: SmartSalonApp
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+      ASPNETCORE_URLS: "http://+:5015"
+      JWT_SECRET: "SmartSalon2024!DockerSecretKeyForJWT@#$%"
+    ports:
+      - "5015:5015"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - salon-network
+
+  # ─── SalonOS API (Modular Monolith) ─────────────────────────
+  salonos-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.SalonOS
+    container_name: SalonOSApi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+      ASPNETCORE_URLS: "http://+:5016"
+      JWT_SECRET: "SalonOS2024!DockerSecretKeyForJWT@#$%"
+    ports:
+      - "5016:5016"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - salon-network
 
 volumes:
   sqlserver_data:
+
+networks:
+  salon-network:
+    driver: bridge

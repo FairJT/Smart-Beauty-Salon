@@ -40,8 +40,15 @@ namespace SmartSalon.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var id = await _salonService.CreateSalonAsync(dto);
-            return Ok(new { message = "Salon created successfully", id });
+            try
+            {
+                var id = await _salonService.CreateSalonAsync(dto);
+                return Ok(new { message = "Salon created successfully", id });
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                return BadRequest(new { message = "A salon with this slug already exists" });
+            }
         }
 
         [HttpPut("{id:int}")]
@@ -50,14 +57,15 @@ namespace SmartSalon.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
+            var salon = await _salonService.GetSalonByIdAsync(id);
+            if (salon == null) return NotFound(new { message = "Salon not found" });
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var isManager = await _salonService.IsSalonManagerAsync(id, userId);
             if (!isManager)
                 return Forbid();
 
             var updated = await _salonService.UpdateSalonAsync(id, dto, userId);
-            if (!updated) return NotFound(new { message = "Salon not found" });
-
             return Ok(new { message = "Salon updated successfully" });
         }
 

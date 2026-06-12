@@ -9,65 +9,63 @@
 
 <div class="topbar d-flex justify-content-between align-items-center">
     <div>
-        <div style="font-size:16px;font-weight:500;color:#0A0A1A;">گزارش‌های مالی</div>
-        <div style="font-size:12px;color:#64748B;margin-top:2px;">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">گزارش‌های مالی</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
             @Model.From تا @Model.To
         </div>
     </div>
     <form method="get" class="d-flex gap-2 align-items-center">
-        <label style="font-size:12px;color:#64748B;">از:</label>
+        <label style="font-size:0.8rem;color:var(--text-secondary);">از:</label>
         <input type="date" name="from" value="@Model.From"
                class="form-control form-control-sm" style="width:140px;" />
-        <label style="font-size:12px;color:#64748B;">تا:</label>
+        <label style="font-size:0.8rem;color:var(--text-secondary);">تا:</label>
         <input type="date" name="to" value="@Model.To"
                class="form-control form-control-sm" style="width:140px;" />
         <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
     </form>
 </div>
 
-<!-- آمار -->
+<!-- Stats -->
 <div class="row g-3 mb-4">
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
             <div class="stat-lbl">کل نوبت‌ها</div>
-            <div class="stat-num">@Model.TotalAppointments</div>
+            <div class="stat-num" style="color:var(--primary);">@Model.TotalAppointments</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
             <div class="stat-lbl">تایید شده</div>
-            <div class="stat-num" style="color:#16A34A;">@Model.ConfirmedAppointments</div>
+            <div class="stat-num" style="color:var(--success);">@Model.ConfirmedAppointments</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
             <div class="stat-lbl">لغو شده</div>
-            <div class="stat-num" style="color:#DC2626;">@Model.CancelledAppointments</div>
+            <div class="stat-num" style="color:var(--danger);">@Model.CancelledAppointments</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card-dark">
             <div class="stat-lbl">درآمد کل</div>
             <div class="stat-num">@Model.TotalRevenue.ToString("N0")</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px;">تومان</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:4px;">تومان</div>
         </div>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- گزارش سالن‌ها -->
+    <!-- Salon Reports -->
     <div class="col-md-7">
         <div class="card">
-            <div class="p-3" style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
-                <div style="display:flex;align-items:center;">
+            <div class="p-3" style="border-bottom:1px solid var(--border-light);">
+                <div class="section-header" style="margin-bottom:0;">
                     <span class="table-bar"></span>
-                    <span style="font-size:14px;font-weight:500;color:#0A0A1A;">
-                        درآمد به تفکیک سالن
-                    </span>
+                    <span class="section-header-label">درآمد به تفکیک سالن</span>
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table mb-0">
+                <table class="table table-accent mb-0">
                     <thead>
                         <tr>
                             <th>سالن</th>
@@ -81,21 +79,19 @@
                         @foreach (var r in Model.SalonReports)
                         {
                             <tr>
-                                <td style="color:#0A0A1A;font-weight:500;">@r.SalonName</td>
-                                <td style="color:#64748B;">@r.Total</td>
-                                <td style="color:#16A34A;">@r.Confirmed</td>
-                                <td style="color:#DC2626;">@r.Cancelled</td>
-                                <td style="color:#0A0A1A;font-weight:500;">
-                                    @r.Revenue.ToString("N0")
-                                </td>
+                                <td style="font-weight:500;">@r.SalonName</td>
+                                <td style="color:var(--text-secondary);">@r.Total</td>
+                                <td style="color:var(--success);">@r.Confirmed</td>
+                                <td style="color:var(--danger);">@r.Cancelled</td>
+                                <td style="font-weight:600;">@r.Revenue.ToString("N0")</td>
                             </tr>
                         }
-                        <tr style="background:#FAFAFA;font-weight:500;">
-                            <td style="color:#0A0A1A;">جمع کل</td>
-                            <td style="color:#64748B;">@Model.TotalAppointments</td>
-                            <td style="color:#16A34A;">@Model.ConfirmedAppointments</td>
-                            <td style="color:#DC2626;">@Model.CancelledAppointments</td>
-                            <td style="color:#6366F1;">@Model.TotalRevenue.ToString("N0")</td>
+                        <tr style="background:var(--primary-50);font-weight:600;">
+                            <td>جمع کل</td>
+                            <td style="color:var(--text-secondary);">@Model.TotalAppointments</td>
+                            <td style="color:var(--success);">@Model.ConfirmedAppointments</td>
+                            <td style="color:var(--danger);">@Model.CancelledAppointments</td>
+                            <td style="color:var(--primary);">@Model.TotalRevenue.ToString("N0")</td>
                         </tr>
                     </tbody>
                 </table>
@@ -103,17 +99,17 @@
         </div>
     </div>
 
-    <!-- گزارش روزانه -->
+    <!-- Daily Report -->
     <div class="col-md-5">
         <div class="card">
-            <div class="p-3" style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
-                <div style="display:flex;align-items:center;">
+            <div class="p-3" style="border-bottom:1px solid var(--border-light);">
+                <div class="section-header" style="margin-bottom:0;">
                     <span class="table-bar"></span>
-                    <span style="font-size:14px;font-weight:500;color:#0A0A1A;">گزارش روزانه</span>
+                    <span class="section-header-label">گزارش روزانه</span>
                 </div>
             </div>
             <div class="table-responsive" style="max-height:350px;overflow-y:auto;">
-                <table class="table mb-0">
+                <table class="table table-accent mb-0">
                     <thead>
                         <tr>
                             <th>تاریخ</th>
@@ -125,11 +121,9 @@
                         @foreach (var d in Model.DailyReports)
                         {
                             <tr>
-                                <td style="color:#64748B;font-size:12px;">@d.Date</td>
-                                <td style="color:#0A0A1A;">@d.Count</td>
-                                <td style="color:#0A0A1A;font-weight:500;">
-                                    @d.Revenue.ToString("N0")
-                                </td>
+                                <td style="color:var(--text-secondary);font-size:0.75rem;">@d.Date</td>
+                                <td style="font-weight:500;">@d.Count</td>
+                                <td style="font-weight:600;">@d.Revenue.ToString("N0")</td>
                             </tr>
                         }
                     </tbody>

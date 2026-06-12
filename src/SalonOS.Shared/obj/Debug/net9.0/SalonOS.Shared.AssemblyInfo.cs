@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SalonOS.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+903e23335a9f4c25cdc3da70362d251c3fbeab51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e88a9a7484dc36b1a56784506bfa898c90c43962")]
 [assembly: System.Reflection.AssemblyProductAttribute("SalonOS.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SalonOS.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

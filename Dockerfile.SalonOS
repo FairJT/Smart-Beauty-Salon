@@ -1,0 +1,35 @@
+# SalonOS API - Modular Monolith - Multi-stage Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Copy all project files and restore
+COPY src/SalonOS.Shared/SalonOS.Shared.csproj src/SalonOS.Shared/
+COPY src/SalonOS.Infrastructure/SalonOS.Infrastructure.csproj src/SalonOS.Infrastructure/
+COPY src/Modules/Identity/SalonOS.Identity.csproj src/Modules/Identity/
+COPY src/Modules/Booking/SalonOS.Booking.csproj src/Modules/Booking/
+COPY src/Modules/Catalog/SalonOS.Catalog.csproj src/Modules/Catalog/
+COPY src/Modules/Inventory/SalonOS.Inventory.csproj src/Modules/Inventory/
+COPY src/Modules/Marketplace/SalonOS.Marketplace.csproj src/Modules/Marketplace/
+COPY src/SalonOS.Api/SalonOS.Api.csproj src/SalonOS.Api/
+RUN dotnet restore src/SalonOS.Api/SalonOS.Api.csproj
+
+# Copy everything and build
+COPY src/ src/
+RUN dotnet publish src/SalonOS.Api/SalonOS.Api.csproj -c Release -o /app/publish --no-restore
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+
+# Install ICU for globalization
+RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:5016
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
+EXPOSE 5016
+
+ENTRYPOINT ["dotnet", "SalonOS.Api.dll"]

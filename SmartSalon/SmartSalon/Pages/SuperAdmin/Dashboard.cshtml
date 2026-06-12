@@ -9,86 +9,77 @@
 
 <div class="topbar">
     <div>
-        <div style="font-size:16px;font-weight:500;color:#0A0A1A;">داشبورد کل پلتفرم</div>
-        <div style="font-size:12px;color:#64748B;margin-top:2px;">خوش آمدید، @Model.AdminName</div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">داشبورد کل پلتفرم</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
+            خوش آمدید، <span style="color:var(--primary);font-weight:600;">@Model.AdminName</span>
+        </div>
     </div>
-    <span style="font-size:12px;background:rgba(129,140,248,0.1);color:#6366F1;
-                 padding:6px 14px;border-radius:20px;border:0.5px solid rgba(129,140,248,0.3);">
+    <span style="font-size:0.75rem;background:var(--primary-100);color:var(--primary);
+                 padding:6px 14px;border-radius:var(--radius-full);">
         🌐 پنل پلتفرم
     </span>
 </div>
 
-<!-- آمار -->
+<!-- Stats -->
 <div class="row g-3 mb-4">
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">کل سالن‌ها</div>
-                <div style="width:32px;height:32px;border-radius:8px;background:#F3F0FF;
-                            display:flex;align-items:center;justify-content:center;">
-                    ✂
-                </div>
+                <div class="stat-icon" style="background:var(--primary-50);">✂</div>
             </div>
-            <div class="stat-num">@Model.TotalSalons</div>
-            <div style="font-size:11px;color:#16A34A;margin-top:6px;">@Model.ActiveSalons فعال</div>
+            <div class="stat-num" style="color:var(--primary);">@Model.TotalSalons</div>
+            <div style="font-size:0.7rem;color:var(--success);margin-top:4px;">@Model.ActiveSalons فعال</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">کل کاربران</div>
-                <div style="width:32px;height:32px;border-radius:8px;background:#FFF0F0;
-                            display:flex;align-items:center;justify-content:center;">
-                    👥
-                </div>
+                <div class="stat-icon" style="background:var(--danger-50);">👥</div>
             </div>
             <div class="stat-num">@Model.TotalUsers</div>
-            <div style="font-size:11px;color:#64748B;margin-top:6px;">@Model.TotalArtists هنرمند</div>
+            <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">@Model.TotalArtists هنرمند</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">کل نوبت‌ها</div>
-                <div style="width:32px;height:32px;border-radius:8px;background:#EFF6FF;
-                            display:flex;align-items:center;justify-content:center;">
-                    📅
-                </div>
+                <div class="stat-icon" style="background:var(--info-50);">📅</div>
             </div>
             <div class="stat-num">@Model.TotalAppointments</div>
-            <div style="font-size:11px;color:#6366F1;margin-top:6px;">@Model.TodayAppointments امروز</div>
+            <div style="font-size:0.7rem;color:var(--primary);margin-top:4px;">@Model.TodayAppointments امروز</div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-6">
         <div class="stat-card-dark">
-            <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="d-flex justify-content-between align-items-start mb-2">
                 <div class="stat-lbl">درآمد کل</div>
-                <div style="width:32px;height:32px;border-radius:8px;background:rgba(129,140,248,0.15);
-                            display:flex;align-items:center;justify-content:center;">
-                    💰
-                </div>
+                <div class="stat-icon" style="background:rgba(255,255,255,0.15);">💰</div>
             </div>
             <div class="stat-num">@Model.TotalRevenue.ToString("N0")</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">تومان</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:4px;">تومان</div>
         </div>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- آخرین سالن‌ها -->
+    <!-- Latest Salons -->
     <div class="col-md-6">
         <div class="card">
             <div class="p-3 d-flex justify-content-between align-items-center"
-                 style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
-                <div style="display:flex;align-items:center;">
+                 style="border-bottom:1px solid var(--border-light);">
+                <div class="section-header" style="margin-bottom:0;">
                     <span class="table-bar"></span>
-                    <span style="font-size:14px;font-weight:500;color:#0A0A1A;">آخرین سالن‌ها</span>
+                    <span class="section-header-label">آخرین سالن‌ها</span>
                 </div>
-                <a href="/SuperAdmin/Salons"
-                   style="font-size:11px;color:#6366F1;text-decoration:none;">مشاهده همه</a>
+                <a href="/SuperAdmin/Salons" style="font-size:0.75rem;color:var(--primary);">
+                    مشاهده همه
+                </a>
             </div>
             <div class="table-responsive">
-                <table class="table mb-0">
+                <table class="table table-accent mb-0">
                     <thead>
                         <tr>
                             <th>نام سالن</th>
@@ -101,7 +92,7 @@
                         @foreach (var s in Model.LatestSalons)
                         {
                             <tr>
-                                <td style="color:#0A0A1A;">@s.Name</td>
+                                <td style="font-weight:500;">@s.Name</td>
                                 <td>
                                     <span class="badge @(s.IsActive ? "bg-success" : "bg-danger")">
                                         @(s.IsActive ? "فعال" : "غیرفعال")
@@ -114,10 +105,10 @@
                                     }
                                     else
                                     {
-                                        <span style="color:#CBD5E1;font-size:12px;">—</span>
+                                        <span style="color:var(--text-muted);font-size:0.75rem;">—</span>
                                     }
                                 </td>
-                                <td style="color:#64748B;">@s.RatingAvg.ToString("F1")</td>
+                                <td style="color:var(--text-secondary);">⭐ @s.RatingAvg.ToString("F1")</td>
                             </tr>
                         }
                     </tbody>
@@ -126,20 +117,21 @@
         </div>
     </div>
 
-    <!-- آخرین نوبت‌ها -->
+    <!-- Latest Appointments -->
     <div class="col-md-6">
         <div class="card">
             <div class="p-3 d-flex justify-content-between align-items-center"
-                 style="border-bottom:0.5px solid rgba(0,0,0,0.05);">
-                <div style="display:flex;align-items:center;">
+                 style="border-bottom:1px solid var(--border-light);">
+                <div class="section-header" style="margin-bottom:0;">
                     <span class="table-bar"></span>
-                    <span style="font-size:14px;font-weight:500;color:#0A0A1A;">آخرین نوبت‌ها</span>
+                    <span class="section-header-label">آخرین نوبت‌ها</span>
                 </div>
-                <a href="/SuperAdmin/Reports"
-                   style="font-size:11px;color:#6366F1;text-decoration:none;">گزارش کامل</a>
+                <a href="/SuperAdmin/Reports" style="font-size:0.75rem;color:var(--primary);">
+                    گزارش کامل
+                </a>
             </div>
             <div class="table-responsive">
-                <table class="table mb-0">
+                <table class="table table-accent mb-0">
                     <thead>
                         <tr>
                             <th>سالن</th>
@@ -166,11 +158,11 @@
                                 _ => "سایر"
                             };
                             <tr>
-                                <td style="color:#0A0A1A;">@a.Salon?.Name</td>
-                                <td style="color:#64748B;">
+                                <td style="font-weight:500;">@a.Salon?.Name</td>
+                                <td style="color:var(--text-secondary);">
                                     @a.Client?.FirstName @a.Client?.LastName
                                 </td>
-                                <td style="color:#64748B;">@a.StartTime.ToString("HH:mm")</td>
+                                <td style="font-weight:500;">@a.StartTime.ToString("HH:mm")</td>
                                 <td><span class="badge @badge">@txt</span></td>
                             </tr>
                         }

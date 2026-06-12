@@ -12,8 +12,11 @@ class SalonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: AppColors.border),
+      ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
@@ -40,7 +43,7 @@ class SalonCard extends StatelessWidget {
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.star_rounded, color: Colors.amber, size: 18),
+            const Icon(Icons.star_rounded, color: AppColors.warning, size: 18),
             Text(
               salon.rating.toStringAsFixed(1),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
