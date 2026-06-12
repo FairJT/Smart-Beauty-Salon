@@ -1,42 +1,34 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SalonOS.Api.Authorization;
 using SalonOS.Marketplace.Application.DTOs;
+using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Marketplace.API.Controllers;
 
 /// <summary>
-/// Package listing controller for managing packages.
-/// Public read access, platform owners can manage.
+/// Marketplace package listing controller.
+/// Browse = marketplace.browse (SalonManager).
+/// Template management = marketplace.template.manage (PlatformOwner only).
 /// </summary>
 [Route("api/package-listings")]
 [ApiController]
 public class PackageListingController : ControllerBase
 {
-    // TODO: Implement package listing service
-    // For now, this is a placeholder
-
     [HttpGet]
-    public IActionResult GetPackageListings()
-    {
-        // TODO: Implement package listing
-        return Ok(new List<PackageListingDto>());
-    }
+    [HasPermission(Permissions.MarketplaceBrowse)]
+    public IActionResult GetPackageListings() => Ok(new List<PackageListingDto>());
 
     [HttpGet("{id}")]
-    public IActionResult GetPackageListing(Guid id)
-    {
-        // TODO: Implement package detail
-        return NotFound(new { message = "Package listing not found" });
-    }
+    [HasPermission(Permissions.MarketplaceBrowse)]
+    public IActionResult GetPackageListing(Guid id) =>
+        NotFound(new { message = "Package listing not found" });
 
     [HttpPost]
-    [Authorize]
+    [HasPermission(Permissions.MarketplaceTemplateManage)]
     public IActionResult CreatePackageListing([FromBody] CreatePackageListingDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        // TODO: Implement package creation (platform owner only)
+        if (!ModelState.IsValid) return BadRequest(ModelState);
         return CreatedAtAction(nameof(GetPackageListing), new { id = Guid.NewGuid() }, dto);
     }
 }

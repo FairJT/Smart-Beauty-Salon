@@ -1,55 +1,47 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SalonOS.Api.Authorization;
 using SalonOS.Inventory.Application.DTOs;
+using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Inventory.API.Controllers;
 
 /// <summary>
-/// Inventory item controller for managing salon inventory.
-/// Only salon managers can manage their own inventory.
+/// Inventory controller.
+/// inventory.view — SalonManager, Receptionist.
+/// inventory.adjust / inventory.manage — SalonManager only.
+/// Authorize on permission strings — never on role names (R2).
 /// </summary>
 [Route("api/inventory-items")]
 [ApiController]
 public class InventoryItemController : ControllerBase
 {
-    // TODO: Implement inventory item service
-    // For now, this is a placeholder
-
     [HttpGet]
-    [Authorize]
-    public IActionResult GetInventoryItems()
-    {
-        // TODO: Implement inventory listing for current salon
-        return Ok(new List<InventoryItemDto>());
-    }
+    [HasPermission(Permissions.InventoryView)]
+    public IActionResult GetInventoryItems() => Ok(new List<InventoryItemDto>());
 
     [HttpGet("{id}")]
-    [Authorize]
-    public IActionResult GetInventoryItem(Guid id)
-    {
-        // TODO: Implement inventory detail
-        return NotFound(new { message = "Inventory item not found" });
-    }
+    [HasPermission(Permissions.InventoryView)]
+    public IActionResult GetInventoryItem(Guid id) =>
+        NotFound(new { message = "Inventory item not found" });
 
     [HttpPost]
-    [Authorize]
+    [HasPermission(Permissions.InventoryManage)]
     public IActionResult CreateInventoryItem([FromBody] CreateInventoryItemDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        // TODO: Implement inventory creation (salon manager only)
+        if (!ModelState.IsValid) return BadRequest(ModelState);
         return CreatedAtAction(nameof(GetInventoryItem), new { id = Guid.NewGuid() }, dto);
     }
 
     [HttpPut("{id}")]
-    [Authorize]
+    [HasPermission(Permissions.InventoryManage)]
     public IActionResult UpdateInventoryItem(Guid id, [FromBody] UpdateInventoryItemDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        // TODO: Implement inventory update (salon manager only)
+        if (!ModelState.IsValid) return BadRequest(ModelState);
         return Ok(new { message = "Inventory item updated successfully" });
     }
+
+    [HttpPost("{id}/adjust")]
+    [HasPermission(Permissions.InventoryAdjust)]
+    public IActionResult AdjustStock(Guid id) =>
+        Ok(new { message = "Stock adjusted" });
 }

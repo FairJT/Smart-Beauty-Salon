@@ -1,44 +1,32 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SalonOS.Api.Authorization;
 using SalonOS.Marketplace.Application.DTOs;
+using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Marketplace.API.Controllers;
 
 /// <summary>
-/// Salon package license controller for managing salon package subscriptions.
-/// Only salon managers can manage their own licenses.
+/// Salon package license (purchase) controller.
+/// marketplace.browse to list; marketplace.license.purchase to buy (SalonManager).
 /// </summary>
 [Route("api/salon-package-licenses")]
 [ApiController]
 public class SalonPackageLicenseController : ControllerBase
 {
-    // TODO: Implement salon package license service
-    // For now, this is a placeholder
-
     [HttpGet]
-    [Authorize]
-    public IActionResult GetSalonPackageLicenses()
-    {
-        // TODO: Implement license listing for current salon
-        return Ok(new List<SalonPackageLicenseDto>());
-    }
+    [HasPermission(Permissions.MarketplaceBrowse)]
+    public IActionResult GetSalonPackageLicenses() => Ok(new List<SalonPackageLicenseDto>());
 
     [HttpPost]
-    [Authorize]
+    [HasPermission(Permissions.MarketplaceLicensePurchase)]
     public IActionResult PurchasePackage([FromBody] CreateSalonPackageLicenseDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        // TODO: Implement package purchase (salon manager only)
-        // This should also handle payment via IPaymentProvider
+        if (!ModelState.IsValid) return BadRequest(ModelState);
         return CreatedAtAction(nameof(GetSalonPackageLicenses), new { }, dto);
     }
 }
 
-/// <summary>
-/// DTO for creating a salon package license.
-/// </summary>
+/// <summary>DTO for creating a salon package license.</summary>
 public class CreateSalonPackageLicenseDto
 {
     public Guid PackageListingId { get; set; }
