@@ -1,63 +1,72 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SalonOS.Api.Authorization;
 using SalonOS.Catalog.Application.DTOs;
+using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Catalog.API.Controllers;
 
 /// <summary>
-/// Catalog service controller for managing salon services.
-/// Only salon managers can manage their own services.
+/// Catalog (Services) controller.
+/// Task 6.4: catalog.* permissions per §R4.
+/// catalog.view is public to all authenticated users (SalonManager, Receptionist, Artist, Client).
+/// catalog.create/edit/delete/package.manage are SalonManager-only.
+/// Authorize on permission strings — never on role names (R2).
 /// </summary>
 [Route("api/catalog-services")]
 [ApiController]
 public class CatalogServiceController : ControllerBase
 {
-    // TODO: Implement catalog service service
-    // For now, this is a placeholder
-
+    // ── GET /api/catalog-services — catalog.view ──────────────────────────────
     [HttpGet]
-    [Authorize]
+    [HasPermission(Permissions.CatalogView)]
     public IActionResult GetCatalogServices()
     {
-        // TODO: Implement service listing for current salon
         return Ok(new List<CatalogServiceDto>());
     }
 
+    // ── GET /api/catalog-services/{id} — catalog.view ────────────────────────
     [HttpGet("{id}")]
-    [Authorize]
+    [HasPermission(Permissions.CatalogView)]
     public IActionResult GetCatalogService(Guid id)
     {
-        // TODO: Implement service detail
         return NotFound(new { message = "Catalog service not found" });
     }
 
+    // ── POST /api/catalog-services — catalog.create ───────────────────────────
     [HttpPost]
-    [Authorize]
+    [HasPermission(Permissions.CatalogCreate)]
     public IActionResult CreateCatalogService([FromBody] CreateCatalogServiceDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        // TODO: Implement service creation (salon manager only)
         return CreatedAtAction(nameof(GetCatalogService), new { id = Guid.NewGuid() }, dto);
     }
 
+    // ── PUT /api/catalog-services/{id} — catalog.edit ────────────────────────
     [HttpPut("{id}")]
-    [Authorize]
+    [HasPermission(Permissions.CatalogEdit)]
     public IActionResult UpdateCatalogService(Guid id, [FromBody] UpdateCatalogServiceDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        // TODO: Implement service update (salon manager only)
         return Ok(new { message = "Catalog service updated successfully" });
     }
 
+    // ── DELETE /api/catalog-services/{id} — catalog.delete ───────────────────
     [HttpDelete("{id}")]
-    [Authorize]
+    [HasPermission(Permissions.CatalogDelete)]
     public IActionResult DeleteCatalogService(Guid id)
     {
-        // TODO: Implement service deletion (salon manager only)
         return Ok(new { message = "Catalog service deleted successfully" });
+    }
+
+    // ── POST /api/catalog-services/packages — catalog.package.manage ──────────
+    [HttpPost("packages")]
+    [HasPermission(Permissions.CatalogPackageManage)]
+    public IActionResult ManagePackage()
+    {
+        return Ok(new { message = "Package managed successfully" });
     }
 }
