@@ -9,6 +9,7 @@ using SalonOS.Api.Authorization;
 using SalonOS.Api.Middleware;
 using SalonOS.Infrastructure.Identity;
 using SalonOS.Infrastructure.Admin;
+using SalonOS.Infrastructure.Interceptors;
 using SalonOS.Infrastructure.MultiTenancy;
 using SalonOS.Shared.Identity;
 using SalonOS.Identity.API.Middleware;
@@ -33,8 +34,11 @@ builder.Services.AddDbContext<IdentityDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add EF Core for main app
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AppDbContext>((sp, options) =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.AddInterceptors(sp.GetRequiredService<TenantSessionContextInterceptor>());
+});
 
 // Add ASP.NET Identity
 builder.Services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>(options =>
@@ -99,6 +103,9 @@ builder.Services.AddScoped<IAuthorizationHandler, OwnsAppointmentHandler>(); // 
 // Add Tenant Context (scoped per request)
 // TenantContext now reads from ICurrentUser claims — never from request input (R3, R4)
 builder.Services.AddScoped<ITenantContext, TenantContextFromClaims>();
+
+// RLS session-context interceptor (Task 8.2)
+builder.Services.AddScoped<TenantSessionContextInterceptor>();
 
 // PlatformAdminService — the only sanctioned cross-tenant service (Task 7.1)
 builder.Services.AddScoped<PlatformAdminService>();
