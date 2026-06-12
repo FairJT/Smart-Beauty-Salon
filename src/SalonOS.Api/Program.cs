@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SalonOS.Api.Authorization;
+using SalonOS.Api.Middleware;
 using SalonOS.Infrastructure.Identity;
 using SalonOS.Infrastructure.MultiTenancy;
 using SalonOS.Shared.Identity;
@@ -135,6 +136,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
 app.UseAuthentication();
+app.UseMiddleware<TenantResolutionMiddleware>(); // Task 4.5 — reject missing-tenant requests
 app.UseAuthorization();
 
 // Add Tenant Context Middleware
