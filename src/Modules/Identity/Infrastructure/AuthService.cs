@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SalonOS.Identity.Application.DTOs;
 using SalonOS.Identity.Domain;
+using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Identity.Infrastructure;
 
@@ -24,16 +25,30 @@ public interface IAuthService
 /// <summary>
 /// Authentication service implementation.
 /// Handles user registration, login, and JWT token generation.
+///
+/// Task 3.2: the token now embeds:
+///   - one "permission" claim per permission in RolePermissions.Map[role]
+///   - "tenant_id" (from the user's active membership)
+///   - "role"      (SalonManager / Receptionist / Artist / Client)
+///   - "artist_id" (only for Artist role)
+///   - "is_platform_owner" = "true" (only for SuperAdmin — no permission list)
+///
+/// Task 3.3: access token lifetime = 30 minutes (was 30 days).
 /// </summary>
 public class AuthService : IAuthService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _config;
+    private readonly IdentityDbContext _db;
 
-    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration config)
+    public AuthService(
+        UserManager<ApplicationUser> userManager,
+        IConfiguration config,
+        IdentityDbContext db)
     {
         _userManager = userManager;
         _config = config;
+        _db = db;
     }
 
     public async Task<AuthResponseDto?> RegisterAsync(RegisterDto dto)
@@ -55,10 +70,12 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
             return null;
 
+        // New clients have no membership yet — token has no tenant/permissions until they join a tenant.
+        var token = await BuildTokenAsync(user);
         return new AuthResponseDto
         {
-            Token = BuildToken(user),
-            ExpiresIn = 30 * 24 * 60,
+            Token = token,
+            ExpiresIn = 30,   // minutes
             User = MapToProfile(user)
         };
     }
@@ -72,10 +89,11 @@ public class AuthService : IAuthService
         if (!await _userManager.CheckPasswordAsync(user, dto.Password))
             return null;
 
+        var token = await BuildTokenAsync(user);
         return new AuthResponseDto
         {
-            Token = BuildToken(user),
-            ExpiresIn = 30 * 24 * 60,
+            Token = token,
+            ExpiresIn = 30,   // minutes
             User = MapToProfile(user)
         };
     }
@@ -86,12 +104,14 @@ public class AuthService : IAuthService
         return user == null ? null : MapToProfile(user);
     }
 
-    public async Task<(bool Success, string Message)> ChangePasswordAsync(string userId, ChangePasswordDto dto)
+    public async Task<(bool Success, string Message)> ChangePasswordAsync(
+        string userId, ChangePasswordDto dto)
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null) return (false, "User not found");
 
-        var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+        var result = await _userManager.ChangePasswordAsync(
+            user, dto.CurrentPassword, dto.NewPassword);
 
         if (!result.Succeeded)
         {
@@ -102,26 +122,71 @@ public class AuthService : IAuthService
         return (true, "Password changed successfully");
     }
 
-    private string BuildToken(ApplicationUser user)
+    // ─── Token builder ────────────────────────────────────────────────────────
+
+    private async Task<string> BuildTokenAsync(ApplicationUser user)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName ?? ""),
-            new Claim("UserType", user.UserType.ToString()),
-            // TenantId will be added when user selects active tenant
-            // This is handled by the TenantContextMiddleware
+            new(ClaimTypes.NameIdentifier, user.Id),
+            new(ClaimTypes.Name, user.UserName ?? string.Empty),
         };
 
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
+        // PlatformOwner (SuperAdmin) — bypass permission list, set flag instead.
+        if (user.UserType == UserType.SuperAdmin)
+        {
+            claims.Add(new Claim("is_platform_owner", "true"));
+            claims.Add(new Claim("role", "PlatformOwner"));
+        }
+        else
+        {
+            // Map UserType → role name that matches RolePermissions.Map keys
+            var roleName = user.UserType switch
+            {
+                UserType.SalonManager => "SalonManager",
+                UserType.Artist       => "Artist",
+                _                     => "Client"
+            };
+
+            // Fetch the user's active membership to get TenantId (and ArtistId if Artist)
+            var membership = await _db.Memberships
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.UserId == user.Id && m.IsActive);
+
+            if (membership != null)
+            {
+                claims.Add(new Claim("tenant_id", membership.TenantId.ToString()));
+
+                // Receptionist is stored as MembershipRole.Staff with a future flag;
+                // for now map MembershipRole.Staff + UserType != Artist → Receptionist.
+                if (membership.Role == MembershipRole.Staff && user.UserType != UserType.Artist)
+                    roleName = "Receptionist";
+            }
+
+            claims.Add(new Claim("role", roleName));
+
+            // Embed one "permission" claim per permission the role holds.
+            if (RolePermissions.Map.TryGetValue(roleName, out var perms))
+                foreach (var p in perms)
+                    claims.Add(new Claim("permission", p));
+
+            // Artist: embed artist_id so ownership checks can compare without a DB hit.
+            if (user.UserType == UserType.Artist && membership != null)
+                claims.Add(new Claim("artist_id", membership.UserId));
+        }
+
+        var jwtKey = _config["JwtSettings:Key"]
+            ?? Environment.GetEnvironmentVariable("JWT_SECRET")
+            ?? throw new InvalidOperationException("JWT key is not configured.");
+
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: _config["JwtSettings:Issuer"],
-            audience: _config["JwtSettings:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddDays(30),
+            issuer:            _config["JwtSettings:Issuer"],
+            audience:          _config["JwtSettings:Audience"],
+            claims:            claims,
+            expires:           DateTime.UtcNow.AddMinutes(30),   // Task 3.3 — 30-min access token
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -129,13 +194,13 @@ public class AuthService : IAuthService
 
     private static UserProfileDto MapToProfile(ApplicationUser user) => new()
     {
-        Id = user.Id,
-        FirstName = user.FirstName,
-        LastName = user.LastName,
-        Mobile = user.PhoneNumber ?? "",
-        UserType = user.UserType.ToString(),
+        Id           = user.Id,
+        FirstName    = user.FirstName,
+        LastName     = user.LastName,
+        Mobile       = user.PhoneNumber ?? string.Empty,
+        UserType     = user.UserType.ToString(),
         LoyaltyPoints = user.LoyaltyPoints,
-        TotalVisits = user.TotalVisits,
-        IsActive = user.IsActive
+        TotalVisits  = user.TotalVisits,
+        IsActive     = user.IsActive
     };
 }
