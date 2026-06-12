@@ -43,8 +43,14 @@ namespace SmartSalon.Controllers
             [FromQuery] int page = 1,
             [FromQuery] int size = 30)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var artistSalonId = await _artistService.GetSalonIdAsync(id);
+            if (artistSalonId == null) return NotFound(new { message = "Artist not found" });
+
+            var canAccess = await _salonService.IsSalonManagerAsync(artistSalonId.Value, userId);
+            if (!canAccess) return Forbid();
+
             var report = await _artistService.GetReportAsync(id, from, to, page, size);
-            if (report == null) return NotFound(new { message = "Artist not found" });
             return Ok(report);
         }
 

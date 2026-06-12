@@ -3694,11 +3694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
+      "projectUniqueName": "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
       "projectName": "SalonOS.Api",
-      "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
+      "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
       "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-      "outputPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\obj\\",
+      "outputPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -3713,14 +3713,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
-              "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj"
+            "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
+              "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj"
             },
-            "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj": {
-              "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj"
+            "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj": {
+              "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj"
             },
-            "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-              "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+            "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+              "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
             }
           }
         }

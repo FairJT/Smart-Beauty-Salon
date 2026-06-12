@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4mCtNrP1bp0=",
+  "dgSpecHash": "wnBfVsXGwLM=",
   "success": true,
-  "projectFilePath": "d:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj",
+  "projectFilePath": "D:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Fair\\.nuget\\packages\\coverlet.collector\\6.0.4\\coverlet.collector.6.0.4.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\microsoft.codecoverage\\17.14.1\\microsoft.codecoverage.17.14.1.nupkg.sha512",

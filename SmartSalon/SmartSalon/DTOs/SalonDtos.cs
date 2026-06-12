@@ -23,8 +23,7 @@ namespace SmartSalon.DTOs
         [MaxLength(1000)]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "شناسه مدیر الزامی است")]
-        public string ManagerId { get; set; } = string.Empty;
+        public string? ManagerId { get; set; }
     }
 
     public class UpdateSalonDto

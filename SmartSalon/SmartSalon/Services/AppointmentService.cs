@@ -251,5 +251,58 @@ namespace SmartSalon.Services
             await _db.SaveChangesAsync();
             return (true, "Rating submitted successfully", artist.RatingAvg);
         }
+
+        public async Task<PaginatedResult<AppointmentListItemDto>> GetAllAsync(
+            int? salonId, int? status, DateTime? from, DateTime? to, int page, int size)
+        {
+            var query = _db.Appointments
+                .Include(a => a.Salon)
+                .Include(a => a.Artist).ThenInclude(ar => ar!.User)
+                .Include(a => a.Service)
+                .AsQueryable();
+
+            if (salonId.HasValue)
+                query = query.Where(a => a.SalonId == salonId.Value);
+
+            if (status.HasValue)
+                query = query.Where(a => (int)a.Status == status.Value);
+
+            if (from.HasValue)
+                query = query.Where(a => a.StartTime.Date >= from.Value.Date);
+
+            if (to.HasValue)
+                query = query.Where(a => a.StartTime.Date <= to.Value.Date);
+
+            var total = await query.CountAsync();
+
+            var appointments = await query
+                .OrderByDescending(a => a.StartTime)
+                .Skip((page - 1) * size)
+                .Take(size)
+                .Select(a => new AppointmentListItemDto
+                {
+                    Id = a.Id,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    Status = (int)a.Status,
+                    EstimatedPrice = a.EstimatedPrice,
+                    DepositAmount = a.DepositAmount,
+                    IsRated = a.IsRated,
+                    Rating = a.Rating,
+                    Comment = a.Comment,
+                    SalonName = a.Salon!.Name,
+                    ArtistName = a.Artist!.User!.FirstName + " " + a.Artist.User.LastName,
+                    ServiceName = a.Service!.Name
+                })
+                .ToListAsync();
+
+            return new PaginatedResult<AppointmentListItemDto>
+            {
+                Total = total,
+                Page = page,
+                Size = size,
+                Data = appointments
+            };
+        }
     }
 }

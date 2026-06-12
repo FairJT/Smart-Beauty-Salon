@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../../domain/entities/appointment_entity.dart';
+import '../../data/datasources/dio_client.dart';
+import '../../data/datasources/api_constants.dart';
 import '../providers/appointment_provider.dart';
 
 class AppointmentList extends ConsumerStatefulWidget {
@@ -148,9 +150,9 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
               onPressed: () async {
                 Navigator.pop(context);
                 try {
-                  await ApiService.post(
+                  await DioClient.instance.post(
                     '${ApiConstants.appointments}/$id/rate',
-                    {'rating': selectedRating, 'comment': commentController.text},
+                    data: {'rating': selectedRating, 'comment': commentController.text},
                   );
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -201,7 +203,7 @@ class _AppointmentCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(appointment.salonName,
+                  child: Text(appointment.salonName ?? '',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 ),
                 Container(
@@ -219,8 +221,8 @@ class _AppointmentCard extends StatelessWidget {
               ],
             ),
             const Divider(height: 20),
-            _row(Icons.spa_outlined, appointment.serviceName),
-            _row(Icons.person_outline, appointment.artistName),
+            _row(Icons.spa_outlined, appointment.serviceName ?? ''),
+            _row(Icons.person_outline, appointment.artistName ?? ''),
             _row(Icons.calendar_today_outlined,
                 '${appointment.startTime.year}/${appointment.startTime.month}/${appointment.startTime.day}  ساعت  ${appointment.startTime.hour}:${appointment.startTime.minute.toString().padLeft(2, '0')}'),
             _row(Icons.attach_money,

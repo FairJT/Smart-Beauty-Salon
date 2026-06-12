@@ -89,11 +89,11 @@ namespace SmartSalon.Services
 
         private string BuildToken(ApplicationUser user)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName ?? ""),
-                new Claim("UserType", user.UserType.ToString()),
+                new(ClaimTypes.NameIdentifier, user.Id),
+                new(ClaimTypes.Name, user.UserName ?? ""),
+                new("UserType", user.UserType.ToString()),
             };
 
             var key = new SymmetricSecurityKey(

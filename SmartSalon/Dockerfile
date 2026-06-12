@@ -15,7 +15,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
 # Install ICU for globalization (Persian dates)
-RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev curl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/publish .
 

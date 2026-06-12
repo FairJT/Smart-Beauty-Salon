@@ -11,5 +11,6 @@ namespace SmartSalon.Services
         Task<bool> CompleteAsync(int id, string userId);
         Task<bool> CancelAsync(int id, string userId);
         Task<(bool Success, string Message, decimal? RatingAvg)> RateAsync(int id, string userId, RateRequestDto request);
+        Task<PaginatedResult<AppointmentListItemDto>> GetAllAsync(int? salonId, int? status, DateTime? from, DateTime? to, int page, int size);
     }
 }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../providers/auth_provider.dart';
-import 'auth/login_screen.dart';
-import 'home/home_screen.dart';
+import 'login_screen.dart';
+import 'home_screen.dart';
+import 'admin/admin_dashboard.dart';
+import 'artist/artist_schedule_screen.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -24,12 +26,24 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (!mounted) return;
 
     final auth = ref.read(authProvider);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => auth.isLoggedIn ? const HomeScreen() : const LoginScreen(),
-      ),
-    );
+
+    if (!auth.isLoggedIn) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+      return;
+    }
+
+    Widget destination;
+    if (auth.isSuperAdmin) {
+      destination = const AdminDashboard();
+    } else if (auth.isSalonManager) {
+      destination = const HomeScreen();
+    } else if (auth.isArtist) {
+      destination = const ArtistScheduleScreen();
+    } else {
+      destination = const HomeScreen();
+    }
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => destination));
   }
 
   @override

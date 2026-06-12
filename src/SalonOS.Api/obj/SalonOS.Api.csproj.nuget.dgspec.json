@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj": {}
+    "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj": {}
   },
   "projects": {
-    "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj": {
+    "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj",
         "projectName": "SalonOS.Booking",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -94,14 +94,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj": {
+    "D:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj",
         "projectName": "SalonOS.Catalog",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\Modules\\Catalog\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\Modules\\Catalog\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -116,8 +116,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -184,14 +184,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
+    "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj",
         "projectName": "SalonOS.Identity",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -206,8 +206,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -278,14 +278,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj": {
+    "D:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj",
         "projectName": "SalonOS.Inventory",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\Modules\\Inventory\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\Modules\\Inventory\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -300,8 +300,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -368,14 +368,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj": {
+    "D:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj",
         "projectName": "SalonOS.Marketplace",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -390,8 +390,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -458,14 +458,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj": {
+    "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
         "projectName": "SalonOS.Api",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\SalonOS.Api.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Api\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -480,14 +480,14 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj"
+              "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -570,14 +570,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj": {
+    "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj",
         "projectName": "SalonOS.Infrastructure",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\SalonOS.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -592,23 +592,23 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj"
+              "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj"
+              "D:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Catalog\\SalonOS.Catalog.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj"
+              "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Identity\\SalonOS.Identity.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj"
+              "D:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Inventory\\SalonOS.Inventory.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj"
+              "D:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\Modules\\Marketplace\\SalonOS.Marketplace.csproj"
               },
-              "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
-                "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
+              "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+                "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj"
               }
             }
           }
@@ -689,14 +689,14 @@
         }
       }
     },
-    "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
+    "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj",
         "projectName": "SalonOS.Shared",
-        "projectPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\SalonOS.Shared.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\src\\SalonOS.Shared\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\src\\SalonOS.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"

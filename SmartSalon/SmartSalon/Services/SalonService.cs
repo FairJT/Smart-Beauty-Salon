@@ -110,7 +110,7 @@ namespace SmartSalon.Services
                 Phone = dto.Phone,
                 Address = dto.Address,
                 Description = dto.Description,
-                ManagerId = dto.ManagerId
+                ManagerId = dto.ManagerId ?? string.Empty
             };
 
             _db.Salons.Add(salon);
@@ -147,7 +147,30 @@ namespace SmartSalon.Services
 
         public async Task<bool> IsSalonManagerAsync(int salonId, string userId)
         {
+            var user = await _db.Users.FindAsync(userId);
+            if (user?.UserType == UserType.SuperAdmin) return true;
             return await _db.Salons.AnyAsync(s => s.Id == salonId && s.ManagerId == userId);
+        }
+
+        public async Task<List<SalonListItemDto>> GetAllSalonsForAdminAsync()
+        {
+            return await _db.Salons
+                .Include(s => s.Services.Where(sv => sv.IsActive))
+                .Include(s => s.Artists.Where(a => a.IsActive))
+                .Select(s => new SalonListItemDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    LogoUrl = s.LogoUrl,
+                    RatingAvg = s.RatingAvg,
+                    IsVip = s.IsVip,
+                    Address = s.Address,
+                    ServiceCount = s.Services.Count,
+                    ArtistCount = s.Artists.Count
+                })
+                .OrderByDescending(s => s.IsVip)
+                .ThenByDescending(s => s.RatingAvg)
+                .ToListAsync();
         }
     }
 }

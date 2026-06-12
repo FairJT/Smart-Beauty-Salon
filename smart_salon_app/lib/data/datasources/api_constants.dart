@@ -1,7 +1,7 @@
 class ApiConstants {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://5.202.45.40:8080/api',
+    defaultValue: 'http://localhost:5015/api',
   );
 
   static const String register = '$baseUrl/auth/register';
@@ -17,4 +17,11 @@ class ApiConstants {
   static const String catalogServices = '$baseUrl/catalog/services';
   static const String inventory = '$baseUrl/inventory';
   static const String marketplace = '$baseUrl/marketplace';
+
+  // Admin endpoints
+  static const String adminUsers = '$baseUrl/admin/users';
+  static const String adminSalons = '$baseUrl/admin/salons';
+  static const String adminStats = '$baseUrl/admin/stats';
+  static const String artistSchedule = '$baseUrl/artist-schedule/my';
+  static const String artistScheduleStats = '$baseUrl/artist-schedule/my/stats';
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rsVr8wmc/uI=",
+  "dgSpecHash": "zmzx4ZUk3Zk=",
   "success": true,
-  "projectFilePath": "d:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj",
+  "projectFilePath": "D:\\PR\\SmartSalon\\src\\Modules\\Booking\\SalonOS.Booking.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Fair\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Fair\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

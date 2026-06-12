@@ -10,7 +10,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await DioClient.instance.post(
       ApiConstants.login,
       data: {
-        'phoneNumber': phoneNumber,
+        'mobile': phoneNumber,
         'password': password,
       },
     );
@@ -32,7 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await DioClient.instance.post(
       ApiConstants.register,
       data: {
-        'phoneNumber': phoneNumber,
+        'mobile': phoneNumber,
         'password': password,
         'firstName': firstName,
         'lastName': lastName,

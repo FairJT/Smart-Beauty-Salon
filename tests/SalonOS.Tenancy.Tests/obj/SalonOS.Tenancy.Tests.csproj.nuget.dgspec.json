@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj": {}
+    "D:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj": {}
   },
   "projects": {
-    "d:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj": {
+    "D:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj",
+        "projectUniqueName": "D:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj",
         "projectName": "SalonOS.Tenancy.Tests",
-        "projectPath": "d:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj",
+        "projectPath": "D:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\SalonOS.Tenancy.Tests.csproj",
         "packagesPath": "C:\\Users\\Fair\\.nuget\\packages\\",
-        "outputPath": "d:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\obj\\",
+        "outputPath": "D:\\PR\\SmartSalon\\tests\\SalonOS.Tenancy.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fair\\AppData\\Roaming\\NuGet\\NuGet.Config"

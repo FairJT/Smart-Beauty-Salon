@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartSalon")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e88a9a7484dc36b1a56784506bfa898c90c43962")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+064e4c1f6237022d62d5ebb5c06ad406edd42ae1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartSalon")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartSalon")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

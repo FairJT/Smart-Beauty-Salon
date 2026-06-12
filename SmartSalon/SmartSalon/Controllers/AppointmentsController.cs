@@ -99,6 +99,20 @@ namespace SmartSalon.Controllers
             return Ok(new { message = "Appointment cancelled" });
         }
 
+        [HttpGet("all")]
+        [Authorize(Policy = "RequireSuperAdmin")]
+        public async Task<IActionResult> GetAll(
+            [FromQuery] int? salonId,
+            [FromQuery] int? status,
+            [FromQuery] DateTime? from,
+            [FromQuery] DateTime? to,
+            [FromQuery] int page = 1,
+            [FromQuery] int size = 30)
+        {
+            var result = await _appointmentService.GetAllAsync(salonId, status, from, to, page, size);
+            return Ok(result);
+        }
+
         [HttpPost("{id:int}/rate")]
         [Authorize]
         public async Task<IActionResult> RateArtist(int id, [FromBody] RateRequestDto request)

@@ -11,5 +11,6 @@ namespace SmartSalon.Services
         Task<bool> UpdateSalonAsync(int id, UpdateSalonDto dto, string userId);
         Task<bool> DeleteSalonAsync(int id, string userId);
         Task<bool> IsSalonManagerAsync(int salonId, string userId);
+        Task<List<SalonListItemDto>> GetAllSalonsForAdminAsync();
     }
 }

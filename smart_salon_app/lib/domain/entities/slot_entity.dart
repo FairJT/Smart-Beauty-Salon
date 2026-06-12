@@ -6,6 +6,8 @@ class SlotEntity extends BaseEntity {
   final int artistId;
   final bool isAvailable;
 
+  String get start => '${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}';
+
   const SlotEntity({
     required super.id,
     required this.startTime,

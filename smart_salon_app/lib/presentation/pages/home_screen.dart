@@ -11,6 +11,9 @@ import 'profile_screen.dart';
 import 'salon_card.dart';
 import 'appointment_list.dart';
 import 'search_dialog.dart';
+import 'admin/admin_dashboard.dart';
+import 'artist/artist_schedule_screen.dart';
+import 'manager/artist_management_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -42,12 +45,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = ref.watch(authProvider);
+
+    if (auth.isSuperAdmin) {
+      return const AdminDashboard();
+    }
+
+    if (auth.isArtist) {
+      return const ArtistScheduleScreen();
+    }
+
     final salonState = ref.watch(salonListProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('سالن هوشمند ابری', style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
+          if (auth.isSalonManager)
+            IconButton(
+              icon: const Icon(Icons.people_outline),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ArtistManagementScreen()),
+              ),
+            ),
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () => showSearchDialog(context, ref),

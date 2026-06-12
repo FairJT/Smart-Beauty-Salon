@@ -23,6 +23,12 @@ class AppColors {
   static const Color info = Color(0xFF3B82F6);
   static const Color info50 = Color(0x143B82F6);
 
+  // Additional colors
+  static const Color gray = Color(0xFF9CA3AF);
+  static const Color green = Color(0xFF10B981);
+  static const Color dark = Color(0xFF1E1B4B);
+  static const Color lightBlue = Color(0xFFEFF6FF);
+
   // Neutral
   static const Color white = Colors.white;
   static const Color background = Color(0xFFF5F3FF);

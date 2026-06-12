@@ -578,3 +578,4 @@ D:\PR\SmartSalon\SmartSalon\SmartSalon\bin\Debug\net9.0\FluentValidation.dll
 D:\PR\SmartSalon\SmartSalon\SmartSalon\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
 D:\PR\SmartSalon\SmartSalon\SmartSalon\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\PR\SmartSalon\SmartSalon\SmartSalon\obj\Debug\net9.0\compressed\et22vqe1yj-{0}-emetgz79w1-emetgz79w1.gz
+D:\PR\SmartSalon\SmartSalon\SmartSalon\bin\Debug\net9.0\appsettings.Docker.json

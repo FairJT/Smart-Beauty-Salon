@@ -35,7 +35,7 @@ namespace SmartSalon.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "RequireSuperAdmin")]
         public async Task<IActionResult> Create([FromBody] CreateSalonDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

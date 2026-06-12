@@ -6,6 +6,8 @@ import '../providers/auth_provider.dart';
 import 'home_screen.dart';
 import 'register_screen.dart';
 import 'otp_screen.dart';
+import 'admin/admin_dashboard.dart';
+import 'artist/artist_schedule_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -38,9 +40,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             _passwordController.text,
           );
       if (!mounted) return;
+      final auth = ref.read(authProvider);
+      Widget destination;
+      if (auth.isSuperAdmin) {
+        destination = const AdminDashboard();
+      } else if (auth.isArtist) {
+        destination = const ArtistScheduleScreen();
+      } else {
+        destination = const HomeScreen();
+      }
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
+        MaterialPageRoute(builder: (_) => destination),
       );
     } catch (e) {
       if (!mounted) return;

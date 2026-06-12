@@ -1,4 +1,10 @@
+# ═══════════════════════════════════════════════════════════════
+# SmartSalon - Docker Compose
+# Services: SQL Server, Backend API, SalonOS API, Flutter Web
+# ═══════════════════════════════════════════════════════════════
+
 services:
+
   # ─── SQL Server (Azure SQL Edge) ─────────────────────────────
   sqlserver:
     image: mcr.microsoft.com/azure-sql-edge:latest
@@ -15,24 +21,52 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+      start_period: 30s
+    restart: unless-stopped
     networks:
       - salon-network
 
-  # ─── SmartSalon Monolith (Razor Pages + API) ────────────────
+  # ─── SmartSalon Backend (ASP.NET API + Razor Pages) ──────────
   smartsalon:
     build:
-      context: ./SmartSalon
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: SmartSalon/Dockerfile
     container_name: SmartSalonApp
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       ASPNETCORE_URLS: "http://+:5015"
-      JWT_SECRET: "SmartSalon2024!DockerSecretKeyForJWT@#$%"
     ports:
       - "5015:5015"
     depends_on:
       sqlserver:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5015/swagger/index.html"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+    networks:
+      - salon-network
+
+  # ─── Flutter Web App (Nginx) ─────────────────────────────────
+  flutter-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.FlutterWeb
+    container_name: FlutterWeb
+    ports:
+      - "8081:80"
+    depends_on:
+      smartsalon:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:80"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
     networks:
       - salon-network
 
@@ -45,12 +79,18 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       ASPNETCORE_URLS: "http://+:5016"
-      JWT_SECRET: "SalonOS2024!DockerSecretKeyForJWT@#$%"
     ports:
       - "5016:5016"
     depends_on:
       sqlserver:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5016/swagger/index.html"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
     networks:
       - salon-network
 

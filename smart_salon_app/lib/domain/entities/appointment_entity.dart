@@ -56,6 +56,22 @@ class AppointmentEntity extends BaseEntity {
   }
 }
 
+class CreateAppointmentInput {
+  final int salonId;
+  final int artistId;
+  final int serviceId;
+  final DateTime startTime;
+  final DateTime endTime;
+
+  const CreateAppointmentInput({
+    required this.salonId,
+    required this.artistId,
+    required this.serviceId,
+    required this.startTime,
+    required this.endTime,
+  });
+}
+
 enum AppointmentStatus {
   pending(1, 'در انتظار'),
   confirmed(2, 'تایید شده'),

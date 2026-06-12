@@ -17,6 +17,11 @@ class AuthState {
       loading: loading ?? this.loading,
     );
   }
+
+  bool get isSuperAdmin => user?.userType == 'SuperAdmin';
+  bool get isSalonManager => user?.userType == 'SalonManager';
+  bool get isArtist => user?.userType == 'Artist';
+  bool get isClient => user?.userType == 'Client';
 }
 
 class AuthNotifier extends StateNotifier<AuthState> {
@@ -56,12 +61,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<bool> register({
-    required String phoneNumber,
+    String? mobile,
     required String password,
     required String firstName,
     required String lastName,
+    String? nationalCode,
   }) async {
-    final user = await _authRepository.register(phoneNumber, password, firstName, lastName);
+    final user = await _authRepository.register(mobile ?? '', password, firstName, lastName);
     state = AuthState(
       isLoggedIn: true,
       user: user,

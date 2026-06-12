@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SalonOS.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+903e23335a9f4c25cdc3da70362d251c3fbeab51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+064e4c1f6237022d62d5ebb5c06ad406edd42ae1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SalonOS.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SalonOS.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

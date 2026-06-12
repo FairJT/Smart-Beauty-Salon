@@ -45,9 +45,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           const SizedBox(height: 20),
           _buildProfileHeader(),
           const SizedBox(height: 16),
-          if (!_loading && _profile != null) _buildLoyaltyCard(),
+          if (!_loading && _user != null) _buildLoyaltyCard(),
           const SizedBox(height: 16),
-          if (!_loading && _profile != null) _buildLoyaltyLevel(_profile!.loyaltyPoints),
+          if (!_loading && _user != null) _buildLoyaltyLevel(_user!.loyaltyPoints ?? 0),
           const SizedBox(height: 16),
           _buildMenuItem(icon: Icons.calendar_month, title: 'رزروهای من', onTap: () {}),
           Card(
@@ -153,7 +153,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text('امتیاز وفاداری شما', style: TextStyle(color: Colors.white70, fontSize: 13)),
-                Text('${_profile?.loyaltyPoints ?? 0} امتیاز',
+                Text('${_user?.loyaltyPoints ?? 0} امتیاز',
                     style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
               ],
             ),
@@ -162,7 +162,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               const Text('تعداد مراجعات', style: TextStyle(color: Colors.white70, fontSize: 12)),
-              Text('${_profile?.totalVisits ?? 0} بار',
+              Text('${_user?.totalVisits ?? 0} بار',
                   style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
             ],
           ),

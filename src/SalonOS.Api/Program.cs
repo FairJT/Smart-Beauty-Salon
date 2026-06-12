@@ -99,6 +99,16 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// ─── Auto-create database in Docker ──────────────────────────
+if (app.Environment.EnvironmentName == "Docker")
+{
+    using var scope = app.Services.CreateScope();
+    var identityDb = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+    identityDb.Database.EnsureCreated();
+    var appDb = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    appDb.Database.EnsureCreated();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

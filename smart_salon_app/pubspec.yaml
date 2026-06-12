@@ -17,7 +17,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   shamsi_date: ^1.0.1
-  intl: ^0.19.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

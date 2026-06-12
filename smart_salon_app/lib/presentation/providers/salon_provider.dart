@@ -8,12 +8,16 @@ class SalonListState {
   final bool loading;
   final String? error;
   final String searchQuery;
+  final bool vipOnly;
+  final String serviceFilter;
 
   SalonListState({
     this.salons = const [],
     this.loading = true,
     this.error,
     this.searchQuery = '',
+    this.vipOnly = false,
+    this.serviceFilter = '',
   });
 
   SalonListState copyWith({
@@ -21,12 +25,16 @@ class SalonListState {
     bool? loading,
     String? error,
     String? searchQuery,
+    bool? vipOnly,
+    String? serviceFilter,
   }) {
     return SalonListState(
       salons: salons ?? this.salons,
       loading: loading ?? this.loading,
       error: error,
       searchQuery: searchQuery ?? this.searchQuery,
+      vipOnly: vipOnly ?? this.vipOnly,
+      serviceFilter: serviceFilter ?? this.serviceFilter,
     );
   }
 }
@@ -54,6 +62,14 @@ class SalonListNotifier extends StateNotifier<SalonListState> {
   void setSearch(String query) {
     state = state.copyWith(searchQuery: query);
     load(search: query);
+  }
+
+  void toggleVip() {
+    state = state.copyWith(vipOnly: !state.vipOnly);
+  }
+
+  void setServiceFilter(String service) {
+    state = state.copyWith(serviceFilter: service);
   }
 }
 

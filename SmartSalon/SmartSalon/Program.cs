@@ -55,6 +55,21 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// ─── Authorization Policies ─────────────────────────────────
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireSuperAdmin", policy =>
+        policy.RequireClaim("UserType", "SuperAdmin"));
+    options.AddPolicy("RequireManager", policy =>
+        policy.RequireClaim("UserType", "SuperAdmin", "SalonManager"));
+    options.AddPolicy("RequireManagerOrAbove", policy =>
+        policy.RequireClaim("UserType", "SuperAdmin", "SalonManager"));
+    options.AddPolicy("RequireArtist", policy =>
+        policy.RequireClaim("UserType", "SuperAdmin", "SalonManager", "Artist"));
+    options.AddPolicy("RequireAuthenticated", policy =>
+        policy.RequireAuthenticatedUser());
+});
+
 // ─── CORS ────────────────────────────────────────────────────
 builder.Services.AddCors(options =>
 {
@@ -101,6 +116,7 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<ISmsService, SmsService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddHostedService<ReminderService>();
 
 // ─── FluentValidation ────────────────────────────────────────
@@ -172,8 +188,26 @@ builder.Services.AddExceptionHandler(options =>
 
 var app = builder.Build();
 
+// ─── Auto-migrate database in Docker ─────────────────────────
+if (app.Environment.EnvironmentName == "Docker")
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.EnsureCreated();
+}
+
+// ─── Seed Roles ─────────────────────────────────────────────
+using var roleScope = app.Services.CreateScope();
+var roleManager = roleScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+string[] roles = { "SuperAdmin", "SalonManager", "Artist", "Client" };
+foreach (var role in roles)
+{
+    if (!await roleManager.RoleExistsAsync(role))
+        await roleManager.CreateAsync(new IdentityRole(role));
+}
+
 // ─── Middleware Pipeline ─────────────────────────────────────
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -181,7 +215,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
-app.UseCors(app.Environment.IsDevelopment() ? "AllowAll" : "Production");
+app.UseCors(app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker" ? "AllowAll" : "Production");
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
