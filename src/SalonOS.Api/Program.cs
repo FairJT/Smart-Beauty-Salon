@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SalonOS.Api.Authorization;
+using SalonOS.Infrastructure.Identity;
+using SalonOS.Shared.Identity;
 using SalonOS.Identity.API.Middleware;
 using SalonOS.Identity.Domain;
 using SalonOS.Identity.Infrastructure;
@@ -81,6 +83,10 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
     };
 });
+
+// IHttpContextAccessor + ICurrentUser (Task 3.1)
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
 // Add Authorization — permission-based policies (§R6.1)
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
