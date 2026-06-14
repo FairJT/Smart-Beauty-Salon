@@ -1,0 +1,190 @@
+﻿@page
+@model SmartSalon.Pages.SuperAdmin.SubscriptionsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_SuperAdminLayout.cshtml";
+    ViewData["Title"] = "اشتراک‌ها";
+    ViewData["ActivePage"] = "Subscriptions";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">مدیریت اشتراک‌ها</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">پلن‌های سالن‌ها</div>
+    </div>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+        ＋ افزودن اشتراک
+    </button>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.Message.StartsWith("✅") ? "alert-success" : "alert-warning") mb-4">
+        @Model.Message
+    </div>
+}
+
+<!-- Plans -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <div style="font-size:28px;margin-bottom:8px;">🥉</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;">پایه</div>
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-secondary);margin-bottom:12px;">رایگان</div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);text-align:right;">
+                <div class="mb-1">✅ تا ۲ هنرمند</div>
+                <div class="mb-1">✅ تا ۵۰ نوبت در ماه</div>
+                <div class="mb-1">❌ بدون SMS</div>
+                <div>❌ بدون آمار پیشرفته</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center"
+             style="border:1px solid var(--primary-200);">
+            <div style="font-size:28px;margin-bottom:8px;">🥈</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;">حرفه‌ای</div>
+            <div style="font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:12px;">
+                ۲۹۰,۰۰۰
+                <span style="font-size:0.7rem;color:var(--text-secondary);font-weight:400;">تومان/ماه</span>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);text-align:right;">
+                <div class="mb-1">✅ تا ۱۰ هنرمند</div>
+                <div class="mb-1">✅ نوبت نامحدود</div>
+                <div class="mb-1">✅ SMS یادآوری</div>
+                <div>❌ بدون آمار پیشرفته</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center"
+             style="border:1px solid rgba(212,175,55,0.3);">
+            <div style="font-size:28px;margin-bottom:8px;">🥇</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;">VIP</div>
+            <div style="font-size:1.5rem;font-weight:700;color:#D4AF37;margin-bottom:12px;">
+                ۵۹۰,۰۰۰
+                <span style="font-size:0.7rem;color:var(--text-secondary);font-weight:400;">تومان/ماه</span>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text-secondary);text-align:right;">
+                <div class="mb-1">✅ هنرمند نامحدود</div>
+                <div class="mb-1">✅ نوبت نامحدود</div>
+                <div class="mb-1">✅ SMS یادآوری</div>
+                <div>✅ آمار پیشرفته</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subscriptions List -->
+<div class="card">
+    <div class="p-3" style="border-bottom:1px solid var(--border-light);">
+        <div class="section-header" style="margin-bottom:0;">
+            <span class="table-bar"></span>
+            <span class="section-header-label">اشتراک‌های فعال</span>
+        </div>
+    </div>
+    @if (!Model.Subscriptions.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">💳</div>
+            <div class="empty-state-title">هنوز اشتراکی ثبت نشده</div>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-accent mb-0">
+                <thead>
+                    <tr>
+                        <th>سالن</th>
+                        <th>پلن</th>
+                        <th>شروع</th>
+                        <th>پایان</th>
+                        <th>مبلغ</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model.Subscriptions)
+                    {
+                        <tr>
+                            <td style="font-weight:500;">@s.SalonName</td>
+                            <td>
+                                <span style="@(s.Plan == "VIP" ? "background:linear-gradient(135deg,#D4AF37,#F0C040);color:#fff;" :
+                                              s.Plan == "Pro" ? "background:var(--primary-100);color:var(--primary);" :
+                                              "background:#F3F4F6;color:#6B7280;")
+                                             font-size:0.65rem;padding:2px 10px;border-radius:var(--radius-full);font-weight:600;">
+                                    @s.Plan
+                                </span>
+                            </td>
+                            <td style="color:var(--text-secondary);font-size:0.75rem;">
+                                @s.StartDate.ToString("yyyy/MM/dd")
+                            </td>
+                            <td style="color:var(--text-secondary);font-size:0.75rem;">
+                                @s.EndDate.ToString("yyyy/MM/dd")
+                            </td>
+                            <td style="font-weight:600;">@s.Amount.ToString("N0")</td>
+                            <td>
+                                <span class="badge @(s.IsActive ? "bg-success" : "bg-danger")">
+                                    @(s.IsActive ? "فعال" : "منقضی")
+                                </span>
+                            </td>
+                            <td>
+                                <form method="post" asp-page-handler="Extend"
+                                      asp-route-id="@s.Id" class="d-inline">
+                                    <button class="btn-action btn-action-accent">تمدید</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- Add Subscription Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن اشتراک</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Add">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">سالن</label>
+                        <select name="SalonId" class="form-select">
+                            @foreach (var salon in Model.Salons)
+                            {
+                                <option value="@salon.Id">@salon.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">پلن</label>
+                        <select name="Plan" class="form-select">
+                            <option value="Basic">🥉 پایه — رایگان</option>
+                            <option value="Pro">🥈 حرفه‌ای — ۲۹۰,۰۰۰ تومان</option>
+                            <option value="VIP">🥇 VIP — ۵۹۰,۰۰۰ تومان</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">مدت (ماه)</label>
+                        <input type="number" name="Months" class="form-control"
+                               value="1" min="1" max="12" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">
+                        انصراف
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">ثبت اشتراک</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

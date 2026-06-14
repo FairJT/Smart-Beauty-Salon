@@ -1,0 +1,122 @@
+﻿@page
+@model SmartSalon.Pages.SuperAdmin.UsersModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_SuperAdminLayout.cshtml";
+    ViewData["Title"] = "مدیریت کاربران";
+    ViewData["ActivePage"] = "Users";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">مدیریت کاربران</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
+            @Model.Users.Count کاربر
+        </div>
+    </div>
+    <form method="get" class="d-flex gap-2">
+        <input type="text" name="search" value="@Model.Search"
+               class="form-control form-control-sm" placeholder="جستجو..."
+               style="width:200px;" />
+        <button type="submit" class="btn btn-primary btn-sm">جستجو</button>
+    </form>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-success mb-4">@Model.Message</div>
+}
+
+<div class="card">
+    <div class="p-3" style="border-bottom:1px solid var(--border-light);">
+        <div class="section-header" style="margin-bottom:0;">
+            <span class="table-bar"></span>
+            <span class="section-header-label">لیست کاربران</span>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-accent mb-0">
+            <thead>
+                <tr>
+                    <th>نام</th>
+                    <th>موبایل</th>
+                    <th>نقش</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var u in Model.Users)
+                {
+                    var roleText = u.UserType switch
+                    {
+                        SmartSalon.Models.UserType.Client => "مشتری",
+                        SmartSalon.Models.UserType.Artist => "هنرمند",
+                        SmartSalon.Models.UserType.SalonManager => "مدیر سالن",
+                        SmartSalon.Models.UserType.SuperAdmin => "سوپرادمین",
+                        _ => "نامشخص"
+                    };
+                    var roleBadge = u.UserType switch
+                    {
+                        SmartSalon.Models.UserType.Client => "bg-secondary",
+                        SmartSalon.Models.UserType.Artist => "bg-info",
+                        SmartSalon.Models.UserType.SalonManager => "bg-primary",
+                        SmartSalon.Models.UserType.SuperAdmin => "bg-danger",
+                        _ => "bg-secondary"
+                    };
+                    <tr>
+                        <td>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <div style="width:28px;height:28px;border-radius:50%;
+                                            background:var(--primary-100);
+                                            display:flex;align-items:center;justify-content:center;
+                                            font-size:12px;color:var(--primary);font-weight:600;flex-shrink:0;">
+                                    @(u.FirstName?.Length > 0 ? u.FirstName[0].ToString() : "؟")
+                                </div>
+                                <span style="font-weight:500;">@u.FirstName @u.LastName</span>
+                            </div>
+                        </td>
+                        <td style="color:var(--text-secondary);">@u.UserName</td>
+                        <td><span class="badge @roleBadge">@roleText</span></td>
+                        <td>
+                            <span class="badge @(u.IsActive ? "bg-success" : "bg-danger")">
+                                @(u.IsActive ? "فعال" : "غیرفعال")
+                            </span>
+                        </td>
+                        <td>
+                            @if (u.UserType != SmartSalon.Models.UserType.SuperAdmin)
+                            {
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <form method="post" asp-page-handler="Toggle"
+                                          asp-route-id="@u.Id" class="d-inline">
+                                        <button class="btn-action"
+                                                style="@(u.IsActive ? "background:var(--danger-50);border-color:rgba(239,68,68,0.2);color:#DC2626;" : "background:var(--success-50);border-color:rgba(16,185,129,0.2);color:#059669;")">
+                                            @(u.IsActive ? "غیرفعال" : "فعال")
+                                        </button>
+                                    </form>
+                                    <form method="post" asp-page-handler="SetManager"
+                                          asp-route-id="@u.Id" class="d-inline">
+                                        <button class="btn-action btn-action-accent">مدیر سالن</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="SetArtist"
+                                          asp-route-id="@u.Id" class="d-inline">
+                                        <button class="btn-action btn-action-accent"
+                                                style="background:var(--info-50);border-color:rgba(59,130,246,0.2);color:#2563EB;">
+                                            پرسنل
+                                        </button>
+                                    </form>
+                                    <form method="post" asp-page-handler="SetClient"
+                                          asp-route-id="@u.Id" class="d-inline">
+                                        <button class="btn-action btn-action-secondary">
+                                            مشتری
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,447 @@
+================================================================================
+SalonOS Implementation Steps - Broken Down for mimo v2.5
+================================================================================
+
+Overview:
+This document breaks down the SalonOS architecture migration into small,
+manageable tasks that can be completed by mimo v2.5 in individual sessions.
+
+Tracking System:
+- [0] = Task NOT done (pending)
+- [1] = Task DONE (completed)
+- mimo scans for first [0] to know where to start
+- mimo changes [0] to [1] after completing each task
+
+Total Tasks: ~150
+Estimated Sessions: 30-40 (3-5 tasks per session)
+Timeline: 6-8 weeks
+
+================================================================================
+PHASE 1: Solution Structure & Shared Library
+================================================================================
+
+Task 1.1: Create Solution Structure
+------------------------------------
+[1] Create SalonOS.sln at project root (D:\PR\SmartSalon\)
+[1] Create src/ directory
+[1] Create src/SalonOS.Shared/ directory
+[1] Create src/SalonOS.Infrastructure/ directory
+[1] Create src/SalonOS.Api/ directory
+[1] Create src/Modules/ directory
+[1] Create module subdirectories: Identity/, Marketplace/, Catalog/, Inventory/, Booking/
+
+Task 1.2: Create Shared Project
+--------------------------------
+[1] Create src/SalonOS.Shared/SalonOS.Shared.csproj (class library, net9.0)
+[1] Create src/SalonOS.Shared/Money.cs - value object with Amount (long) + Currency
+[1] Create src/SalonOS.Shared/Result.cs - monadic result type (Ok/Error)
+[1] Create src/SalonOS.Shared/TenantEntity.cs - base class with Id + TenantId
+[1] Create src/SalonOS.Shared/ITenantContext.cs - interface with TenantId property
+[1] Create src/SalonOS.Shared/TenantContext.cs - implementation
+[1] Create src/SalonOS.Shared/DomainEvent.cs - base domain event
+[1] Create src/SalonOS.Shared/IHasDomainEvents.cs - interface for entities with events
+[1] Create src/SalonOS.Shared/CurrencyMismatchException.cs
+
+Task 1.3: Create Infrastructure Project
+----------------------------------------
+[1] Create src/SalonOS.Infrastructure/SalonOS.Infrastructure.csproj (class library, net9.0)
+[1] Add NuGet references: EF Core, SqlServer, Hangfire
+[1] Create src/SalonOS.Infrastructure/AppDbContext.cs (migrate from existing)
+[1] Create src/SalonOS.Infrastructure/OutboxInterceptor.cs
+[1] Create src/SalonOS.Infrastructure/OutboxMessage.cs
+[1] Create src/SalonOS.Infrastructure/HangfireJobDispatcher.cs
+
+Task 1.4: Create API Host Project
+----------------------------------
+[1] Create src/SalonOS.Api/SalonOS.Api.csproj (web api, net9.0)
+[1] Add project references: Shared, Infrastructure
+[1] Create src/SalonOS.Api/Program.cs (basic setup)
+[1] Create src/SalonOS.Api/appsettings.json
+[1] Verify solution builds
+
+================================================================================
+PHASE 2: Identity Module
+================================================================================
+
+Task 2.1: Identity Domain
+--------------------------
+[1] Create src/Modules/Identity/ directory structure
+[1] Create src/Modules/Identity/SalonOS.Identity.csproj
+[1] Add reference to Shared project
+[1] Move ApplicationUser.cs from current Models
+[1] Create Tenant.cs entity (GLOBAL, no TenantId)
+[1] Create Membership.cs entity (links User to Tenant)
+[1] Create UserRole.cs enum (expand UserType)
+
+Task 2.2: Identity Application
+-------------------------------
+[1] Create src/Modules/Identity/Application/ directory
+[1] Move AuthDtos.cs from current DTOs
+[1] Create new DTOs: TenantDto.cs, MembershipDto.cs
+[1] Move RegisterValidator from current Validators
+[1] Create new validators: CreateTenantValidator, CreateMembershipValidator
+
+Task 2.3: Identity Infrastructure
+----------------------------------
+[1] Create src/Modules/Identity/Infrastructure/ directory
+[1] Move AuthService.cs from current Services
+[1] Create IdentityDbContext.cs (or use shared AppDbContext)
+[1] Register identity services in DI
+
+Task 2.4: Identity API
+-----------------------
+[1] Create src/Modules/Identity/API/ directory
+[1] Move AuthController.cs from current Controllers
+[1] Create TenantController.cs (CRUD for tenants)
+[1] Create MembershipController.cs (user-tenant assignments)
+[1] Create TenantContextMiddleware.cs
+
+Task 2.5: Update Authentication
+--------------------------------
+[1] Update JWT token to include TenantId claim
+[1] Implement TenantContext resolution from JWT
+[1] Add middleware to set TenantContext per request
+[1] Test authentication flow
+
+================================================================================
+PHASE 3: Marketplace Module
+================================================================================
+
+Task 3.1: Marketplace Domain
+-----------------------------
+[1] Create src/Modules/Marketplace/ directory structure
+[1] Create src/Modules/Marketplace/SalonOS.Marketplace.csproj
+[1] Add reference to Shared project
+[1] Create ServiceTemplate.cs (GLOBAL entity)
+[1] Create TemplateOptionGroup.cs (GLOBAL entity)
+[1] Create TemplateOption.cs (GLOBAL entity)
+[1] Create PackageListing.cs (GLOBAL entity)
+[1] Create SalonPackageLicense.cs (TENANT entity)
+
+Task 3.2: Marketplace Application
+----------------------------------
+[1] Create src/Modules/Marketplace/Application/ directory
+[1] Create DTOs: ServiceTemplateDto.cs, TemplateOptionGroupDto.cs
+[1] Create DTOs: TemplateOptionDto.cs, PackageListingDto.cs
+[1] Create DTOs: SalonPackageLicenseDto.cs
+[1] Create validators for all DTOs
+
+Task 3.3: Marketplace Infrastructure
+-------------------------------------
+[1] Create src/Modules/Marketplace/Infrastructure/ directory
+[1] Create MarketplaceDbContext.cs
+[1] Register in main AppDbContext
+[1] Create repository interfaces and implementations
+
+Task 3.4: Marketplace API
+--------------------------
+[1] Create src/Modules/Marketplace/API/ directory
+[1] Create ServiceTemplateController.cs (platform owner only)
+[1] Create PackageListingController.cs (public read, platform owner write)
+[1] Create SalonPackageLicenseController.cs (salon manages own licenses)
+
+Task 3.5: Migrate Existing Packages
+------------------------------------
+[1] Migrate ServicePackage.cs to PackageListing.cs
+[1] Migrate SalonPackageSubscription.cs to SalonPackageLicense.cs
+[1] Update Razor Pages to use new entities
+[1] Create EF migration for new tables
+
+================================================================================
+PHASE 4: Catalog Module
+================================================================================
+
+Task 4.1: Catalog Domain
+-------------------------
+[1] Create src/Modules/Catalog/ directory structure
+[1] Create src/Modules/Catalog/SalonOS.Catalog.csproj
+[1] Add reference to Shared project
+[1] Create CatalogService.cs (TENANT entity)
+[1] Create CatalogServiceOption.cs (TENANT entity)
+
+Task 4.2: Catalog Application
+------------------------------
+[1] Create src/Modules/Catalog/Application/ directory
+[1] Create DTOs: CatalogServiceDto.cs, CatalogServiceOptionDto.cs
+[1] Create validators for all DTOs
+
+Task 4.3: Catalog Infrastructure
+---------------------------------
+[1] Create src/Modules/Catalog/Infrastructure/ directory
+[1] Create CatalogDbContext.cs
+[1] Register in main AppDbContext
+[1] Create repository interfaces and implementations
+
+Task 4.4: Catalog API
+----------------------
+[1] Create src/Modules/Catalog/API/ directory
+[1] Create CatalogServiceController.cs (salon manages own services)
+[1] Create CatalogServiceOptionController.cs
+
+Task 4.5: Migrate Existing Services
+------------------------------------
+[1] Migrate SalonService.cs to CatalogService.cs
+[1] Add ServiceTemplateId FK
+[1] Add jsonb option snapshot to Booking entity
+[1] Create EF migration
+
+================================================================================
+PHASE 5: Inventory Module
+================================================================================
+
+Task 5.1: Inventory Domain
+---------------------------
+[1] Create src/Modules/Inventory/ directory structure
+[1] Create src/Modules/Inventory/SalonOS.Inventory.csproj
+[1] Add reference to Shared project
+[1] Create InventoryItem.cs (TENANT entity)
+[1] Create StockMovement.cs (append-only ledger)
+[1] Create InventoryLow.cs (domain event)
+
+Task 5.2: Inventory Application
+--------------------------------
+[1] Create src/Modules/Inventory/Application/ directory
+[1] Create DTOs: InventoryItemDto.cs, StockMovementDto.cs
+[1] Create validators for all DTOs
+
+Task 5.3: Inventory Infrastructure
+-----------------------------------
+[1] Create src/Modules/Inventory/Infrastructure/ directory
+[1] Create InventoryDbContext.cs
+[1] Register in main AppDbContext
+[1] Create repository interfaces and implementations
+
+Task 5.4: Inventory API
+------------------------
+[1] Create src/Modules/Inventory/API/ directory
+[1] Create InventoryItemController.cs (salon manages own inventory)
+[1] Create StockMovementController.cs (view movements)
+
+Task 5.5: Inventory Business Logic
+-----------------------------------
+[1] Implement OnHandQty cached projection
+[1] Add decrement logic on BookingCompleted
+[1] Add InventoryLow notification trigger
+[1] Create EF migration
+
+================================================================================
+PHASE 6: Booking Module
+================================================================================
+
+Task 6.1: Booking Domain
+-------------------------
+[1] Create src/Modules/Booking/ directory structure
+[1] Create src/Modules/Booking/SalonOS.Booking.csproj
+[1] Add reference to Shared project
+[1] Move Appointment.cs to Booking.cs (rename if desired)
+[1] Add TimeRange property (NpgsqlRange for future)
+[1] Add CustomerSelectionSnapshot (jsonb property)
+[1] Create BookingCompleted.cs (domain event)
+[1] Create BookingCancelled.cs (domain event)
+
+Task 6.2: Booking Application
+------------------------------
+[1] Create src/Modules/Booking/Application/ directory
+[1] Move AppointmentDtos.cs to BookingDtos.cs
+[1] Move CreateAppointmentValidator to CreateBookingValidator
+[1] Update DTOs for new fields
+
+Task 6.3: Booking Infrastructure
+---------------------------------
+[1] Create src/Modules/Booking/Infrastructure/ directory
+[1] Create BookingDbContext.cs
+[1] Register in main AppDbContext
+[1] Create repository interfaces and implementations
+
+Task 6.4: Booking API
+----------------------
+[1] Create src/Modules/Booking/API/ directory
+[1] Move AppointmentsController.cs to BookingController.cs
+[1] Update endpoints for new structure
+
+Task 6.5: Booking Business Logic
+---------------------------------
+[1] Migrate slot calculation logic
+[1] Migrate overlap detection logic
+[1] Implement Redis slot hold (UX only)
+[1] Add domain event publishing
+[1] Create EF migration
+
+================================================================================
+PHASE 7: Hangfire & Outbox
+================================================================================
+
+Task 7.1: Hangfire Setup
+-------------------------
+[1] Add Hangfire.Core NuGet package to Infrastructure
+[1] Add Hangfire.SqlServer NuGet package to Infrastructure
+[1] Configure Hangfire in Program.cs
+[1] Create HangfireJobDispatcher.cs
+
+Task 7.2: Outbox Pattern
+-------------------------
+[1] Create OutboxMessage.cs entity
+[1] Create OutboxInterceptor.cs (SaveChanges interceptor)
+[1] Register interceptor in AppDbContext
+[1] Create OutboxDispatcherJob.cs (Hangfire job)
+
+Task 7.3: Domain Event Handlers
+--------------------------------
+[1] Create BookingCompletedHandler.cs
+[1] Create BookingCancelledHandler.cs
+[1] Create InventoryLowHandler.cs
+[1] Create PackagePurchasedHandler.cs
+
+Task 7.4: Background Jobs
+--------------------------
+[1] Create ReminderJob.cs (replace BackgroundService)
+[1] Create LeaderboardRefreshJob.cs
+[1] Create PayrollPeriodCloseJob.cs (future)
+
+================================================================================
+PHASE 8: Multi-Tenancy
+================================================================================
+
+Task 8.1: TenantEntity Migration
+---------------------------------
+[1] Identify all tenant-owned entities
+[1] Add TenantId property to each
+[1] Create EF global query filters
+[1] Update StampTenant() in AppDbContext
+
+Task 8.2: TenantContext Middleware
+----------------------------------
+[1] Create TenantContextMiddleware.cs
+[1] Resolve TenantId from JWT + Membership
+[1] Set scoped ITenantContext
+[1] Register in pipeline
+
+Task 8.3: Update All Queries
+-----------------------------
+[1] Audit all service methods for tenant scoping
+[1] Ensure query filters are applied
+[1] Test cross-tenant isolation
+
+Task 8.4: Tenancy Tests
+------------------------
+[1] Create tests/SalonOS.Tenancy.Tests/ project
+[1] Create TenantA_cannot_read_TenantB_booking test
+[1] Create TenantA_cannot_mutate_TenantB_booking test
+[1] Create TenantA_cannot_see_TenantB_inventory test
+[1] Create TenantA_cannot_see_TenantB_staff test
+
+================================================================================
+PHASE 9: Money & Payments
+================================================================================
+
+Task 9.1: Money Implementation
+-------------------------------
+[1] Update Money.cs with all operations
+[1] Add Money to all price/amount fields
+[1] Update EF mappings for Money (two columns)
+[1] Test all money operations
+
+Task 9.2: Payment Interface
+----------------------------
+[1] Create IPaymentProvider.cs interface
+[1] Create PaymentSession.cs entity
+[1] Create PaymentResult.cs entity
+[1] Create CreatePaymentInput.cs DTO
+
+Task 9.3: Zarinpal Adapter
+---------------------------
+[1] Create ZarinpalProvider.cs implementation
+[1] Add configuration for Zarinpal API
+[1] Implement CreatePaymentAsync
+[1] Implement VerifyPaymentAsync
+[1] Implement VerifyWebhook
+
+Task 9.4: Payment Integration
+------------------------------
+[1] Integrate payment in Booking flow (deposit)
+[1] Integrate payment in Marketplace (package purchase)
+[1] Add idempotency key handling
+[1] Test payment flows
+
+================================================================================
+PHASE 10: Flutter Client (Future)
+================================================================================
+
+Task 10.1: Flutter Architecture
+--------------------------------
+[1] Restructure to data/, domain/, presentation/
+[1] Add Dio interceptors for auth and tenant
+[1] Update API client for new endpoints
+
+Task 10.2: UI Updates
+----------------------
+[1] Add Jalali calendar support
+[1] Add RTL support
+[1] Update booking screen for new catalog options
+[1] Update community feed
+
+Task 10.3: Guest Booking
+-------------------------
+[1] Implement phone-only OTP flow
+[1] Update booking for guest users
+
+================================================================================
+EXECUTION NOTES FOR mimo v2.5
+================================================================================
+
+HOW TO USE THIS FILE:
+1. Read this file at start of each session
+2. Scan for first [0] - that's where you start
+3. Complete the task, change [0] to [1]
+4. Continue until session ends or tasks complete
+5. Next session repeats from step 1
+
+Session Guidelines:
+1. One task at a time - Complete one task before moving to next
+2. Build after each phase - Verify solution compiles
+3. Test after each module - Run existing tests, add new ones
+4. Commit frequently - Small, focused commits
+5. Document decisions - Update README with architecture choices
+
+File Naming Conventions:
+- Projects: SalonOS.{ModuleName}.csproj
+- Entities: {EntityName}.cs (PascalCase)
+- DTOs: {EntityName}Dto.cs
+- Validators: {EntityName}Validator.cs
+- Controllers: {EntityName}Controller.cs
+- Services: {EntityName}Service.cs
+
+Dependency Direction:
+  API -> Infrastructure -> Modules -> Shared
+  Modules -> Shared (never between modules)
+
+Multi-Tenancy Rules:
+1. TenantEntity - Base class for all tenant-owned entities
+2. Global Query Filters - Automatic tenant scoping
+3. TenantContext - Resolved from JWT + Membership
+4. Never trust client - Server always validates tenant
+
+Money Rules:
+1. Always use Money type - Never raw numbers for currency
+2. Two columns - Amount (long) + Currency (string)
+3. No floating point - Integer minor units only
+4. No coercion - Different currencies throw exception
+
+================================================================================
+PROGRESS TRACKING
+================================================================================
+
+Phase 1: Solution Structure          [1] Completed
+Phase 2: Identity Module             [1] Completed
+Phase 3: Marketplace Module          [1] Completed
+Phase 4: Catalog Module              [1] Completed
+Phase 5: Inventory Module            [1] Completed
+Phase 6: Booking Module              [1] Completed
+Phase 7: Hangfire & Outbox           [1] Completed
+Phase 8: Multi-Tenancy               [1] Completed
+Phase 9: Money & Payments            [1] Completed
+Phase 10: Flutter Client             [1] Completed
+
+================================================================================
+END OF DOCUMENT
+================================================================================

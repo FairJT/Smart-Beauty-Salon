@@ -1,0 +1,326 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "I:\\Projects\\SmartSalon\\SmartSalon\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\superadmin\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\superadmin\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\superadmin\\subscriptions.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\superadmin\\subscriptions.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\superadmin\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\superadmin\\users.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\superadmin\\salons.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\superadmin\\salons.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\superadmin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\superadmin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\shared\\_superadminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\shared\\_superadminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\settings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\settings.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\packages.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\packages.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\services.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\services.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\artists.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\artists.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\appointments.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\appointments.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\pages\\admin\\settings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\pages\\admin\\settings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\models\\salon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\models\\salon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|i:\\projects\\smartsalon\\smartsalon\\smartsalon\\migrations\\20260530112847_addadmintheme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{95907139-6104-47DA-9E09-A9C5FED62723}|SmartSalon\\SmartSalon.csproj|solutionrelative:smartsalon\\migrations\\20260530112847_addadmintheme.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Login.cshtml.cs",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Login.cshtml.cs",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Login.cshtml.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAowDMAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T03:34:23.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\appsettings.json",
+              "RelativeDocumentMoniker": "SmartSalon\\appsettings.json",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\appsettings.json",
+              "RelativeToolTip": "SmartSalon\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-04T03:37:45.8Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Reports.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Reports.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\SuperAdmin\\Reports.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Reports.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\SuperAdmin\\Reports.cshtml",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAswIsAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T12:05:42.018Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Subscriptions.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Subscriptions.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\SuperAdmin\\Subscriptions.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Subscriptions.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\SuperAdmin\\Subscriptions.cshtml",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAswMYAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T12:05:09.754Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Users.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Users.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\SuperAdmin\\Users.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Users.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\SuperAdmin\\Users.cshtml",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAuwIIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T07:48:14.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Salons.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Salons.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\SuperAdmin\\Salons.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Salons.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\SuperAdmin\\Salons.cshtml",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAswJEAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T07:47:55.921Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\SuperAdmin\\Dashboard.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\SuperAdmin\\Dashboard.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\SuperAdmin\\Dashboard.cshtml",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAswLUAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T07:47:37.38Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_AdminLayout.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Shared\\_AdminLayout.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Shared\\_AdminLayout.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Shared\\_AdminLayout.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Shared\\_AdminLayout.cshtml",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAvwH4AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T11:30:29.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Login.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Login.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Login.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-05T03:34:12.875Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_SuperAdminLayout.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Shared\\_SuperAdminLayout.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Shared\\_SuperAdminLayout.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Shared\\_SuperAdminLayout.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Shared\\_SuperAdminLayout.cshtml",
+              "ViewState": "AgIAACgBAAAAAAAAAAAswFsBAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T07:46:39.769Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Packages.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Packages.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Packages.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Packages.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Packages.cshtml",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAswJMAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-01T09:25:24.321Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Services.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Services.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Services.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Services.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Services.cshtml",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAswKgAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-01T09:23:38.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Artists.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Artists.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Artists.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Artists.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Artists.cshtml",
+              "ViewState": "AgIAANUAAAAAAAAAAAAswAgBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-01T04:00:35.532Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Appointments.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Appointments.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Appointments.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Appointments.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Appointments.cshtml",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAuwLIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-01T03:47:08.814Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Dashboard.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Dashboard.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Dashboard.cshtml",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAuwKcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-31T06:28:06.759Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Settings.cshtml.cs",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Settings.cshtml.cs",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Settings.cshtml.cs",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Settings.cshtml.cs",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Settings.cshtml.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAowEwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T11:38:07.912Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Settings.cshtml",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Settings.cshtml",
+              "RelativeDocumentMoniker": "SmartSalon\\Pages\\Admin\\Settings.cshtml",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Pages\\Admin\\Settings.cshtml",
+              "RelativeToolTip": "SmartSalon\\Pages\\Admin\\Settings.cshtml",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAuwNIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-30T11:33:52.087Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "20260530112847_AddAdminTheme.cs",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Migrations\\20260530112847_AddAdminTheme.cs",
+              "RelativeDocumentMoniker": "SmartSalon\\Migrations\\20260530112847_AddAdminTheme.cs",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Migrations\\20260530112847_AddAdminTheme.cs",
+              "RelativeToolTip": "SmartSalon\\Migrations\\20260530112847_AddAdminTheme.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T11:28:47.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Salon.cs",
+              "DocumentMoniker": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Models\\Salon.cs",
+              "RelativeDocumentMoniker": "SmartSalon\\Models\\Salon.cs",
+              "ToolTip": "I:\\Projects\\SmartSalon\\SmartSalon\\SmartSalon\\Models\\Salon.cs",
+              "RelativeToolTip": "SmartSalon\\Models\\Salon.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T11:25:06.365Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

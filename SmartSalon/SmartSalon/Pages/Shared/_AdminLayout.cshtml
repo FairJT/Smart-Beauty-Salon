@@ -1,0 +1,409 @@
+﻿@using SmartSalon.Data
+@inject ApplicationDbContext _db
+@{
+    var adminToken = Context.Session.GetString("AdminToken");
+    var salon = adminToken != null
+        ? _db.Salons.FirstOrDefault(s => s.ManagerId == adminToken)
+        : null;
+    var theme = salon?.AdminTheme ?? "purple";
+    var adminName = Context.Session.GetString("AdminName") ?? "مدیر";
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] | سالن هوشمند</title>
+    <link href="~/lib/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    <style>
+        /* ── Theme Variables ────────────────────────────────── */
+        .theme-purple {
+            --sidebar-bg: linear-gradient(180deg, #0F0A1A 0%, #1A0F2E 100%);
+            --sidebar-accent: #A78BFA;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #A78BFA;
+            --sidebar-hover: rgba(167,139,250,0.08);
+            --sidebar-active: rgba(167,139,250,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+        .theme-gold {
+            --sidebar-bg: linear-gradient(180deg, #0A0A0A 0%, #1A1508 100%);
+            --sidebar-accent: #D4AF37;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #D4AF37;
+            --sidebar-hover: rgba(212,175,55,0.08);
+            --sidebar-active: rgba(212,175,55,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+        .theme-blue {
+            --sidebar-bg: linear-gradient(180deg, #060E1A 0%, #0A1A2E 100%);
+            --sidebar-accent: #60A5FA;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #60A5FA;
+            --sidebar-hover: rgba(96,165,250,0.08);
+            --sidebar-active: rgba(96,165,250,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+        .theme-teal {
+            --sidebar-bg: linear-gradient(180deg, #061212 0%, #0A1F1E 100%);
+            --sidebar-accent: #2DD4BF;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #2DD4BF;
+            --sidebar-hover: rgba(45,212,191,0.08);
+            --sidebar-active: rgba(45,212,191,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+        .theme-crimson {
+            --sidebar-bg: linear-gradient(180deg, #0A0404 0%, #1A0808 100%);
+            --sidebar-accent: #F87171;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #F87171;
+            --sidebar-hover: rgba(248,113,113,0.08);
+            --sidebar-active: rgba(248,113,113,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+        .theme-amber {
+            --sidebar-bg: linear-gradient(180deg, #0C0A09 0%, #1A1508 100%);
+            --sidebar-accent: #FCD34D;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #FCD34D;
+            --sidebar-hover: rgba(252,211,77,0.08);
+            --sidebar-active: rgba(252,211,77,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+        .theme-slate {
+            --sidebar-bg: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+            --sidebar-accent: #334155;
+            --sidebar-text: rgba(51,65,85,0.5);
+            --sidebar-text-active: #334155;
+            --sidebar-hover: rgba(51,65,85,0.06);
+            --sidebar-active: rgba(51,65,85,0.10);
+            --sidebar-border: rgba(0,0,0,0.08);
+        }
+        .theme-coral {
+            --sidebar-bg: linear-gradient(180deg, #120604 0%, #1A0F08 100%);
+            --sidebar-accent: #FB923C;
+            --sidebar-text: rgba(255,255,255,0.45);
+            --sidebar-text-active: #FB923C;
+            --sidebar-hover: rgba(251,146,60,0.08);
+            --sidebar-active: rgba(251,146,60,0.12);
+            --sidebar-border: rgba(255,255,255,0.06);
+        }
+
+        /* ── Sidebar ────────────────────────────────────────── */
+        .sidebar {
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            position: fixed;
+            width: 240px;
+            right: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--sidebar-border);
+            z-index: 100;
+            transition: width var(--transition-normal);
+        }
+
+        .sidebar-logo {
+            padding: 24px 20px 20px;
+            border-bottom: 1px solid var(--sidebar-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--sidebar-accent);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            color: #0F0A1A;
+            font-weight: 700;
+        }
+
+        .theme-slate .logo-icon {
+            color: #fff;
+        }
+
+        .logo-name {
+            color: var(--sidebar-accent);
+            font-size: 14px;
+            font-weight: 700;
+            font-family: var(--font-family);
+        }
+
+        .logo-sub {
+            color: var(--sidebar-text);
+            font-size: 9px;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            padding: 16px 12px;
+            flex: 1;
+        }
+
+        .nav-section-label {
+            font-size: 9px;
+            color: var(--sidebar-text);
+            padding: 0 8px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 2px;
+            text-decoration: none;
+            color: var(--sidebar-text);
+            font-size: 13px;
+            font-family: var(--font-family);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            border: 1px solid transparent;
+        }
+
+        .sidebar a:hover {
+            background: var(--sidebar-hover);
+            color: var(--sidebar-text-active);
+        }
+
+        .sidebar a.active {
+            background: var(--sidebar-active);
+            color: var(--sidebar-text-active);
+            border-color: rgba(255,255,255,0.06);
+            font-weight: 600;
+        }
+
+        .sidebar a.active .dot {
+            display: block;
+        }
+
+        .sidebar a .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--sidebar-accent);
+            margin-right: auto;
+            display: none;
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: var(--sidebar-border);
+            margin: 12px 4px;
+        }
+
+        .sidebar-user {
+            padding: 12px;
+            border-top: 1px solid var(--sidebar-border);
+        }
+
+        .user-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .theme-slate .user-inner {
+            background: rgba(0,0,0,0.03);
+            border-color: rgba(0,0,0,0.04);
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--sidebar-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: #0F0A1A;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .theme-slate .user-avatar {
+            color: #fff;
+        }
+
+        .user-name {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .theme-slate .user-name {
+            color: #1E1B4B;
+        }
+
+        .user-role {
+            color: var(--sidebar-text);
+            font-size: 10px;
+        }
+
+        /* ── Main Content ───────────────────────────────────── */
+        .main-content {
+            margin-right: 240px;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        /* ── Action buttons in tables ───────────────────────── */
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 28px;
+            height: 28px;
+            padding: 0 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: 1px solid;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-action-approve {
+            background: var(--success-50);
+            border-color: rgba(16,185,129,0.2);
+            color: #059669;
+        }
+
+        .btn-action-approve:hover {
+            background: var(--success-100);
+        }
+
+        .btn-action-danger {
+            background: var(--danger-50);
+            border-color: rgba(239,68,68,0.2);
+            color: #DC2626;
+        }
+
+        .btn-action-danger:hover {
+            background: var(--danger-100);
+        }
+
+        .btn-action-accent {
+            background: var(--primary-50);
+            border-color: var(--primary-200);
+            color: var(--primary);
+        }
+
+        .btn-action-accent:hover {
+            background: var(--primary-100);
+        }
+
+        .btn-action-secondary {
+            background: #F3F4F6;
+            border-color: #E5E7EB;
+            color: #6B7280;
+        }
+
+        .btn-action-secondary:hover {
+            background: #E5E7EB;
+        }
+    </style>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="theme-@theme">
+
+    <!-- ─── Sidebar ─────────────────────────── -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">✂</div>
+            <div>
+                <div class="logo-name">سالن هوشمند</div>
+                <div class="logo-sub">SMART SALON</div>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <div class="nav-section-label">منو اصلی</div>
+
+            <a href="/Admin/Dashboard"
+               class="@(ViewData["ActivePage"]?.ToString() == "Dashboard" ? "active" : "")">
+                📊 داشبورد
+                <span class="dot"></span>
+            </a>
+
+            <a href="/Admin/Appointments"
+               class="@(ViewData["ActivePage"]?.ToString() == "Appointments" ? "active" : "")">
+                📅 نوبت‌ها
+                <span class="dot"></span>
+            </a>
+
+            <a href="/Admin/Artists"
+               class="@(ViewData["ActivePage"]?.ToString() == "Artists" ? "active" : "")">
+                👤 پرسنل
+                <span class="dot"></span>
+            </a>
+
+            <a href="/Admin/Services"
+               class="@(ViewData["ActivePage"]?.ToString() == "Services" ? "active" : "")">
+                💅 خدمات
+                <span class="dot"></span>
+            </a>
+
+            <a href="/Admin/Packages"
+               class="@(ViewData["ActivePage"]?.ToString() == "Packages" ? "active" : "")">
+                📦 پکیج‌ها
+                <span class="dot"></span>
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a href="/Admin/Settings"
+               class="@(ViewData["ActivePage"]?.ToString() == "Settings" ? "active" : "")">
+                ⚙️ تنظیمات
+                <span class="dot"></span>
+            </a>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="user-inner">
+                <div class="user-avatar">
+                    @(adminName.Length > 0 ? adminName[0].ToString() : "م")
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div class="user-name">@adminName</div>
+                    <div class="user-role">مدیر سالن</div>
+                </div>
+                <a href="/Admin/Login"
+                   style="color:var(--sidebar-text);text-decoration:none;font-size:14px;
+                          transition:color 0.2s;"
+                   title="خروج">
+                    🚪
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Main Content ─────────────────────── -->
+    <div class="main-content">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

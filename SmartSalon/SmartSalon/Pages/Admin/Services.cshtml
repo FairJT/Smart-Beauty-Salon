@@ -1,0 +1,154 @@
+﻿@page
+@model SmartSalon.Pages.Admin.ServicesModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "خدمات";
+    ViewData["ActivePage"] = "Services";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">مدیریت خدمات</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
+            @Model.Services.Count خدمت ثبت شده
+        </div>
+    </div>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+        ＋ افزودن خدمت
+    </button>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.Message.StartsWith("✅") ? "alert-success" : "alert-warning") mb-4">
+        @Model.Message
+    </div>
+}
+
+@if (!Model.Services.Any())
+{
+    <div class="card p-5">
+        <div class="empty-state">
+            <div class="empty-state-icon">💅</div>
+            <div class="empty-state-title">هنوز خدماتی اضافه نشده</div>
+            <div class="empty-state-desc">برای افزودن خدمت روی دکمه بالا کلیک کنید</div>
+        </div>
+    </div>
+}
+else
+{
+    @foreach (var group in Model.Services.GroupBy(s => s.Category))
+    {
+        <div class="mb-4">
+            <div class="section-header">
+                <span class="table-bar"></span>
+                <span class="section-header-label">@group.Key</span>
+                <span class="section-header-badge">@group.Count() خدمت</span>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-accent mb-0">
+                        <thead>
+                            <tr>
+                                <th>نام خدمت</th>
+                                <th>مدت (دقیقه)</th>
+                                <th>قیمت (تومان)</th>
+                                <th>وضعیت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in group.OrderBy(x => x.Name))
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <div style="width:8px;height:8px;border-radius:50%;
+                                                        background:@(s.IsActive ? "var(--primary)" : "#CBD5E1");
+                                                        flex-shrink:0;"></div>
+                                            <span style="font-weight:500;color:var(--text-primary);">@s.Name</span>
+                                        </div>
+                                    </td>
+                                    <td style="color:var(--text-secondary);">@s.BaseDurationMinutes</td>
+                                    <td style="font-weight:600;color:var(--text-primary);">
+                                        @s.BasePrice.ToString("N0")
+                                    </td>
+                                    <td>
+                                        <span class="badge @(s.IsActive ? "bg-success" : "bg-danger")">
+                                            @(s.IsActive ? "فعال" : "غیرفعال")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <form method="post" asp-page-handler="Toggle"
+                                                  asp-route-id="@s.Id" class="d-inline">
+                                                <button class="btn-action"
+                                                        style="@(s.IsActive ? "background:var(--danger-50);border-color:rgba(239,68,68,0.2);color:#DC2626;" : "background:var(--success-50);border-color:rgba(16,185,129,0.2);color:#059669;")">
+                                                    @(s.IsActive ? "غیرفعال" : "فعال")
+                                                </button>
+                                            </form>
+                                            <form method="post" asp-page-handler="Delete"
+                                                  asp-route-id="@s.Id" class="d-inline">
+                                                <button class="btn-action btn-action-danger"
+                                                        onclick="return confirm('حذف شود؟')">
+                                                    🗑
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<!-- Add Service Modal -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">افزودن خدمت جدید</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Add">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">نام خدمت</label>
+                        <input type="text" name="name" class="form-control"
+                               placeholder="مثلاً: رنگ مو" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">دسته‌بندی</label>
+                        <input type="text" name="category" class="form-control"
+                               placeholder="مثلاً: مو، ناخن، پوست" required />
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="form-label">مدت زمان (دقیقه)</label>
+                            <input type="number" name="duration" class="form-control"
+                                   value="60" min="5" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">قیمت (تومان)</label>
+                            <input type="number" name="price" class="form-control"
+                                   value="500000" min="0" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">
+                        انصراف
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm">افزودن</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

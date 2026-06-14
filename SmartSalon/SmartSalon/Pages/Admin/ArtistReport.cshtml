@@ -1,0 +1,167 @@
+﻿@page "/Admin/ArtistReport/{artistId:int}"
+@model SmartSalon.Pages.Admin.ArtistReportModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "گزارش هنرمند";
+    ViewData["ActivePage"] = "Artists";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">📊 گزارش درآمد هنرمند</div>
+    <a href="/Admin/Artists" class="btn btn-secondary btn-sm">← برگشت</a>
+</div>
+
+@if (Model.Report == null)
+{
+    <div class="alert alert-warning">اطلاعاتی یافت نشد</div>
+}
+else
+{
+    <!-- Artist Header -->
+    <div class="card p-4 mb-4">
+        <div class="d-flex align-items-center gap-3">
+            @if (!string.IsNullOrEmpty(Model.Report.PhotoUrl))
+            {
+                <img src="@Model.Report.PhotoUrl" width="70" height="70"
+                     style="border-radius:50%;object-fit:cover;border:3px solid var(--primary-200);" />
+            }
+            else
+            {
+                <div class="artist-avatar" style="width:70px;height:70px;font-size:28px;">
+                    @(Model.Report.ArtistName?.Substring(0, 1) ?? "؟")
+                </div>
+            }
+            <div>
+                <h5 class="mb-1" style="font-weight:700;">@Model.Report.ArtistName</h5>
+                <div style="color:#F59E0B;font-weight:600;">
+                    ⭐ @Model.Report.RatingAvg.ToString("F1")
+                    <small style="color:var(--text-muted);font-weight:400;">
+                        (@Model.Report.RatingCount نظر)
+                    </small>
+                </div>
+            </div>
+
+            <!-- Date Filter -->
+            <div class="me-auto">
+                <form method="get" class="d-flex gap-2 align-items-center">
+                    <label class="mb-0" style="color:var(--text-secondary);font-size:0.8rem;">از:</label>
+                    <input type="date" name="from" value="@Model.From"
+                           class="form-control form-control-sm" />
+                    <label class="mb-0" style="color:var(--text-secondary);font-size:0.8rem;">تا:</label>
+                    <input type="date" name="to" value="@Model.To"
+                           class="form-control form-control-sm" />
+                    <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);color:#fff;">
+                <div class="stat-lbl" style="color:rgba(255,255,255,0.7);">کل نوبت‌ها</div>
+                <div class="stat-num" style="color:#fff;">@Model.Report.TotalAppointments</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="background:linear-gradient(135deg,#10B981,#34D399);color:#fff;">
+                <div class="stat-lbl" style="color:rgba(255,255,255,0.7);">نوبت‌های تمام شده</div>
+                <div class="stat-num" style="color:#fff;">@Model.Report.CompletedAppointments</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card" style="background:linear-gradient(135deg,#EF4444,#F87171);color:#fff;">
+                <div class="stat-lbl" style="color:rgba(255,255,255,0.7);">نوبت‌های لغو شده</div>
+                <div class="stat-num" style="color:#fff;">@Model.Report.CancelledAppointments</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card-dark">
+                <div class="stat-lbl">درآمد کل (تومان)</div>
+                <div class="stat-num">@Model.Report.TotalRevenue.ToString("N0")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Service Report -->
+        <div class="col-md-5">
+            <div class="card p-4">
+                <div class="section-header">
+                    <span class="table-bar"></span>
+                    <span class="section-header-label">💅 درآمد بر اساس خدمت</span>
+                </div>
+                @if (!Model.Report.ServiceReport.Any())
+                {
+                    <div class="empty-state" style="padding:1.5rem;">
+                        <div class="empty-state-desc">داده‌ای وجود ندارد</div>
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-accent mb-0">
+                        <thead>
+                            <tr>
+                                <th>خدمت</th>
+                                <th>تعداد</th>
+                                <th>درآمد</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model.Report.ServiceReport)
+                            {
+                                <tr>
+                                    <td style="font-weight:500;">@s.ServiceName</td>
+                                    <td>@s.Count</td>
+                                    <td style="font-weight:600;">@s.Revenue.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+        <!-- Daily Report -->
+        <div class="col-md-7">
+            <div class="card p-4">
+                <div class="section-header">
+                    <span class="table-bar"></span>
+                    <span class="section-header-label">📅 گزارش روزانه</span>
+                </div>
+                @if (!Model.Report.DailyReport.Any())
+                {
+                    <div class="empty-state" style="padding:1.5rem;">
+                        <div class="empty-state-desc">داده‌ای وجود ندارد</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive" style="max-height:350px;overflow-y:auto;">
+                        <table class="table table-accent mb-0">
+                            <thead>
+                                <tr>
+                                    <th>تاریخ</th>
+                                    <th>تعداد نوبت</th>
+                                    <th>درآمد (تومان)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var d in Model.Report.DailyReport)
+                                {
+                                    <tr>
+                                        <td style="color:var(--text-secondary);">@d.Date</td>
+                                        <td style="font-weight:500;">@d.Count</td>
+                                        <td style="font-weight:600;">@d.Revenue.ToString("N0")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

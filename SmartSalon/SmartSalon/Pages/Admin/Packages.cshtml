@@ -1,0 +1,145 @@
+﻿@page
+@model SmartSalon.Pages.Admin.PackagesModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "پکیج‌های خدمات";
+    ViewData["ActivePage"] = "Packages";
+}
+
+<div class="topbar d-flex justify-content-between align-items-center">
+    <div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">پکیج‌های خدمات</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
+            خرید پکیج = فعال شدن خودکار خدمات در سالن
+        </div>
+    </div>
+    @if (Model.ActiveSubscriptions.Any())
+    {
+        <span style="font-size:0.75rem;background:var(--primary-100);color:var(--primary);
+                     padding:6px 14px;border-radius:var(--radius-full);">
+            @Model.ActiveSubscriptions.Count پکیج فعال
+        </span>
+    }
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.Message.StartsWith("✅") ? "alert-success" : "alert-warning") mb-4">
+        @Model.Message
+    </div>
+}
+
+<!-- Active Packages -->
+@if (Model.ActiveSubscriptions.Any())
+{
+    <div class="mb-4">
+        <div class="section-header">
+            <span class="table-bar"></span>
+            <span class="section-header-label">پکیج‌های فعال سالن شما</span>
+        </div>
+        <div class="row g-3">
+            @foreach (var sub in Model.ActiveSubscriptions)
+            {
+                <div class="col-md-4">
+                    <div class="card p-3"
+                         style="border:1px solid var(--primary-200);background:var(--primary-50);">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div style="font-weight:600;color:var(--primary);font-size:0.9rem;">
+                                @sub.Package?.Name
+                            </div>
+                            <span class="badge bg-success">فعال ✓</span>
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--text-secondary);">
+                            تا: @sub.EndDate.ToString("yyyy/MM/dd")
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
+                            @sub.Package?.Description
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<!-- All Packages -->
+<div class="section-header">
+    <span class="table-bar"></span>
+    <span class="section-header-label">همه پکیج‌ها</span>
+</div>
+
+<div class="row g-4">
+    @foreach (var pkg in Model.Packages)
+    {
+        var isActive = Model.ActiveSubscriptions.Any(s => s.PackageId == pkg.Id);
+        <div class="col-md-4">
+            <div class="card p-4 h-100"
+                 style="@(isActive ? "border:1px solid var(--primary-200);" : "")">
+
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div style="font-size:1rem;font-weight:700;color:var(--text-primary);">
+                            @pkg.Name
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:3px;">
+                            @pkg.Category
+                        </div>
+                    </div>
+                    @if (isActive)
+                    {
+                        <span class="badge bg-success">فعال ✓</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">غیرفعال</span>
+                    }
+                </div>
+
+                <!-- Description -->
+                <p style="font-size:0.8rem;color:var(--text-secondary);min-height:40px;">
+                    @pkg.Description
+                </p>
+
+                <!-- Price & Duration -->
+                <div class="d-flex justify-content-between align-items-center mb-3"
+                     style="padding:12px;background:var(--primary-50);border-radius:var(--radius-sm);">
+                    <div>
+                        <div style="font-size:0.7rem;color:var(--text-secondary);">قیمت</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--primary);">
+                            @pkg.Price.ToString("N0")
+                            <span style="font-size:0.7rem;color:var(--text-secondary);font-weight:400;">تومان</span>
+                        </div>
+                    </div>
+                    <div style="text-align:left;">
+                        <div style="font-size:0.7rem;color:var(--text-secondary);">مدت</div>
+                        <div style="font-size:0.9rem;font-weight:600;color:var(--text-primary);">
+                            @pkg.DurationMonths ماه
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="mt-auto">
+                    @if (!isActive)
+                    {
+                        <form method="post" asp-page-handler="Buy" asp-route-id="@pkg.Id">
+                            <button type="submit" class="btn btn-primary w-100">
+                                🛒 خرید پکیج
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-page-handler="Renew" asp-route-id="@pkg.Id">
+                            <button type="submit" class="btn btn-secondary w-100">
+                                🔄 تمدید پکیج
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

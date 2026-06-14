@@ -1,0 +1,26 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SalonOS.Api/SalonOS.Api.csproj" />
+    <Project Path="src/SalonOS.Infrastructure/SalonOS.Infrastructure.csproj" />
+    <Project Path="src/SalonOS.Shared/SalonOS.Shared.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Booking/">
+    <Project Path="src/Modules/Booking/SalonOS.Booking.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Catalog/">
+    <Project Path="src/Modules/Catalog/SalonOS.Catalog.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/SalonOS.Identity.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Inventory/">
+    <Project Path="src/Modules/Inventory/SalonOS.Inventory.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Marketplace/">
+    <Project Path="src/Modules/Marketplace/SalonOS.Marketplace.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SalonOS.Tenancy.Tests/SalonOS.Tenancy.Tests.csproj" />
+  </Folder>
+</Solution>

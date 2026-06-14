@@ -1,0 +1,165 @@
+﻿@page
+@model SmartSalon.Pages.Admin.AppointmentsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "نوبت‌ها";
+    ViewData["ActivePage"] = "Appointments";
+}
+
+<div class="topbar">
+    <div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">مدیریت نوبت‌ها</div>
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">
+            تاریخ انتخابی: @Model.SelectedDate.ToString("yyyy/MM/dd")
+        </div>
+    </div>
+    <form method="get" class="d-flex gap-2 align-items-center">
+        <input type="date" name="date"
+               value="@Model.SelectedDate.ToString("yyyy-MM-dd")"
+               class="form-control form-control-sm"
+               style="width:160px;" />
+        <button type="submit" class="btn btn-primary btn-sm">فیلتر</button>
+    </form>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-lbl">کل نوبت‌ها</div>
+            <div class="stat-num" style="color:var(--primary);">@Model.Appointments.Count</div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-lbl">در انتظار</div>
+            <div class="stat-num" style="color:var(--warning);">
+                @Model.Appointments.Count(a => a.Status == SmartSalon.Models.AppointmentStatus.Pending)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card">
+            <div class="stat-lbl">تایید شده</div>
+            <div class="stat-num" style="color:var(--success);">
+                @Model.Appointments.Count(a => a.Status == SmartSalon.Models.AppointmentStatus.Confirmed)
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="stat-card-dark">
+            <div class="stat-lbl">درآمد روز</div>
+            <div class="stat-num">@Model.TodayRevenue.ToString("N0")</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.5);margin-top:4px;">تومان</div>
+        </div>
+    </div>
+</div>
+
+<!-- Appointments Table -->
+<div class="card">
+    <div class="p-3 d-flex justify-content-between align-items-center"
+         style="border-bottom:1px solid var(--border-light);">
+        <div class="section-header" style="margin-bottom:0;">
+            <span class="table-bar"></span>
+            <span class="section-header-label">لیست نوبت‌ها</span>
+        </div>
+        <span class="section-header-badge">
+            @Model.Appointments.Count نوبت
+        </span>
+    </div>
+
+    @if (!Model.Appointments.Any())
+    {
+        <div class="empty-state">
+            <div class="empty-state-icon">📅</div>
+            <div class="empty-state-title">در این تاریخ نوبتی ثبت نشده</div>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-accent mb-0">
+                <thead>
+                    <tr>
+                        <th>مشتری</th>
+                        <th>خدمت</th>
+                        <th>هنرمند</th>
+                        <th>ساعت</th>
+                        <th>مبلغ</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model.Appointments.OrderBy(x => x.StartTime))
+                    {
+                        var statusText = a.Status switch
+                        {
+                            SmartSalon.Models.AppointmentStatus.Pending => "در انتظار",
+                            SmartSalon.Models.AppointmentStatus.Confirmed => "تایید شده",
+                            SmartSalon.Models.AppointmentStatus.Cancelled => "لغو شده",
+                            SmartSalon.Models.AppointmentStatus.Completed => "تمام شده",
+                            _ => "نامشخص"
+                        };
+                        var statusBadge = a.Status switch
+                        {
+                            SmartSalon.Models.AppointmentStatus.Pending => "bg-warning",
+                            SmartSalon.Models.AppointmentStatus.Confirmed => "bg-success",
+                            SmartSalon.Models.AppointmentStatus.Cancelled => "bg-danger",
+                            SmartSalon.Models.AppointmentStatus.Completed => "bg-secondary",
+                            _ => "bg-secondary"
+                        };
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div style="width:32px;height:32px;border-radius:50%;
+                                                background:var(--primary-100);
+                                                display:flex;align-items:center;justify-content:center;
+                                                font-size:12px;color:var(--primary);font-weight:600;
+                                                flex-shrink:0;">
+                                        @((a.Client?.FirstName ?? "؟")[0])
+                                    </div>
+                                    <span style="font-weight:500;">@a.Client?.FirstName @a.Client?.LastName</span>
+                                </div>
+                            </td>
+                            <td>@a.Service?.Name</td>
+                            <td>@a.Artist?.User?.FirstName @a.Artist?.User?.LastName</td>
+                            <td style="font-weight:500;">@a.StartTime.ToString("HH:mm")</td>
+                            <td style="font-weight:600;">@a.EstimatedPrice.ToString("N0")</td>
+                            <td>
+                                <span class="badge @statusBadge">@statusText</span>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    @if (a.Status == SmartSalon.Models.AppointmentStatus.Pending)
+                                    {
+                                        <form method="post" asp-page-handler="Confirm"
+                                              asp-route-id="@a.Id" class="d-inline">
+                                            <button class="btn-action btn-action-approve">تایید</button>
+                                        </form>
+                                    }
+                                    @if (a.Status == SmartSalon.Models.AppointmentStatus.Confirmed)
+                                    {
+                                        <form method="post" asp-page-handler="Complete"
+                                              asp-route-id="@a.Id" class="d-inline">
+                                            <button class="btn-action btn-action-accent">تکمیل</button>
+                                        </form>
+                                    }
+                                    @if (a.Status == SmartSalon.Models.AppointmentStatus.Pending ||
+                                   a.Status == SmartSalon.Models.AppointmentStatus.Confirmed)
+                                    {
+                                        <form method="post" asp-page-handler="Cancel"
+                                              asp-route-id="@a.Id" class="d-inline">
+                                            <button class="btn-action btn-action-danger">لغو</button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

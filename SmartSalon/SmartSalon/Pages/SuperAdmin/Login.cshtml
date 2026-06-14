@@ -1,0 +1,133 @@
+﻿@page
+@model SmartSalon.Pages.SuperAdmin.LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود مدیر پلتفرم</title>
+    <link href="~/lib/bootstrap/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #EDE9FE 0%, #ECFDF5 50%, #FDF2F8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px;
+            padding: 1rem;
+        }
+
+        .login-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 20px 60px rgba(99,102,241,0.12), 0 0 0 1px rgba(255,255,255,0.5);
+            padding: 2.5rem 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .login-logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #818CF8, #6366F1);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 1.25rem;
+            box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+        }
+
+        .login-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .login-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(99,102,241,0.15);
+            border-radius: var(--radius-sm);
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+            transition: all var(--transition-fast);
+        }
+
+        .form-control:focus {
+            background: #fff;
+            border-color: #818CF8;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #818CF8, #6366F1);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-logo">🌐</div>
+            <div class="login-title">پنل مدیریت پلتفرم</div>
+            <div class="login-subtitle">فقط SuperAdmin دسترسی دارد</div>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger" style="text-align:center;font-size:0.8rem;">
+                    @Model.ErrorMessage
+                </div>
+            }
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">شماره موبایل</label>
+                    <input type="text" name="Mobile" class="form-control"
+                           placeholder="09121234567" required />
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">رمز عبور</label>
+                    <input type="password" name="Password" class="form-control"
+                           placeholder="رمز عبور" required />
+                </div>
+                <button type="submit" class="btn-login">
+                    ورود به پنل مدیریت
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
