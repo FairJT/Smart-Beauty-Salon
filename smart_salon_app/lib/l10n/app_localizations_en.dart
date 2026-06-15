@@ -194,4 +194,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderSent => 'Reminder Sent';
+
+  @override
+  String get errorUnknown => 'An unexpected error occurred';
+
+  @override
+  String get statusCancelledByArtist => 'Cancelled by Artist';
+
+  @override
+  String get statusUnknown => 'Unknown';
+
+  @override
+  String get mobileRequired => 'Mobile number is required';
+
+  @override
+  String get mobileInvalid => 'Invalid mobile number';
+
+  @override
+  String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 8 characters';
+
+  @override
+  String fieldRequired(String fieldName) => '$fieldName is required';
+
+  @override
+  String get nationalCodeRequired => 'National code is required';
+
+  @override
+  String get nationalCodeInvalid => 'National code must be 10 digits';
+
+  @override
+  String get phoneInvalid => 'Invalid phone number';
+
+  @override
+  String get restartApp => 'Please restart the app';
+
+  @override
+  String get daySat => 'Saturday';
+
+  @override
+  String get daySun => 'Sunday';
+
+  @override
+  String get dayMon => 'Monday';
+
+  @override
+  String get dayTue => 'Tuesday';
+
+  @override
+  String get dayWed => 'Wednesday';
+
+  @override
+  String get dayThu => 'Thursday';
+
+  @override
+  String get dayFri => 'Friday';
 }

@@ -4,17 +4,17 @@ import '../../core/app_colors.dart';
 import '../../domain/entities/slot_entity.dart';
 
 class BookingScreen extends StatefulWidget {
-  final int salonId;
-  final int artistId;
+  final String slug;
+  final String artistId;
   final String artistName;
-  final int serviceId;
+  final String serviceId;
   final String serviceName;
   final int durationMinutes;
   final double price;
 
   const BookingScreen({
     super.key,
-    required this.salonId,
+    required this.slug,
     required this.artistId,
     required this.artistName,
     required this.serviceId,

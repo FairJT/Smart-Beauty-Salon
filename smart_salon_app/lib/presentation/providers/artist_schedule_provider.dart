@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/datasources/dio_client.dart';
 import '../../data/datasources/api_constants.dart';
 import '../../domain/entities/appointment_entity.dart';
+import '../../types.dart';
 
 class ArtistScheduleState {
   final List<AppointmentEntity> appointments;
@@ -43,10 +44,7 @@ class ArtistScheduleNotifier extends StateNotifier<ArtistScheduleState> {
       state = state.copyWith(
         appointments: data
             .map((j) => AppointmentEntity(
-                  id: j['id'] ?? 0,
-                  salonId: j['salonId'] ?? 0,
-                  artistId: j['artistId'] ?? 0,
-                  serviceId: j['serviceId'] ?? 0,
+                  id: j['id']?.toString() ?? '',
                   startTime: DateTime.parse(j['startTime']),
                   endTime: DateTime.parse(j['endTime']),
                   status: j['status'] ?? 0,

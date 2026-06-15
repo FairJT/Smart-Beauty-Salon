@@ -40,7 +40,9 @@ public class IdentityDbContext : IdentityDbContext<ApplicationUser>
         // Membership configuration
         builder.Entity<Membership>(e =>
         {
-            e.HasIndex(m => new { m.UserId, m.TenantId }).IsUnique();
+            e.HasKey(m => m.Id).IsClustered(false);
+            e.HasIndex(m => new { m.TenantId, m.UserId }).IsClustered().IsUnique();
+
             e.HasIndex(m => m.TenantId);
 
             e.HasOne(m => m.User)
@@ -126,8 +128,8 @@ public class IdentityDbContext : IdentityDbContext<ApplicationUser>
         // Client can favorite salons across multiple tenants (A-06)
         builder.Entity<SavedSalon>(e =>
         {
-            e.HasIndex(s => s.UserId);
-            e.HasIndex(s => new { s.UserId, s.SalonId }).IsUnique();
+            e.HasKey(s => s.Id).IsClustered(false);
+            e.HasIndex(s => new { s.UserId, s.Slug }).IsClustered().IsUnique();
         });
     }
 }

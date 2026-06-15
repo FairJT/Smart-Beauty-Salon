@@ -2,18 +2,18 @@ import '../../domain/entities/artist_entity.dart';
 import '../../domain/repositories/artist_repository.dart';
 import '../datasources/dio_client.dart';
 import '../datasources/api_constants.dart';
+import '../../types.dart';
 
 class ArtistRepositoryImpl implements ArtistRepository {
   @override
-  Future<List<ArtistEntity>> getArtistsBySalon(int salonId) async {
+  Future<List<ArtistEntity>> getArtistsBySalon(String slug) async {
     final response = await DioClient.instance.get(
-      '${ApiConstants.artists}/salon/$salonId',
+      '${ApiConstants.artists}/salon/$slug',
     );
 
     final data = response.data as List;
     return data.map((json) => ArtistEntity(
-      id: json['id'],
-      salonId: json['salonId'],
+      id: json['id']?.toString() ?? '',
       name: json['name'],
       phoneNumber: json['phoneNumber'],
       profileImageUrl: json['profileImageUrl'],
@@ -23,13 +23,12 @@ class ArtistRepositoryImpl implements ArtistRepository {
   }
 
   @override
-  Future<ArtistEntity> getArtistById(int id) async {
+  Future<ArtistEntity> getArtistById(ArtistId id) async {
     final response = await DioClient.instance.get('${ApiConstants.artists}/$id');
     final json = response.data;
 
     return ArtistEntity(
-      id: json['id'],
-      salonId: json['salonId'],
+      id: json['id']?.toString() ?? '',
       name: json['name'],
       phoneNumber: json['phoneNumber'],
       profileImageUrl: json['profileImageUrl'],

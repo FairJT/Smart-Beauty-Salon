@@ -48,9 +48,14 @@ class _BookingScreenState extends State<BookingScreen> {
     List<int> gDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     List<int> jDays = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
-    gy -= 1600; gm -= 1; gd -= 1;
-    int gDN = 365 * gy + ((gy + 3) ~/ 4) - ((gy + 99) ~/ 100) + ((gy + 399) ~/ 400);
-    for (int i = 0; i < gm; i++) gDN += gDays[i];
+    gy -= 1600;
+    gm -= 1;
+    gd -= 1;
+    int gDN =
+        365 * gy + ((gy + 3) ~/ 4) - ((gy + 99) ~/ 100) + ((gy + 399) ~/ 400);
+    for (int i = 0; i < gm; i++) {
+      gDN += gDays[i];
+    }
     if (gm > 1 && ((gy % 4 == 0 && gy % 100 != 0) || gy % 400 == 0)) gDN++;
     gDN += gd;
 
@@ -59,17 +64,27 @@ class _BookingScreenState extends State<BookingScreen> {
     jDN %= 12053;
     jy = 979 + 33 * jNP + 4 * (jDN ~/ 1461);
     jDN %= 1461;
-    if (jDN >= 366) { jy += (jDN - 1) ~/ 365; jDN = (jDN - 1) % 365; }
-    for (jm = 0; jm < 11 && jDN >= jDays[jm]; jm++) jDN -= jDays[jm];
+    if (jDN >= 366) {
+      jy += (jDN - 1) ~/ 365;
+      jDN = (jDN - 1) % 365;
+    }
+    for (jm = 0; jm < 11 && jDN >= jDays[jm]; jm++) {
+      jDN -= jDays[jm];
+    }
     jd = jDN + 1;
 
     return JalaliDate(jy, jm + 1, jd);
   }
 
   Future<void> _loadSlots() async {
-    setState(() { _loadingSlots = true; _slots = []; _selectedSlot = null; });
+    setState(() {
+      _loadingSlots = true;
+      _slots = [];
+      _selectedSlot = null;
+    });
     try {
-      final dateStr = '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}';
+      final dateStr =
+          '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}';
       final res = await ApiService.get(
         '${ApiConstants.slots}?artistId=${widget.artistId}&date=$dateStr&duration=${widget.durationMinutes}',
       );
@@ -81,7 +96,10 @@ class _BookingScreenState extends State<BookingScreen> {
         _loadingSlots = false;
       });
     } catch (e) {
-      setState(() { _error = e.toString().replaceAll('Exception: ', ''); _loadingSlots = false; });
+      setState(() {
+        _error = e.toString().replaceAll('Exception: ', '');
+        _loadingSlots = false;
+      });
     }
   }
 
@@ -90,7 +108,10 @@ class _BookingScreenState extends State<BookingScreen> {
       setState(() => _error = 'لطفاً یک تایم انتخاب کنید');
       return;
     }
-    setState(() { _booking = true; _error = null; });
+    setState(() {
+      _booking = true;
+      _error = null;
+    });
     try {
       final slot = _slots.firstWhere((s) => s.start == _selectedSlot);
       final res = await ApiService.post(ApiConstants.appointments, {
@@ -114,20 +135,27 @@ class _BookingScreenState extends State<BookingScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('تاریخ: ${jalali.day} ${_jalaliMonthName(jalali.month)} ${jalali.year}'),
+              Text(
+                  'تاریخ: ${jalali.day} ${_jalaliMonthName(jalali.month)} ${jalali.year}'),
               Text('ساعت: $_selectedSlot'),
               Text('خدمت: ${widget.serviceName}'),
               Text('هنرمند: ${widget.artistName}'),
               const SizedBox(height: 12),
               Text(
                 'مبلغ بیعانه: ${res['deposit']} تومان',
-                style: const TextStyle(color: AppColors.green, fontWeight: FontWeight.bold, fontSize: 16),
+                style: const TextStyle(
+                    color: AppColors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
               ),
             ],
           ),
           actions: [
             ElevatedButton(
-              onPressed: () { Navigator.pop(context); Navigator.pop(context); },
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
               child: const Text('باشه'),
             ),
           ],
@@ -141,12 +169,33 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   String _jalaliMonthName(int month) {
-    const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+    const months = [
+      'فروردین',
+      'اردیبهشت',
+      'خرداد',
+      'تیر',
+      'مرداد',
+      'شهریور',
+      'مهر',
+      'آبان',
+      'آذر',
+      'دی',
+      'بهمن',
+      'اسفند'
+    ];
     return months[month - 1];
   }
 
   String _weekDayName(DateTime date) {
-    const days = ['دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه','یکشنبه'];
+    const days = [
+      'دوشنبه',
+      'سه‌شنبه',
+      'چهارشنبه',
+      'پنجشنبه',
+      'جمعه',
+      'شنبه',
+      'یکشنبه'
+    ];
     return days[date.weekday - 1];
   }
 
@@ -155,17 +204,20 @@ class _BookingScreenState extends State<BookingScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('رزرو نوبت')),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
+        padding: EdgeInsets.fromLTRB(
+            16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildInfoCard(),
             const SizedBox(height: 20),
-            const Text('انتخاب تاریخ:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Text('انتخاب تاریخ:',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             const SizedBox(height: 8),
             _buildDateSelector(),
             const SizedBox(height: 20),
-            const Text('انتخاب تایم:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Text('انتخاب تایم:',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             const SizedBox(height: 8),
             _buildSlots(),
             const SizedBox(height: 20),
@@ -173,8 +225,12 @@ class _BookingScreenState extends State<BookingScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 margin: const EdgeInsets.only(bottom: 16),
-                decoration: BoxDecoration(color: Colors.red.shade100, borderRadius: BorderRadius.circular(10)),
-                child: Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+                decoration: BoxDecoration(
+                    color: Colors.red.shade100,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Text(_error!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.red)),
               ),
             ElevatedButton(
               onPressed: _booking ? null : _book,
@@ -202,7 +258,8 @@ class _BookingScreenState extends State<BookingScreen> {
           _infoRow(Icons.person, 'هنرمند', widget.artistName),
           _infoRow(Icons.spa, 'خدمت', widget.serviceName),
           _infoRow(Icons.timer, 'مدت', '${widget.durationMinutes} دقیقه'),
-          _infoRow(Icons.attach_money, 'قیمت', '${widget.price.toStringAsFixed(0)} تومان'),
+          _infoRow(Icons.attach_money, 'قیمت',
+              '${widget.price.toStringAsFixed(0)} تومان'),
         ],
       ),
     );
@@ -230,29 +287,42 @@ class _BookingScreenState extends State<BookingScreen> {
         itemCount: 14,
         itemBuilder: (_, i) {
           final date = DateTime.now().add(Duration(days: i + 1));
-          final isSelected = date.day == _selectedDate.day && date.month == _selectedDate.month;
+          final isSelected = date.day == _selectedDate.day &&
+              date.month == _selectedDate.month;
           final jalali = _toJalali(date);
 
           return GestureDetector(
-            onTap: () { setState(() => _selectedDate = date); _loadSlots(); },
+            onTap: () {
+              setState(() => _selectedDate = date);
+              _loadSlots();
+            },
             child: Container(
               width: 70,
               margin: const EdgeInsets.only(left: 8),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                border: Border.all(
+                    color:
+                        isSelected ? AppColors.primary : Colors.grey.shade300),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(_weekDayName(date),
-                      style: TextStyle(fontSize: 10, color: isSelected ? Colors.white70 : Colors.grey)),
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: isSelected ? Colors.white70 : Colors.grey)),
                   Text('${jalali.day}',
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
-                          color: isSelected ? Colors.white : AppColors.primary)),
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              isSelected ? Colors.white : AppColors.primary)),
                   Text(_jalaliMonthName(jalali.month),
-                      style: TextStyle(fontSize: 10, color: isSelected ? Colors.white70 : Colors.grey)),
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: isSelected ? Colors.white70 : Colors.grey)),
                 ],
               ),
             ),
@@ -265,7 +335,9 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget _buildSlots() {
     if (_loadingSlots) return const Center(child: CircularProgressIndicator());
     if (_slots.isEmpty) {
-      return const Center(child: Text('تایم خالی وجود ندارد', style: TextStyle(color: Colors.grey)));
+      return const Center(
+          child: Text('تایم خالی وجود ندارد',
+              style: TextStyle(color: Colors.grey)));
     }
     return Wrap(
       spacing: 8,
@@ -279,10 +351,13 @@ class _BookingScreenState extends State<BookingScreen> {
             decoration: BoxDecoration(
               color: isSelected ? AppColors.primary : Colors.white,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+              border: Border.all(
+                  color: isSelected ? AppColors.primary : Colors.grey.shade300),
             ),
             child: Text(slot.start,
-                style: TextStyle(color: isSelected ? Colors.white : AppColors.dark, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: isSelected ? Colors.white : AppColors.dark,
+                    fontWeight: FontWeight.bold)),
           ),
         );
       }).toList(),

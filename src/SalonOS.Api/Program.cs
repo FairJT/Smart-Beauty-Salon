@@ -96,7 +96,9 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    var jwtKey = builder.Configuration["JwtSettings:Key"] ?? Environment.GetEnvironmentVariable("JWT_SECRET");
+    var jwtKey = builder.Configuration["JwtSettings:Key"];
+    if (string.IsNullOrEmpty(jwtKey))
+        jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET");
     if (string.IsNullOrEmpty(jwtKey))
         throw new InvalidOperationException("JWT key is not configured.");
 
@@ -209,8 +211,9 @@ var app = builder.Build();
         try { identityDb.Database.Migrate(); } catch { }
         try { appDb.Database.Migrate(); } catch { }
 
-        // Create database with Identity tables
-        identityDb.Database.EnsureCreated();
+        // Databases are created by Migrate() above.
+        // Raw SQL below provides idempotent schema safety for environments
+        // without generated migrations (FAIR-02).
 
         // Ensure OutboxMessages table exists (shared DB with IdentityDbContext)
         appDb.Database.ExecuteSqlRaw(@"
@@ -225,8 +228,8 @@ var app = builder.Build();
                 [RetryCount] INT NOT NULL DEFAULT 0
             )");
 
-        // Ensure Booking tables exist
-        try { bookingDb.Database.EnsureCreated(); } catch { }
+        // Apply Booking migrations if any
+        try { bookingDb.Database.Migrate(); } catch { }
 
         // ── Ensure Phase 2 booking tables exist ──
         identityDb.Database.ExecuteSqlRaw(@"
@@ -299,15 +302,17 @@ var app = builder.Build();
             CREATE TABLE [SavedSalons] (
                 [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
                 [UserId] NVARCHAR(450) NOT NULL,
-                [SalonTenantId] UNIQUEIDENTIFIER NOT NULL,
+                [Slug] NVARCHAR(450) NOT NULL DEFAULT '',
+                [SalonName] NVARCHAR(200) NOT NULL DEFAULT '',
+                [LogoUrl] NVARCHAR(500) NULL,
                 [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE()
             )");
         identityDb.Database.ExecuteSqlRaw(@"
             IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_SavedSalons_UserId')
             CREATE INDEX [IX_SavedSalons_UserId] ON [SavedSalons]([UserId])");
         identityDb.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_SavedSalons_UserId_SalonTenantId')
-            CREATE UNIQUE INDEX [IX_SavedSalons_UserId_SalonTenantId] ON [SavedSalons]([UserId], [SalonTenantId])");
+            IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_SavedSalons_UserId_Slug')
+            CREATE UNIQUE INDEX [IX_SavedSalons_UserId_Slug] ON [SavedSalons]([UserId], [Slug])");
         identityDb.Database.ExecuteSqlRaw(@"
             IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'ClientProfiles')
             CREATE TABLE [ClientProfiles] (
@@ -469,8 +474,8 @@ var app = builder.Build();
         identityDb.Database.ExecuteSqlRaw(@"
             IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('ArtistProfiles') AND name = 'RentCurrency')
                 ALTER TABLE [ArtistProfiles] ADD [RentCurrency] NVARCHAR(3) NULL");
-        // Ensure Catalog tables exist via catalog DbContext
-        try { catalogDb.Database.EnsureCreated(); } catch { }
+        // Apply Catalog migrations if any
+        try { catalogDb.Database.Migrate(); } catch { }
 
         // ── Seed users ──────────────────────────────────────────
         await SeedUsersAsync(userManager, identityDb);
@@ -548,6 +553,31 @@ static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, Ident
 
     }
 
+    // Create a default tenant FIRST so profile FK references are valid
+    var defaultTenantId = Guid.NewGuid();
+    var salonManagerUser = await userManager.FindByNameAsync("09110000002");
+    if (salonManagerUser != null && !await db.Tenants.AnyAsync())
+    {
+        var tenant = new Tenant
+        {
+            Id = defaultTenantId,
+            Name = "سالن زیبایی نمونه",
+            Slug = "salon-sample",
+            Description = "سالن زیبایی پیشفرض",
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow
+        };
+        db.Tenants.Add(tenant);
+        await db.SaveChangesAsync();
+        Console.WriteLine("[Seed] Created default tenant");
+    }
+    else
+    {
+        var existing = await db.Tenants.FirstOrDefaultAsync();
+        if (existing != null)
+            defaultTenantId = existing.Id;
+    }
+
     // Batch-create role-specific profile entities for newly seeded users
     var profileBatch = new List<object>();
     foreach (var u in seedUsers)
@@ -559,11 +589,11 @@ static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, Ident
         {
             case UserType.SalonManager:
                 if (!await db.SalonManagerProfiles.AnyAsync(p => p.UserId == user.Id))
-                    profileBatch.Add(new SalonManagerProfile { UserId = user.Id, IsOwner = false, IsActive = true });
+                    profileBatch.Add(new SalonManagerProfile { UserId = user.Id, TenantId = defaultTenantId, IsOwner = false, IsActive = true });
                 break;
             case UserType.Artist:
                 if (!await db.ArtistProfiles.AnyAsync(p => p.UserId == user.Id))
-                    profileBatch.Add(new ArtistProfile { UserId = user.Id, Skill = "General", IsActive = true });
+                    profileBatch.Add(new ArtistProfile { UserId = user.Id, TenantId = defaultTenantId, Skill = "General", IsActive = true });
                 break;
             case UserType.Client:
                 if (!await db.ClientProfiles.AnyAsync(p => p.UserId == user.Id))
@@ -578,24 +608,14 @@ static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, Ident
         Console.WriteLine($"[Seed] Created {profileBatch.Count} profile(s)");
     }
 
-    // Create a default tenant and memberships for non-SuperAdmin users
-    var salonManager = await userManager.FindByNameAsync("09110000002");
-    if (salonManager != null && !await db.Tenants.AnyAsync())
+    // Create memberships for non-SuperAdmin users
+    if (salonManagerUser != null && !await db.Memberships.AnyAsync())
     {
-        var tenant = new Tenant
-        {
-            Id = Guid.NewGuid(),
-            Name = "سالن زیبایی نمونه",
-            Slug = "salon-sample",
-            Description = "سالن زیبایی پیشفرض",
-            IsActive = true,
-            CreatedAt = DateTime.UtcNow
-        };
-        db.Tenants.Add(tenant);
+        var tenant = await db.Tenants.FirstAsync();
 
         var memberships = new[]
         {
-            new Membership { UserId = salonManager.Id, TenantId = tenant.Id, Role = MembershipRole.Manager, IsActive = true },
+            new Membership { UserId = salonManagerUser.Id, TenantId = tenant.Id, Role = MembershipRole.Manager, IsActive = true },
         };
 
         var artist = await userManager.FindByNameAsync("09110000003");
@@ -608,6 +628,6 @@ static async Task SeedUsersAsync(UserManager<ApplicationUser> userManager, Ident
 
         db.Memberships.AddRange(memberships);
         await db.SaveChangesAsync();
-        Console.WriteLine("[Seed] Created default tenant with memberships");
+        Console.WriteLine("[Seed] Created default tenant memberships");
     }
 }

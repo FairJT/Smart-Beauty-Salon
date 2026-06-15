@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Marketplace.Application.DTOs;
+using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Marketplace.API.Controllers;
 
@@ -16,6 +17,7 @@ public class ServiceTemplateController : ControllerBase
     // For now, this is a placeholder
 
     [HttpGet]
+    [HasPermission(Permissions.MarketplaceBrowse)]
     public IActionResult GetServiceTemplates()
     {
         // TODO: Implement template listing
@@ -23,6 +25,7 @@ public class ServiceTemplateController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [HasPermission(Permissions.MarketplaceBrowse)]
     public IActionResult GetServiceTemplate(Guid id)
     {
         // TODO: Implement template detail
@@ -30,7 +33,7 @@ public class ServiceTemplateController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [HasPermission(Permissions.MarketplaceTemplateManage)]
     public IActionResult CreateServiceTemplate([FromBody] CreateServiceTemplateDto dto)
     {
         if (!ModelState.IsValid)
@@ -41,7 +44,7 @@ public class ServiceTemplateController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize]
+    [HasPermission(Permissions.MarketplaceTemplateManage)]
     public IActionResult UpdateServiceTemplate(Guid id, [FromBody] UpdateServiceTemplateDto dto)
     {
         if (!ModelState.IsValid)

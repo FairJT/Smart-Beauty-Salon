@@ -59,7 +59,7 @@ class AdminUser {
 }
 
 class AdminSalon {
-  final int id;
+  final String slug;
   final String name;
   final String? phone;
   final String? address;
@@ -70,7 +70,7 @@ class AdminSalon {
   final int serviceCount;
 
   AdminSalon({
-    required this.id,
+    required this.slug,
     required this.name,
     this.phone,
     this.address,
@@ -82,7 +82,7 @@ class AdminSalon {
   });
 
   factory AdminSalon.fromJson(Map<String, dynamic> json) => AdminSalon(
-        id: json['id'] ?? 0,
+        slug: json['slug']?.toString() ?? '',
         name: json['name'] ?? '',
         phone: json['phone'],
         address: json['address'],
@@ -187,20 +187,20 @@ class AdminNotifier extends StateNotifier<AdminState> {
     }
   }
 
-  Future<void> toggleSalonActive(int salonId) async {
+  Future<void> toggleSalonActive(String slug) async {
     try {
       await DioClient.instance
-          .put('${ApiConstants.adminSalons}/$salonId/toggle-active');
+          .put('${ApiConstants.adminSalons}/$slug/toggle-active');
       await loadSalons();
     } catch (e) {
       state = state.copyWith(error: e.toString());
     }
   }
 
-  Future<void> toggleSalonVip(int salonId) async {
+  Future<void> toggleSalonVip(String slug) async {
     try {
       await DioClient.instance
-          .put('${ApiConstants.adminSalons}/$salonId/toggle-vip');
+          .put('${ApiConstants.adminSalons}/$slug/toggle-vip');
       await loadSalons();
     } catch (e) {
       state = state.copyWith(error: e.toString());

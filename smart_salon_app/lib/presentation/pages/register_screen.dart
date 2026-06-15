@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../../core/validators.dart';
 import '../providers/auth_provider.dart';
-import 'home_screen.dart';
 import 'client_home_screen.dart';
 import 'manager/manager_dashboard_screen.dart';
 import 'artist/artist_dashboard_screen.dart';
@@ -106,28 +105,36 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                         ],
                       ),
-                      child: const Icon(Icons.person_add_rounded, size: 50, color: Colors.white),
+                      child: const Icon(Icons.person_add_rounded,
+                          size: 50, color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Text(
                     'ثبت‌نام در سالن هوشمند',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.textPrimary, fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 32),
                   TextFormField(
                     controller: _firstNameController,
                     textAlign: TextAlign.right,
                     validator: (v) => Validators.required(v, 'نام'),
-                    decoration: const InputDecoration(hintText: 'نام', prefixIcon: Icon(Icons.person_outline)),
+                    decoration: const InputDecoration(
+                        hintText: 'نام',
+                        prefixIcon: Icon(Icons.person_outline)),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: _lastNameController,
                     textAlign: TextAlign.right,
                     validator: (v) => Validators.required(v, 'نام خانوادگی'),
-                    decoration: const InputDecoration(hintText: 'نام خانوادگی', prefixIcon: Icon(Icons.person_outline)),
+                    decoration: const InputDecoration(
+                        hintText: 'نام خانوادگی',
+                        prefixIcon: Icon(Icons.person_outline)),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -135,7 +142,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     keyboardType: TextInputType.phone,
                     textAlign: TextAlign.right,
                     validator: Validators.mobile,
-                    decoration: const InputDecoration(hintText: 'شماره موبایل', prefixIcon: Icon(Icons.phone_android)),
+                    decoration: const InputDecoration(
+                        hintText: 'شماره موبایل',
+                        prefixIcon: Icon(Icons.phone_android)),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -143,7 +152,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.right,
                     validator: Validators.nationalCode,
-                    decoration: const InputDecoration(hintText: 'کد ملی', prefixIcon: Icon(Icons.badge_outlined)),
+                    decoration: const InputDecoration(
+                        hintText: 'کد ملی',
+                        prefixIcon: Icon(Icons.badge_outlined)),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -155,7 +166,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       hintText: 'رمز عبور (حداقل ۸ کاراکتر)',
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
-                        icon: Icon(_hidePass ? Icons.visibility_off : Icons.visibility, color: AppColors.gray),
+                        icon: Icon(
+                            _hidePass ? Icons.visibility_off : Icons.visibility,
+                            color: AppColors.gray),
                         onPressed: () => setState(() => _hidePass = !_hidePass),
                       ),
                     ),
@@ -180,22 +193,27 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         shadowColor: Colors.transparent,
                         foregroundColor: Colors.white,
                         minimumSize: const Size(double.infinity, 52),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
                       ),
                       onPressed: _loading ? null : _register,
                       child: _loading
                           ? const SizedBox(
                               width: 24,
                               height: 24,
-                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: Colors.white),
                             )
-                          : const Text('ثبت‌نام', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          : const Text('ثبت‌نام',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('قبلاً ثبت‌نام کردید؟ وارد شوید', style: TextStyle(color: AppColors.primary)),
+                    child: const Text('قبلاً ثبت‌نام کردید؟ وارد شوید',
+                        style: TextStyle(color: AppColors.primary)),
                   ),
                 ],
               ),

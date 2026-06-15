@@ -26,6 +26,7 @@
     <ProjectReference Include="..\..\src\SalonOS.Infrastructure\SalonOS.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\SalonOS.Api\SalonOS.Api.csproj" />
     <ProjectReference Include="..\..\src\Modules\Booking\SalonOS.Booking.csproj" />
+    <ProjectReference Include="..\..\src\Modules\Catalog\SalonOS.Catalog.csproj" />
   </ItemGroup>
 
 </Project>

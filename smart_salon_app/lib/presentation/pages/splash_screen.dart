@@ -3,10 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../providers/auth_provider.dart';
 import 'login_screen.dart';
-import 'home_screen.dart';
 import 'admin/admin_dashboard.dart';
 import 'artist/artist_dashboard_screen.dart';
-import 'artist/artist_schedule_screen.dart';
 import 'manager/manager_dashboard_screen.dart';
 import 'client_home_screen.dart';
 
@@ -31,7 +29,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final auth = ref.read(authProvider);
 
     if (!auth.isLoggedIn) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const LoginScreen()));
       return;
     }
 
@@ -46,7 +45,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       destination = const ClientHomeScreen();
     }
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => destination));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (_) => destination));
   }
 
   @override
@@ -74,17 +74,23 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                     ),
                   ],
                 ),
-                child: const Icon(Icons.content_cut_rounded, size: 70, color: Colors.white),
+                child: const Icon(Icons.content_cut_rounded,
+                    size: 70, color: Colors.white),
               ),
               const SizedBox(height: 24),
               const Text(
                 'سالن هوشمند',
-                style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              const Text('SMART SALON', style: TextStyle(color: Colors.white60, fontSize: 16)),
+              const Text('SMART SALON',
+                  style: TextStyle(color: Colors.white60, fontSize: 16)),
               const SizedBox(height: 60),
-              const CircularProgressIndicator(color: Colors.white, strokeWidth: 3),
+              const CircularProgressIndicator(
+                  color: Colors.white, strokeWidth: 3),
             ],
           ),
         ),

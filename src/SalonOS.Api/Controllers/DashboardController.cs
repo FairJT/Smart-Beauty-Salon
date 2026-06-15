@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SalonOS.Booking.Domain;
 using SalonOS.Booking.Infrastructure;
+using SalonOS.Catalog.Infrastructure;
 using SalonOS.Identity.Infrastructure;
 using SalonOS.Shared;
 using SalonOS.Shared.Authorization;
@@ -15,15 +16,18 @@ public class DashboardController : ControllerBase
 {
     private readonly BookingDbContext _bookingDb;
     private readonly IdentityDbContext _identityDb;
+    private readonly CatalogDbContext _catalogDb;
     private readonly ITenantContext _tenant;
 
     public DashboardController(
         BookingDbContext bookingDb,
         IdentityDbContext identityDb,
+        CatalogDbContext catalogDb,
         ITenantContext tenant)
     {
         _bookingDb = bookingDb;
         _identityDb = identityDb;
+        _catalogDb = catalogDb;
         _tenant = tenant;
     }
 
@@ -54,20 +58,46 @@ public class DashboardController : ControllerBase
         var revenueTodayAmount = completedToday
             .Sum(b => b.FinalPrice?.Amount ?? b.EstimatedPrice.Amount);
 
+        var availableMinutes = todayBookings.Count > 0 ? 480 : 1;
+
         var artistUtilization = todayBookings
             .GroupBy(b => b.ArtistId)
             .Select(g => new
             {
                 artistId = g.Key,
                 bookingCount = g.Count(),
-                totalDurationMinutes = g.Sum(b => b.DurationMinutes)
+                completedToday = g.Count(b => b.Status == BookingStatus.Completed),
+                totalDurationMinutes = g.Sum(b => b.DurationMinutes),
+                utilizationPercent = Math.Round(g.Sum(b => b.DurationMinutes) * 100.0 / availableMinutes, 1)
             })
             .ToList();
+
+        var artistIds = artistUtilization.Select(a => a.artistId).ToList();
+        var artistNames = await _identityDb.ArtistProfiles
+            .Where(a => artistIds.Contains(a.Id))
+            .Join(_identityDb.Users,
+                profile => profile.UserId,
+                user => user.Id,
+                (profile, user) => new { profile.Id, FullName = user.FirstName + " " + user.LastName })
+            .ToListAsync();
+        var nameMap = artistNames.ToDictionary(a => a.Id, a => a.FullName);
+
+        var artistUtil = artistUtilization.Select(a => new
+        {
+            artistId = a.artistId,
+            artistName = nameMap.GetValueOrDefault(a.artistId, ""),
+            todayAppointments = a.bookingCount,
+            completedToday = a.completedToday,
+            utilizationPercent = a.utilizationPercent
+        }).ToList();
 
         var tenant = await _identityDb.Tenants
             .Where(t => t.Id == tenantId)
             .Select(t => new { t.Name, t.License })
             .FirstOrDefaultAsync();
+
+        var activeServiceCount = await _catalogDb.CatalogServices.CountAsync(s => s.TenantId == tenantId && s.IsActive);
+        var activeArtistCount = await _identityDb.ArtistProfiles.CountAsync(a => a.TenantId == tenantId);
 
         return Ok(new
         {
@@ -76,12 +106,10 @@ public class DashboardController : ControllerBase
             todayAppointments = todayCount,
             upcomingAppointments = upcomingCount,
             revenueToday = new { amount = revenueTodayAmount, currency = "IRR" },
-            artistUtilization,
-            quickLinks = new
-            {
-                catalog = "/salon/" + tenantId + "/services",
-                staff = "/api/artist-schedules"
-            }
+            activeServiceCount,
+            activeArtistCount,
+            subscriptionStatus = tenant?.License,
+            artistUtilization = artistUtil
         });
     }
 
@@ -127,12 +155,18 @@ public class DashboardController : ControllerBase
             .Take(10)
             .ToListAsync();
 
+        var activeSubscriptionCount = await _identityDb.Tenants
+            .CountAsync(t => t.IsActive && t.License != null && t.License != "");
+
         return Ok(new
         {
             totalTenants,
-            activeTenants,
-            totalUsers,
+            totalSalons = totalTenants,
+            activeSalons = activeTenants,
             totalArtists,
+            totalUsers,
+            activeSubscriptions = activeSubscriptionCount,
+            platformRevenue = new { amount = revenueMonth, currency = "IRR" },
             revenueThisMonth = new { amount = revenueMonth, currency = "IRR" },
             revenueToday = new { amount = revenueToday, currency = "IRR" },
             bookingsThisMonth = completedThisMonth.Count,
@@ -176,8 +210,8 @@ public class DashboardController : ControllerBase
             {
                 b.Id,
                 b.ClientId,
-                b.StartsAt,
-                b.EndsAt,
+                startTime = b.StartsAt,
+                endTime = b.EndsAt,
                 b.DurationMinutes,
                 b.Status
             })
@@ -191,21 +225,27 @@ public class DashboardController : ControllerBase
             : 0.0;
         var ratingCount = ratedBookings.Count;
 
+        var now2 = DateTime.UtcNow;
+        var monthStart2 = new DateTime(now2.Year, now2.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+        var monthBookings = myBookings
+            .Where(b => b.StartsAt >= monthStart2 && b.StartsAt < now2 && b.Status == BookingStatus.Completed)
+            .ToList();
+        var monthRevenueAmount = monthBookings.Sum(b => b.FinalPrice?.Amount ?? b.EstimatedPrice.Amount);
+
         return Ok(new
         {
             todayAppointments = todayBookings.Count,
             upcomingAppointments = upcomingBookings.Count,
             nextAppointment = nextBooking,
-            ratingSummary = new
-            {
-                average = ratingAvg,
-                count = ratingCount
-            }
+            ratingAvg,
+            ratingCount,
+            monthAppointments = monthBookings.Count,
+            monthRevenue = new { amount = monthRevenueAmount, currency = "IRR" }
         });
     }
 
     [HttpGet("api/dashboard/client")]
-    [HasPermission(Permissions.AppointmentCreate)]
+    [HasPermission(Permissions.ClientSelf)]
     public async Task<IActionResult> GetClientDashboard()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -232,8 +272,8 @@ public class DashboardController : ControllerBase
                 b.Id,
                 b.ArtistId,
                 b.ServiceId,
-                b.StartsAt,
-                b.EndsAt,
+                startTime = b.StartsAt,
+                endTime = b.EndsAt,
                 b.DurationMinutes,
                 b.Status,
                 priceAmount = b.EstimatedPrice.Amount,
@@ -241,12 +281,63 @@ public class DashboardController : ControllerBase
             })
             .FirstOrDefault();
 
+        var savedSalons = await _identityDb.SavedSalons
+            .Where(s => s.UserId == userId)
+            .ToListAsync();
+
+        var slugs = savedSalons.Select(s => s.Slug).ToList();
+        var currentTenants = await _identityDb.Tenants
+            .Where(t => slugs.Contains(t.Slug))
+            .Select(t => new { t.Slug, t.Name, t.LogoUrl, t.Id })
+            .ToListAsync();
+
+        var tenantMap = currentTenants.ToDictionary(t => t.Slug);
+        var tenantIdList = currentTenants.Select(t => t.Id).ToList();
+        var ratingStats = await _bookingDb.Bookings
+            .Where(b => b.IsRated && b.Rating.HasValue && tenantIdList.Contains(b.TenantId))
+            .GroupBy(b => b.TenantId)
+            .Select(g => new { TenantId = g.Key, AvgRating = g.Average(b => b.Rating!.Value), Count = g.Count() })
+            .ToListAsync();
+
+        var ratingMap = ratingStats.ToDictionary(r => r.TenantId);
+        foreach (var s in savedSalons)
+        {
+            if (tenantMap.TryGetValue(s.Slug, out var tenant))
+            {
+                if (s.SalonName != tenant.Name || s.LogoUrl != tenant.LogoUrl)
+                {
+                    s.SalonName = tenant.Name;
+                    s.LogoUrl = tenant.LogoUrl;
+                }
+            }
+        }
+
+        if (savedSalons.Any(s => tenantMap.ContainsKey(s.Slug)))
+            await _identityDb.SaveChangesAsync();
+
+        var favoriteSalons = savedSalons.Select(s =>
+        {
+            var tenant = tenantMap.GetValueOrDefault(s.Slug);
+            var tenantId = tenant?.Id;
+            var ratingData = tenantId.HasValue ? ratingMap.GetValueOrDefault(tenantId.Value) : null;
+            return new
+            {
+                slug = s.Slug,
+                salonName = s.SalonName,
+                logoUrl = s.LogoUrl,
+                ratingAvg = ratingData?.AvgRating ?? 0.0,
+                isVip = false
+            };
+        }).ToList();
+
         return Ok(new
         {
             upcomingAppointments = upcomingBookings.Count,
             nextAppointment = nextBooking,
             loyaltyPoints = profile?.LoyaltyPoints ?? 0,
-            totalVisits = profile?.TotalVisits ?? 0
+            totalVisits = profile?.TotalVisits ?? 0,
+            unreadNotifications = 0,
+            favoriteSalons
         });
     }
 }

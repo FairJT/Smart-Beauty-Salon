@@ -13,7 +13,8 @@ class SalonRepositoryImpl implements SalonRepository {
 
     final data = response.data as List;
     return data.map((json) => SalonEntity(
-      id: json['id'],
+      id: json['slug']?.toString() ?? '',
+      slug: json['slug'] ?? '',
       name: json['name'],
       description: json['description'],
       address: json['address'],
@@ -21,18 +22,19 @@ class SalonRepositoryImpl implements SalonRepository {
       imageUrl: json['imageUrl'],
       latitude: (json['latitude'] ?? 0).toDouble(),
       longitude: (json['longitude'] ?? 0).toDouble(),
-      rating: json['rating'] ?? 0,
+      rating: (json['rating'] ?? 0).toDouble(),
       reviewCount: json['reviewCount'] ?? 0,
     )).toList();
   }
 
   @override
-  Future<SalonEntity> getSalonById(int id) async {
-    final response = await DioClient.instance.get('${ApiConstants.salons}/$id');
+  Future<SalonEntity> getSalonBySlug(String slug) async {
+    final response = await DioClient.instance.get('${ApiConstants.salons}/$slug');
     final json = response.data;
 
     return SalonEntity(
-      id: json['id'],
+      id: json['slug']?.toString() ?? '',
+      slug: json['slug'] ?? '',
       name: json['name'],
       description: json['description'],
       address: json['address'],
@@ -40,7 +42,7 @@ class SalonRepositoryImpl implements SalonRepository {
       imageUrl: json['imageUrl'],
       latitude: (json['latitude'] ?? 0).toDouble(),
       longitude: (json['longitude'] ?? 0).toDouble(),
-      rating: json['rating'] ?? 0,
+      rating: (json['rating'] ?? 0).toDouble(),
       reviewCount: json['reviewCount'] ?? 0,
     );
   }
@@ -58,7 +60,8 @@ class SalonRepositoryImpl implements SalonRepository {
 
     final data = response.data as List;
     return data.map((json) => SalonEntity(
-      id: json['id'],
+      id: json['slug']?.toString() ?? '',
+      slug: json['slug'] ?? '',
       name: json['name'],
       description: json['description'],
       address: json['address'],
@@ -66,7 +69,7 @@ class SalonRepositoryImpl implements SalonRepository {
       imageUrl: json['imageUrl'],
       latitude: (json['latitude'] ?? 0).toDouble(),
       longitude: (json['longitude'] ?? 0).toDouble(),
-      rating: json['rating'] ?? 0,
+      rating: (json['rating'] ?? 0).toDouble(),
       reviewCount: json['reviewCount'] ?? 0,
     )).toList();
   }

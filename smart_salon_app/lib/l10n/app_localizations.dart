@@ -469,6 +469,63 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminder Sent'**
   String get reminderSent;
+
+  /// No description provided for @errorUnknown.
+  String get errorUnknown;
+
+  /// No description provided for @statusCancelledByArtist.
+  String get statusCancelledByArtist;
+
+  /// No description provided for @statusUnknown.
+  String get statusUnknown;
+
+  /// No description provided for @mobileRequired.
+  String get mobileRequired;
+
+  /// No description provided for @mobileInvalid.
+  String get mobileInvalid;
+
+  /// No description provided for @passwordRequired.
+  String get passwordRequired;
+
+  /// No description provided for @passwordMinLength.
+  String get passwordMinLength;
+
+  /// No description provided for @fieldRequired.
+  String fieldRequired(String fieldName);
+
+  /// No description provided for @nationalCodeRequired.
+  String get nationalCodeRequired;
+
+  /// No description provided for @nationalCodeInvalid.
+  String get nationalCodeInvalid;
+
+  /// No description provided for @phoneInvalid.
+  String get phoneInvalid;
+
+  /// No description provided for @restartApp.
+  String get restartApp;
+
+  /// No description provided for @daySat.
+  String get daySat;
+
+  /// No description provided for @daySun.
+  String get daySun;
+
+  /// No description provided for @dayMon.
+  String get dayMon;
+
+  /// No description provided for @dayTue.
+  String get dayTue;
+
+  /// No description provided for @dayWed.
+  String get dayWed;
+
+  /// No description provided for @dayThu.
+  String get dayThu;
+
+  /// No description provided for @dayFri.
+  String get dayFri;
 }
 
 class _AppLocalizationsDelegate

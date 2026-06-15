@@ -28,6 +28,7 @@
   "errorServer": "Internal server error.",
   "errorSessionExpired": "Session expired.",
   "errorInvalidCredentials": "Invalid mobile number or password.",
+  "errorUnknown": "An unexpected error occurred",
   "successLogin": "Logged in successfully.",
   "successRegister": "Registered successfully.",
   "successLogout": "Logged out successfully.",
@@ -61,5 +62,28 @@
   "statusCompleted": "Completed",
   "statusCancelled": "Cancelled",
   "statusNoShow": "No Show",
+  "statusCancelledByArtist": "Cancelled by Artist",
+  "statusUnknown": "Unknown",
+  "mobileRequired": "Mobile number is required",
+  "mobileInvalid": "Invalid mobile number",
+  "passwordRequired": "Password is required",
+  "passwordMinLength": "Password must be at least 8 characters",
+  "fieldRequired": "{fieldName} is required",
+  "@fieldRequired": {
+    "placeholders": {
+      "fieldName": {}
+    }
+  },
+  "nationalCodeRequired": "National code is required",
+  "nationalCodeInvalid": "National code must be 10 digits",
+  "phoneInvalid": "Invalid phone number",
+  "restartApp": "Please restart the app",
+  "daySat": "Saturday",
+  "daySun": "Sunday",
+  "dayMon": "Monday",
+  "dayTue": "Tuesday",
+  "dayWed": "Wednesday",
+  "dayThu": "Thursday",
+  "dayFri": "Friday",
   "reminderSent": "Reminder Sent"
 }

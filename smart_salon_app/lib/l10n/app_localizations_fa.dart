@@ -194,4 +194,61 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get reminderSent => 'یادآوری ارسال شد';
+
+  @override
+  String get errorUnknown => 'خطای غیرمنتظره‌ای رخ داده است';
+
+  @override
+  String get statusCancelledByArtist => 'لغو توسط هنرمند';
+
+  @override
+  String get statusUnknown => 'نامشخص';
+
+  @override
+  String get mobileRequired => 'شماره موبایل الزامی است';
+
+  @override
+  String get mobileInvalid => 'شماره موبایل نامعتبر است';
+
+  @override
+  String get passwordRequired => 'رمز عبور الزامی است';
+
+  @override
+  String get passwordMinLength => 'رمز عبور حداقل ۸ کاراکتر باشد';
+
+  @override
+  String fieldRequired(String fieldName) => '$fieldName الزامی است';
+
+  @override
+  String get nationalCodeRequired => 'کد ملی الزامی است';
+
+  @override
+  String get nationalCodeInvalid => 'کد ملی باید ۱۰ رقم باشد';
+
+  @override
+  String get phoneInvalid => 'شماره تلفن نامعتبر است';
+
+  @override
+  String get restartApp => 'لطفاً برنامه را مجدداً راه‌اندازی کنید';
+
+  @override
+  String get daySat => 'شنبه';
+
+  @override
+  String get daySun => 'یکشنبه';
+
+  @override
+  String get dayMon => 'دوشنبه';
+
+  @override
+  String get dayTue => 'سه‌شنبه';
+
+  @override
+  String get dayWed => 'چهارشنبه';
+
+  @override
+  String get dayThu => 'پنج‌شنبه';
+
+  @override
+  String get dayFri => 'جمعه';
 }

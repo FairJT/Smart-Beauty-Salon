@@ -1,5 +1,5 @@
 class ServiceItem {
-  final int id;
+  final String id;
   final String name;
   final String category;
   final int baseDurationMinutes;
@@ -15,7 +15,7 @@ class ServiceItem {
 
   factory ServiceItem.fromJson(Map<String, dynamic> json) {
     return ServiceItem(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       name: json['name'] ?? '',
       category: json['category'] ?? '',
       baseDurationMinutes: json['baseDurationMinutes'] ?? 30,

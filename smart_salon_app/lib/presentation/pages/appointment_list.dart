@@ -75,7 +75,7 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
     );
   }
 
-  Future<void> _cancel(int id) async {
+  Future<void> _cancel(String id) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
@@ -108,7 +108,7 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
     }
   }
 
-  void _showRateDialog(int id) {
+  void _showRateDialog(String id) {
     int selectedRating = 5;
     final commentController = TextEditingController();
 

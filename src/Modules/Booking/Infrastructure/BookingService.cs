@@ -135,8 +135,8 @@ public class BookingService : IBookingService
             var slotStart = rangeStart.AddMinutes(i * durationMinutes);
             slots.Add(new SlotDto
             {
-                StartsAt = slotStart,
-                EndsAt = slotStart.AddMinutes(durationMinutes),
+                StartTime = slotStart,
+                EndTime = slotStart.AddMinutes(durationMinutes),
                 IsAvailable = true
             });
         }

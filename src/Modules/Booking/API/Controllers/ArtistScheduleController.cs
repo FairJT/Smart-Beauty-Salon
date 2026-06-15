@@ -33,6 +33,75 @@ public class ArtistScheduleController : ControllerBase
         return Ok(schedules);
     }
 
+    [HttpGet("~/api/artist-schedule/my")]
+    [HasPermission(Permissions.AppointmentViewOwn)]
+    public async Task<IActionResult> GetMySchedule()
+    {
+        var artistId = User.FindFirst("artist_id")?.Value;
+        if (string.IsNullOrEmpty(artistId) || !Guid.TryParse(artistId, out var parsedArtistId))
+            return Forbid();
+
+        var now = DateTime.UtcNow;
+        var startOfDay = now.Date;
+        var endOfDay = startOfDay.AddDays(1);
+
+        var appointments = await _db.Bookings
+            .Where(b => b.ArtistId == parsedArtistId && b.TenantId == _tenant.TenantId
+                && b.StartsAt >= startOfDay && b.StartsAt < endOfDay
+                && b.Status != Booking.Domain.BookingStatus.Cancelled
+                && b.Status != Booking.Domain.BookingStatus.NoShow)
+            .OrderBy(b => b.StartsAt)
+            .Select(b => new
+            {
+                id = b.Id,
+                artistId = b.ArtistId,
+                serviceId = b.ServiceId,
+                startTime = b.StartsAt,
+                endTime = b.EndsAt,
+                status = (int)b.Status,
+                estimatedPrice = (double)b.EstimatedPrice.Amount,
+                depositAmount = (double)b.DepositAmount.Amount,
+                isRated = b.IsRated,
+                rating = (int?)b.Rating,
+                comment = b.Comment ?? "",
+                salonName = "",
+                artistName = "",
+                serviceName = "",
+                clientName = b.ClientId ?? ""
+            })
+            .ToListAsync();
+
+        return Ok(appointments);
+    }
+
+    [HttpGet("~/api/artist-schedule/my/stats")]
+    [HasPermission(Permissions.AppointmentViewOwn)]
+    public async Task<IActionResult> GetMyStats()
+    {
+        var artistIdClaim = User.FindFirst("artist_id")?.Value;
+        if (string.IsNullOrEmpty(artistIdClaim) || !Guid.TryParse(artistIdClaim, out var parsedArtistId))
+            return Forbid();
+
+        var now = DateTime.UtcNow;
+        var startOfMonth = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+        var endOfMonth = startOfMonth.AddMonths(1);
+
+        var todayStart = now.Date;
+        var todayEnd = todayStart.AddDays(1);
+
+        var todayCount = await _db.Bookings
+            .CountAsync(b => b.ArtistId == parsedArtistId && b.TenantId == _tenant.TenantId
+                && b.StartsAt >= todayStart && b.StartsAt < todayEnd
+                && b.Status != Booking.Domain.BookingStatus.Cancelled);
+
+        var monthCount = await _db.Bookings
+            .CountAsync(b => b.ArtistId == parsedArtistId && b.TenantId == _tenant.TenantId
+                && b.StartsAt >= startOfMonth && b.StartsAt < endOfMonth
+                && b.Status != Booking.Domain.BookingStatus.Cancelled);
+
+        return Ok(new { todayAppointments = todayCount, monthAppointments = monthCount });
+    }
+
     [HttpPost]
     [HasPermission(Permissions.SalonEdit)]
     public async Task<IActionResult> Create([FromBody] CreateArtistScheduleDto dto)

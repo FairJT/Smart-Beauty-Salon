@@ -7,9 +7,9 @@ import '../../widgets/dashboard_widgets.dart';
 import '../home_screen.dart';
 
 class ManagerDashboardScreen extends ConsumerStatefulWidget {
-  final int? salonId;
+  final String? slug;
 
-  const ManagerDashboardScreen({super.key, this.salonId});
+  const ManagerDashboardScreen({super.key, this.slug});
 
   @override
   ConsumerState<ManagerDashboardScreen> createState() => _ManagerDashboardScreenState();
@@ -20,7 +20,7 @@ class _ManagerDashboardScreenState extends ConsumerState<ManagerDashboardScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(salonManagerDashboardProvider.notifier).load(widget.salonId);
+      ref.read(salonManagerDashboardProvider.notifier).load(widget.slug);
     });
   }
 
@@ -47,12 +47,12 @@ class _ManagerDashboardScreenState extends ConsumerState<ManagerDashboardScreen>
 
   Widget _buildBody(SalonManagerDashboardState state) {
     if (state.loading) return const LoadingState();
-    if (state.error != null) return ErrorState(message: state.error!, onRetry: () => ref.read(salonManagerDashboardProvider.notifier).load(widget.salonId));
+    if (state.error != null) return ErrorState(message: state.error!, onRetry: () => ref.read(salonManagerDashboardProvider.notifier).load(widget.slug));
     final data = state.data;
     if (data == null) return const EmptyState(message: 'داده‌ای یافت نشد');
 
     return RefreshIndicator(
-      onRefresh: () => ref.read(salonManagerDashboardProvider.notifier).load(widget.salonId),
+      onRefresh: () => ref.read(salonManagerDashboardProvider.notifier).load(widget.slug),
       child: ListView(
         padding: AppSpacing.pagePadding,
         children: [

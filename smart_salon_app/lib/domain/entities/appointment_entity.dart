@@ -1,9 +1,7 @@
+import '../../types.dart';
 import 'base_entity.dart';
 
 class AppointmentEntity extends BaseEntity {
-  final int salonId;
-  final int artistId;
-  final int serviceId;
   final DateTime startTime;
   final DateTime endTime;
   final int status;
@@ -18,9 +16,6 @@ class AppointmentEntity extends BaseEntity {
 
   const AppointmentEntity({
     required super.id,
-    required this.salonId,
-    required this.artistId,
-    required this.serviceId,
     required this.startTime,
     required this.endTime,
     required this.status,
@@ -57,14 +52,14 @@ class AppointmentEntity extends BaseEntity {
 }
 
 class CreateAppointmentInput {
-  final int salonId;
-  final int artistId;
-  final int serviceId;
+  final String slug;
+  final ArtistId artistId;
+  final ServiceId serviceId;
   final DateTime startTime;
   final DateTime endTime;
 
   const CreateAppointmentInput({
-    required this.salonId,
+    required this.slug,
     required this.artistId,
     required this.serviceId,
     required this.startTime,

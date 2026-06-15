@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>Test Flutter Full Load</title>
+</head>
+<body>
+<h1>Testing Flutter full load...</h1>
+<pre id="log" style="background:#eee;padding:10px;font-size:14px"></pre>
+<script>
+var log = document.getElementById('log');
+function addLog(msg) { log.textContent += msg + '\n'; }
+addLog('1. Starting...');
+</script>
+<script src="flutter_bootstrap.js"></script>
+<script>
+addLog('2. After bootstrap: _flutter=' + typeof _flutter);
+addLog('3. buildConfig: ' + JSON.stringify(_flutter.buildConfig));
+setTimeout(function() {
+  var scripts = document.querySelectorAll('script[src]');
+  addLog('4. External scripts loaded: ' + scripts.length);
+  for (var s of scripts) {
+    addLog('   src=' + s.src);
+  }
+  var bodyChildren = document.body.children.length;
+  addLog('5. Body children: ' + bodyChildren);
+}, 3000);
+</script>
+</body>
+</html>

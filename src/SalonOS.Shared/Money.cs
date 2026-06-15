@@ -1,9 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace SalonOS.Shared;
 
 /// <summary>
 /// Money value object - integer minor units + currency.
 /// Never use floating point for money. long covers IRR comfortably (max ~9.2×10¹⁸).
 /// </summary>
+[Owned]
 public sealed class Money : IEquatable<Money>
 {
     public long Amount { get; }

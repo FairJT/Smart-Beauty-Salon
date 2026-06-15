@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 
 class ErrorBoundary extends StatefulWidget {
   final Widget child;
@@ -25,6 +26,8 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_error != null) {
       return Material(
         child: Center(
@@ -36,18 +39,18 @@ class _ErrorBoundaryState extends State<ErrorBoundary> {
                 const Icon(Icons.error_outline, size: 64, color: Colors.red),
                 const SizedBox(height: 16),
                 Text(
-                  'خطایی رخ داده است',
+                  l10n.errorUnknown,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'لطفاً برنامه را مجدداً راه‌اندازی کنید',
+                  l10n.restartApp,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () => setState(() => _error = null),
-                  child: const Text('تلاش مجدد'),
+                  child: Text(l10n.retry),
                 ),
               ],
             ),

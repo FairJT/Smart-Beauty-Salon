@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
-import '../../core/api_service.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/salon_provider.dart';
-import '../../providers/appointment_provider.dart';
 import '../../providers/notification_provider.dart';
 import '../auth/login_screen.dart';
 import '../salon/salon_detail_screen.dart';
@@ -47,7 +45,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('سالن هوشمند ابری', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('سالن هوشمند ابری',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -97,7 +96,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Row(
               children: [
                 const Text('سالن‌های برتر',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 if (salonState.searchQuery.isNotEmpty) ...[
                   const SizedBox(width: 8),
                   Chip(
@@ -122,7 +122,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const Padding(
               padding: EdgeInsets.all(40),
               child: Center(
-                child: Text('سالنی یافت نشد', style: TextStyle(color: Colors.grey)),
+                child: Text('سالنی یافت نشد',
+                    style: TextStyle(color: Colors.grey)),
               ),
             )
           else
@@ -130,7 +131,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   salon: s,
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => SalonDetailScreen(salonId: s.id)),
+                    MaterialPageRoute(
+                        builder: (_) => SalonDetailScreen(salonId: s.id)),
                   ),
                 )),
         ],
@@ -150,17 +152,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onSelected: (_) => ref.read(salonListProvider.notifier).toggleVip(),
           ),
           const SizedBox(width: 8),
-          ...['رنگ مو', 'کوتاهی', 'مانیکور', 'پدیکور', 'ابро'].map((s) => Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: FilterChip(
-                  label: Text(s),
-                  selected: salonState.serviceFilter == s,
-                  onSelected: (_) {
-                    final notifier = ref.read(salonListProvider.notifier);
-                    notifier.setServiceFilter(salonState.serviceFilter == s ? '' : s);
-                  },
-                ),
-              )),
+          ...['رنگ مو', 'کوتاهی', 'مانیکور', 'پدیکور', 'ابро']
+              .map((s) => Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: FilterChip(
+                      label: Text(s),
+                      selected: salonState.serviceFilter == s,
+                      onSelected: (_) {
+                        final notifier = ref.read(salonListProvider.notifier);
+                        notifier.setServiceFilter(
+                            salonState.serviceFilter == s ? '' : s);
+                      },
+                    ),
+                  )),
         ],
       ),
     );
@@ -171,17 +175,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [AppColors.primary, Color(0xFF2C5F8A)]),
+        gradient: const LinearGradient(
+            colors: [AppColors.primary, Color(0xFF2C5F8A)]),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('خوش آمدید', style: TextStyle(color: Colors.white70, fontSize: 14)),
+          const Text('خوش آمدید',
+              style: TextStyle(color: Colors.white70, fontSize: 14)),
           const SizedBox(height: 6),
           const Text(
             'سالن مناسب خود را پیدا کنید',
-            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
@@ -189,7 +196,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               backgroundColor: Colors.amber,
               foregroundColor: Colors.white,
               minimumSize: const Size(0, 42),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
             ),
             icon: const Icon(Icons.calendar_today, size: 18),
             label: const Text('رزرو نوبت'),
@@ -208,7 +216,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             const Icon(Icons.wifi_off, size: 60, color: Colors.grey),
             const SizedBox(height: 12),
-            Text(error, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey)),
+            Text(error,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => ref.read(salonListProvider.notifier).load(),

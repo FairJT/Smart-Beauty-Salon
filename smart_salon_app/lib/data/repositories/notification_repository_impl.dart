@@ -2,6 +2,7 @@ import '../../domain/entities/notification_entity.dart';
 import '../../domain/repositories/notification_repository.dart';
 import '../datasources/dio_client.dart';
 import '../datasources/api_constants.dart';
+import '../../types.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   @override
@@ -10,34 +11,34 @@ class NotificationRepositoryImpl implements NotificationRepository {
     final data = response.data as List;
 
     return data.map((json) => NotificationEntity(
-      id: json['id'],
+      id: json['id']?.toString() ?? '',
       title: json['title'],
       message: json['message'],
       isRead: json['isRead'] ?? false,
       type: json['type'],
-      relatedId: json['relatedId'],
+      relatedId: json['relatedId']?.toString(),
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
     )).toList();
   }
 
   @override
-  Future<NotificationEntity> getNotificationById(int id) async {
+  Future<NotificationEntity> getNotificationById(NotificationId id) async {
     final response = await DioClient.instance.get('${ApiConstants.notifications}/$id');
     final json = response.data;
 
     return NotificationEntity(
-      id: json['id'],
+      id: json['id']?.toString() ?? '',
       title: json['title'],
       message: json['message'],
       isRead: json['isRead'] ?? false,
       type: json['type'],
-      relatedId: json['relatedId'],
+      relatedId: json['relatedId']?.toString(),
       createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
     );
   }
 
   @override
-  Future<void> markAsRead(int id) async {
+  Future<void> markAsRead(NotificationId id) async {
     await DioClient.instance.put(
       '${ApiConstants.notifications}/$id/read',
       data: {},

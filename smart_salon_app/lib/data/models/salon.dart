@@ -2,7 +2,7 @@ import 'artist.dart';
 import 'service_item.dart';
 
 class Salon {
-  final int id;
+  final String id;
   final String name;
   final String? slug;
   final String? phone;
@@ -32,7 +32,7 @@ class Salon {
 
   factory Salon.fromJson(Map<String, dynamic> json) {
     return Salon(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       name: json['name'] ?? '',
       slug: json['slug'],
       phone: json['phone'],
@@ -57,7 +57,7 @@ class Salon {
 }
 
 class SalonListItem {
-  final int id;
+  final String id;
   final String name;
   final String? logoUrl;
   final double ratingAvg;
@@ -79,7 +79,7 @@ class SalonListItem {
 
   factory SalonListItem.fromJson(Map<String, dynamic> json) {
     return SalonListItem(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       name: json['name'] ?? '',
       logoUrl: json['logoUrl'],
       ratingAvg: (json['ratingAvg'] ?? 0).toDouble(),

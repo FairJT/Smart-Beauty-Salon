@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
 using SalonOS.Marketplace.Application.DTOs;
-using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Marketplace.API.Controllers;
 

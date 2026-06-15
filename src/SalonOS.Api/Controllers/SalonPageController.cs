@@ -65,13 +65,14 @@ public class SalonPageController : ControllerBase
             .Where(s => s.TenantId == tenantId.Value && s.IsActive && !s.IsDeleted)
             .Select(s => new
             {
-                s.Id,
-                s.Name,
-                s.Description,
-                ServiceTypeId = s.ServiceTypeId,
-                BasePriceAmount = s.BasePrice.Amount,
-                BasePriceCurrency = s.BasePrice.Currency,
-                s.BaseDurationMinutes
+                id = s.Id,
+                name = s.Name,
+                description = s.Description,
+                price = (double)s.BasePrice.Amount,
+                durationMinutes = s.BaseDurationMinutes,
+                imageUrl = (string?)null,
+                isActive = s.IsActive,
+                templateId = (int?)null
             })
             .ToListAsync();
 
@@ -140,13 +141,12 @@ public class SalonPageController : ControllerBase
                 user => user.Id,
                 (profile, user) => new
                 {
-                    profile.Id,
-                    UserId = user.Id,
-                    user.FirstName,
-                    user.LastName,
-                    profile.Skill,
-                    profile.Bio,
-                    profile.ContractType
+                    id = profile.Id,
+                    name = $"{user.FirstName} {user.LastName}".Trim(),
+                    phoneNumber = user.PhoneNumber ?? "",
+                    profileImageUrl = (string?)null,
+                    specialization = profile.Skill ?? "",
+                    isActive = profile.IsActive
                 })
             .ToListAsync();
 
@@ -238,8 +238,8 @@ public class SalonPageController : ControllerBase
             var slotStart = rangeStart.AddMinutes(i * durationMinutes);
             slots.Add(new
             {
-                startsAt = slotStart,
-                endsAt = slotStart.AddMinutes(durationMinutes),
+                startTime = slotStart,
+                endTime = slotStart.AddMinutes(durationMinutes),
                 isAvailable = true
             });
         }

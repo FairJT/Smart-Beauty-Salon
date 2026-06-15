@@ -24,7 +24,7 @@ class SalonManagerDashboardState {
 class SalonManagerDashboardNotifier extends StateNotifier<SalonManagerDashboardState> {
   SalonManagerDashboardNotifier() : super(const SalonManagerDashboardState());
 
-  Future<void> load([int? salonId]) async {
+  Future<void> load([String? slug]) async {
     state = state.copyWith(loading: true, error: null);
     try {
       final json = await ApiService.get(ApiConstants.dashboardManager);

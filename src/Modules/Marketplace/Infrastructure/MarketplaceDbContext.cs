@@ -67,6 +67,7 @@ public class MarketplaceDbContext : DbContext
         // SalonPackageLicense configuration (TENANT entity)
         builder.Entity<SalonPackageLicense>(e =>
         {
+            e.HasQueryFilter(l => !l.IsDeleted);
             e.HasIndex(l => l.TenantId);
             e.HasIndex(l => l.PackageListingId);
             e.HasIndex(l => l.IsActive);

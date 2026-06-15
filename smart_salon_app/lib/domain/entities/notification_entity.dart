@@ -1,3 +1,4 @@
+import '../../types.dart';
 import 'base_entity.dart';
 
 class NotificationEntity extends BaseEntity {
@@ -5,7 +6,7 @@ class NotificationEntity extends BaseEntity {
   final String message;
   final bool isRead;
   final String? type;
-  final int? relatedId;
+  final String? relatedId;
 
   const NotificationEntity({
     required super.id,

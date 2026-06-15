@@ -1,6 +1,8 @@
-import 'base_entity.dart';
+import '../../types.dart';
 
-class SalonEntity extends BaseEntity {
+class SalonEntity {
+  final SalonId id;
+  final String slug;
   final String name;
   final String? description;
   final String? address;
@@ -9,11 +11,12 @@ class SalonEntity extends BaseEntity {
   final double latitude;
   final double longitude;
   final bool isActive;
-  final int rating;
+  final double rating;
   final int reviewCount;
 
   const SalonEntity({
-    required super.id,
+    required this.id,
+    required this.slug,
     required this.name,
     this.description,
     this.address,
@@ -24,7 +27,5 @@ class SalonEntity extends BaseEntity {
     this.isActive = true,
     this.rating = 0,
     this.reviewCount = 0,
-    super.createdAt,
-    super.updatedAt,
   });
 }

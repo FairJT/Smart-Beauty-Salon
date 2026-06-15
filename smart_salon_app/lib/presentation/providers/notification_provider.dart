@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/notification_entity.dart';
 import '../../domain/repositories/notification_repository.dart';
 import '../../data/repositories/notification_repository_impl.dart';
+import '../../types.dart';
 
 class NotificationState {
   final List<NotificationEntity> notifications;
@@ -49,7 +50,7 @@ class NotificationNotifier extends StateNotifier<NotificationState> {
     }
   }
 
-  Future<void> markAsRead(int id) async {
+  Future<void> markAsRead(NotificationId id) async {
     await _notificationRepository.markAsRead(id);
     state = state.copyWith(
       notifications: state.notifications

@@ -31,11 +31,16 @@ public class CatalogDbContext : DbContext
         // CatalogService configuration (TENANT entity)
         builder.Entity<CatalogService>(e =>
         {
+            e.HasQueryFilter(s => !s.IsDeleted);
             e.HasIndex(s => s.TenantId);
             e.HasIndex(s => new { s.TenantId, s.IsActive });
             e.HasIndex(s => s.ServiceTypeId);
 
-            e.OwnsOne(s => s.BasePrice);
+            e.OwnsOne(s => s.BasePrice, b =>
+            {
+                b.Property(m => m.Amount).HasColumnName("BasePrice_Amount");
+                b.Property(m => m.Currency).HasColumnName("BasePrice_Currency").HasMaxLength(3);
+            });
 
             e.HasOne(s => s.ServiceType)
                 .WithMany()
@@ -46,10 +51,15 @@ public class CatalogDbContext : DbContext
         // ServiceOption configuration (TENANT entity)
         builder.Entity<ServiceOption>(e =>
         {
+            e.HasQueryFilter(o => !o.IsDeleted);
             e.HasIndex(o => o.TenantId);
             e.HasIndex(o => new { o.CatalogServiceId, o.IsActive });
 
-            e.OwnsOne(o => o.PriceDelta);
+            e.OwnsOne(o => o.PriceDelta, b =>
+            {
+                b.Property(m => m.Amount).HasColumnName("PriceDelta_Amount");
+                b.Property(m => m.Currency).HasColumnName("PriceDelta_Currency").HasMaxLength(3);
+            });
 
             e.HasOne(o => o.CatalogService)
                 .WithMany(s => s.Options)
@@ -60,10 +70,15 @@ public class CatalogDbContext : DbContext
         // Material configuration (TENANT entity)
         builder.Entity<Material>(e =>
         {
+            e.HasQueryFilter(m => !m.IsDeleted);
             e.HasIndex(m => m.TenantId);
             e.HasIndex(m => m.Name);
 
-            e.OwnsOne(m => m.Price);
+            e.OwnsOne(m => m.Price, b =>
+            {
+                b.Property(p => p.Amount).HasColumnName("Price_Amount");
+                b.Property(p => p.Currency).HasColumnName("Price_Currency").HasMaxLength(3);
+            });
 
             e.HasMany(m => m.SalonServices)
                 .WithMany(s => s.Materials)
@@ -73,6 +88,7 @@ public class CatalogDbContext : DbContext
         // SalonMedia configuration (TENANT entity)
         builder.Entity<SalonMedia>(e =>
         {
+            e.HasQueryFilter(m => !m.IsDeleted);
             e.HasIndex(m => m.TenantId);
             e.HasIndex(m => new { m.SalonId, m.SortOrder });
             e.HasIndex(m => m.MediaType);

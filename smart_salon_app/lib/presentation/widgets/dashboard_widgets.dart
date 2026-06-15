@@ -244,7 +244,7 @@ class QuickLink extends StatelessWidget {
 // ─── Appointment card ─────────────────────────────────────────
 
 class AppointmentCard extends StatelessWidget {
-  final int id;
+  final String id;
   final DateTime startTime;
   final String title;
   final String subtitle;

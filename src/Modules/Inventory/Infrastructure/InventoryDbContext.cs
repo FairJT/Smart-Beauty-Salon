@@ -24,6 +24,7 @@ public class InventoryDbContext : DbContext
         // InventoryItem configuration (TENANT entity)
         builder.Entity<InventoryItem>(e =>
         {
+            e.HasQueryFilter(i => !i.IsDeleted);
             e.HasIndex(i => i.TenantId);
             e.HasIndex(i => new { i.TenantId, i.IsActive });
             e.HasIndex(i => i.Category);
@@ -37,8 +38,12 @@ public class InventoryDbContext : DbContext
         // StockMovement configuration (TENANT entity)
         builder.Entity<StockMovement>(e =>
         {
+            e.HasQueryFilter(m => !m.IsDeleted);
+
+            e.HasKey(m => m.Id).IsClustered(false);
+            e.HasIndex(m => new { m.InventoryItemId, m.CreatedAt }).IsClustered();
+
             e.HasIndex(m => m.TenantId);
-            e.HasIndex(m => new { m.InventoryItemId, m.CreatedAt });
 
             e.Property(m => m.Quantity).HasColumnType("decimal(18,4)");
 

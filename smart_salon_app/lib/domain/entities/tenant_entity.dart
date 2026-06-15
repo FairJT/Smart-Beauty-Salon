@@ -1,3 +1,4 @@
+import '../../types.dart';
 import 'base_entity.dart';
 
 abstract class TenantEntity extends BaseEntity {

@@ -11,8 +11,8 @@ import 'booking_screen.dart';
 import 'guest_booking_screen.dart';
 
 class SalonDetailScreen extends StatefulWidget {
-  final int salonId;
-  const SalonDetailScreen({super.key, required this.salonId});
+  final String slug;
+  const SalonDetailScreen({super.key, required this.slug});
 
   @override
   State<SalonDetailScreen> createState() => _SalonDetailScreenState();
@@ -48,9 +48,9 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
       final serviceRepo = ServiceRepositoryImpl();
       final artistRepo = ArtistRepositoryImpl();
 
-      _salon = await salonRepo.getSalonById(widget.salonId);
-      _services = await serviceRepo.getServicesBySalon(widget.salonId);
-      _artists = await artistRepo.getArtistsBySalon(widget.salonId);
+      _salon = await salonRepo.getSalonBySlug(widget.slug);
+      _services = await serviceRepo.getServicesBySalon(_salon!.id);
+      _artists = await artistRepo.getArtistsBySalon(_salon!.id);
       setState(() { _loading = false; });
     } catch (e) {
       setState(() { _error = e.toString().replaceAll('Exception: ', ''); _loading = false; });
@@ -173,7 +173,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => GuestBookingScreen(salonId: widget.salonId),
+                          builder: (_) => GuestBookingScreen(slug: widget.slug),
                         ),
                       );
                     },
@@ -282,7 +282,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                 context,
                 MaterialPageRoute(
                   builder: (_) => BookingScreen(
-                    salonId: _salon!.id,
+                    slug: widget.slug,
                     artistId: a.id,
                     artistName: a.name,
                     serviceId: _selectedService!.id,

@@ -1,7 +1,7 @@
+import '../../types.dart';
 import 'base_entity.dart';
 
 class ArtistEntity extends BaseEntity {
-  final int salonId;
   final String name;
   final String? phoneNumber;
   final String? profileImageUrl;
@@ -10,7 +10,6 @@ class ArtistEntity extends BaseEntity {
 
   const ArtistEntity({
     required super.id,
-    required this.salonId,
     required this.name,
     this.phoneNumber,
     this.profileImageUrl,

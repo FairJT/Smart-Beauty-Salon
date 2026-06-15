@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
-import '../providers/auth_provider.dart';
 import 'home_screen.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
@@ -14,7 +13,8 @@ class OtpScreen extends ConsumerStatefulWidget {
 }
 
 class _OtpScreenState extends ConsumerState<OtpScreen> {
-  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   bool _loading = false;
   String? _error;
@@ -54,7 +54,10 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
       return;
     }
 
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       // TODO: Implement OTP verification with the backend
       // For now, navigate to home screen
@@ -72,14 +75,15 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
 
   Future<void> _resendOtp() async {
     if (_resendSeconds > 0) return;
-    
+
     try {
       // TODO: Implement resend OTP with the backend
       setState(() => _resendSeconds = 60);
       _startResendTimer();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('کد جدید ارسال شد'), backgroundColor: Colors.green),
+        const SnackBar(
+            content: Text('کد جدید ارسال شد'), backgroundColor: Colors.green),
       );
     } catch (e) {
       if (!mounted) return;
@@ -113,7 +117,10 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
               const Text(
                 'تایید شماره موبایل',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               Text(
@@ -128,31 +135,39 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(color: Colors.red.shade100, borderRadius: BorderRadius.circular(10)),
-                  child: Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+                  decoration: BoxDecoration(
+                      color: Colors.red.shade100,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(_error!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.red)),
                 ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 52),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
                 onPressed: _loading ? null : _verifyOtp,
                 child: _loading
                     ? const SizedBox(
                         width: 24,
                         height: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
                       )
-                    : const Text('تایید', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    : const Text('تایید',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 16),
               TextButton(
                 onPressed: _resendSeconds > 0 ? null : _resendOtp,
                 child: Text(
                   _resendSeconds > 0
-                      ? 'ارسال مجدد کد در ${_resendSeconds} ثانیه'
+                      ? 'ارسال مجدد کد در $_resendSeconds ثانیه'
                       : 'ارسال مجدد کد',
                   style: const TextStyle(color: Colors.white70),
                 ),

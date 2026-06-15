@@ -1,10 +1,13 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/dio_client.dart';
 import '../datasources/api_constants.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
+  static const _storage = FlutterSecureStorage();
+  static const _tokenKey = 'auth_token';
+
   @override
   Future<UserEntity> login(String phoneNumber, String password) async {
     final response = await DioClient.instance.post(
@@ -19,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
     await _saveToken(data['token']);
 
     return UserEntity(
-      id: data['user']['id'],
+      id: data['user']['id']?.toString() ?? '',
       phoneNumber: data['user']['phoneNumber'],
       firstName: data['user']['firstName'],
       lastName: data['user']['lastName'],
@@ -34,8 +37,6 @@ class AuthRepositoryImpl implements AuthRepository {
       data: {
         'mobile': phoneNumber,
         'password': password,
-        'firstName': firstName,
-        'lastName': lastName,
       },
     );
 
@@ -43,7 +44,7 @@ class AuthRepositoryImpl implements AuthRepository {
     await _saveToken(data['token']);
 
     return UserEntity(
-      id: data['user']['id'],
+      id: data['user']['id']?.toString() ?? '',
       phoneNumber: data['user']['phoneNumber'],
       firstName: data['user']['firstName'],
       lastName: data['user']['lastName'],
@@ -57,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final data = response.data;
 
     return UserEntity(
-      id: data['id'],
+      id: data['id']?.toString() ?? '',
       phoneNumber: data['phoneNumber'],
       firstName: data['firstName'],
       lastName: data['lastName'],
@@ -67,9 +68,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('token_saved_at');
+    await _storage.delete(key: _tokenKey);
   }
 
   @override
@@ -80,25 +79,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    if (token == null) return null;
-
-    final savedAt = prefs.getString('token_saved_at');
-    if (savedAt != null) {
-      final savedDate = DateTime.parse(savedAt);
-      if (DateTime.now().difference(savedDate).inDays >= 29) {
-        await logout();
-        return null;
-      }
-    }
-
-    return token;
+    return await _storage.read(key: _tokenKey);
   }
 
   Future<void> _saveToken(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', token);
-    await prefs.setString('token_saved_at', DateTime.now().toIso8601String());
+    await _storage.write(key: _tokenKey, value: token);
   }
 }

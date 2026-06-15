@@ -62,8 +62,8 @@ public class BookingDto
 
 public class SlotDto
 {
-    public DateTime StartsAt { get; set; }
-    public DateTime EndsAt { get; set; }
+    public DateTime StartTime { get; set; }
+    public DateTime EndTime { get; set; }
     public bool IsAvailable { get; set; }
 }
 

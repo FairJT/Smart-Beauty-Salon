@@ -1,5 +1,5 @@
 class AppNotification {
-  final int id;
+  final String id;
   final String title;
   final String message;
   final String type;
@@ -17,7 +17,7 @@ class AppNotification {
 
   factory AppNotification.fromJson(Map<String, dynamic> json) {
     return AppNotification(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       title: json['title'] ?? '',
       message: json['message'] ?? '',
       type: json['type'] ?? 'info',

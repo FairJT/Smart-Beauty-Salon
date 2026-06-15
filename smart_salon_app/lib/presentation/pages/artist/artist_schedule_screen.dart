@@ -107,7 +107,7 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
     );
   }
 
-  Future<void> _confirm(int id) async {
+  Future<void> _confirm(String id) async {
     try {
       await DioClient.instance.put('${ApiConstants.appointments}/$id/confirm');
       if (!mounted) return;
@@ -123,7 +123,7 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
     }
   }
 
-  Future<void> _complete(int id) async {
+  Future<void> _complete(String id) async {
     try {
       await DioClient.instance.put('${ApiConstants.appointments}/$id/complete');
       if (!mounted) return;

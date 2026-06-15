@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
 using SalonOS.Identity.Application.DTOs;
-using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Identity.API.Controllers;
 

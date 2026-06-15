@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
 using SalonOS.Inventory.Application.DTOs;
-using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Inventory.API.Controllers;
 

@@ -22,6 +22,12 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(builder);
 
+        builder.Entity<OutboxMessage>(e =>
+        {
+            e.HasKey(o => o.Id).IsClustered(false);
+            e.HasIndex(o => new { o.ProcessedAt, o.CreatedAt }).IsClustered();
+        });
+
         foreach (var et in builder.Model.GetEntityTypes()
                      .Where(t => typeof(TenantEntity).IsAssignableFrom(t.ClrType)))
         {

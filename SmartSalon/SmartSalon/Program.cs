@@ -91,10 +91,12 @@ builder.Services.AddSession(options =>
 // ── Firebase ────────────────────────────────────────────────────
 try
 {
+#pragma warning disable CS0618
     FirebaseApp.Create(new AppOptions
     {
         Credential = GoogleCredential.FromFile("firebase-credentials.json"),
     });
+#pragma warning restore CS0618
 }
 catch
 {

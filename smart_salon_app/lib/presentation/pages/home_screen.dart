@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../providers/auth_provider.dart';
 import '../providers/salon_provider.dart';
-import '../providers/appointment_provider.dart';
 import '../providers/notification_provider.dart';
-import '../providers/favorites_provider.dart';
 import 'login_screen.dart';
 import 'salon_detail_screen.dart';
 import 'profile_screen.dart';
@@ -13,11 +11,8 @@ import 'salon_card.dart';
 import 'appointment_list.dart';
 import 'search_dialog.dart';
 import 'admin/admin_dashboard.dart';
-import 'artist/artist_dashboard_screen.dart';
 import 'artist/artist_schedule_screen.dart';
-import 'manager/manager_dashboard_screen.dart';
 import 'manager/artist_management_screen.dart';
-import 'client_home_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -55,26 +50,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       return const AdminDashboard();
     }
 
-    if (auth.isSalonManager) {
-      return const ManagerDashboardScreen();
-    }
-
     if (auth.isArtist) {
-      return const ArtistDashboardScreen();
+      return const ArtistScheduleScreen();
     }
 
     final salonState = ref.watch(salonListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('سالن هوشمند ابری', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('سالن هوشمند ابری',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           if (auth.isSalonManager)
             IconButton(
               icon: const Icon(Icons.people_outline),
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const ArtistManagementScreen()),
+                MaterialPageRoute(
+                    builder: (_) => const ArtistManagementScreen()),
               ),
             ),
           IconButton(
@@ -125,7 +118,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: Row(
               children: [
                 const Text('سالن‌های برتر',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 if (salonState.searchQuery.isNotEmpty) ...[
                   const SizedBox(width: 8),
                   Chip(
@@ -150,7 +144,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const Padding(
               padding: EdgeInsets.all(40),
               child: Center(
-                child: Text('سالنی یافت نشد', style: TextStyle(color: Colors.grey)),
+                child: Text('سالنی یافت نشد',
+                    style: TextStyle(color: Colors.grey)),
               ),
             )
           else
@@ -158,7 +153,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   salon: s,
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => SalonDetailScreen(salonId: s.id)),
+                    MaterialPageRoute(
+                        builder: (_) => SalonDetailScreen(slug: s.id)),
                   ),
                 )),
         ],
@@ -178,17 +174,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             onSelected: (_) => ref.read(salonListProvider.notifier).toggleVip(),
           ),
           const SizedBox(width: 8),
-          ...['رنگ مو', 'کوتاهی', 'مانیکور', 'پدیکور', 'ابро'].map((s) => Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: FilterChip(
-                  label: Text(s),
-                  selected: salonState.serviceFilter == s,
-                  onSelected: (_) {
-                    final notifier = ref.read(salonListProvider.notifier);
-                    notifier.setServiceFilter(salonState.serviceFilter == s ? '' : s);
-                  },
-                ),
-              )),
+          ...['رنگ مو', 'کوتاهی', 'مانیکور', 'پدیکور', 'ابро']
+              .map((s) => Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: FilterChip(
+                      label: Text(s),
+                      selected: salonState.serviceFilter == s,
+                      onSelected: (_) {
+                        final notifier = ref.read(salonListProvider.notifier);
+                        notifier.setServiceFilter(
+                            salonState.serviceFilter == s ? '' : s);
+                      },
+                    ),
+                  )),
         ],
       ),
     );
@@ -205,11 +203,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('خوش آمدید', style: TextStyle(color: Colors.white70, fontSize: 14)),
+          const Text('خوش آمدید',
+              style: TextStyle(color: Colors.white70, fontSize: 14)),
           const SizedBox(height: 6),
           const Text(
             'سالن مناسب خود را پیدا کنید',
-            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
@@ -217,7 +217,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               backgroundColor: Colors.white,
               foregroundColor: AppColors.primary,
               minimumSize: const Size(0, 42),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
             ),
             icon: const Icon(Icons.calendar_today, size: 18),
             label: const Text('رزرو نوبت'),
@@ -236,7 +237,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             const Icon(Icons.wifi_off, size: 60, color: Colors.grey),
             const SizedBox(height: 12),
-            Text(error, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey)),
+            Text(error,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => ref.read(salonListProvider.notifier).load(),

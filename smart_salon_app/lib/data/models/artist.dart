@@ -1,5 +1,5 @@
 class Artist {
-  final int id;
+  final String id;
   final String firstName;
   final String lastName;
   final String? photoUrl;
@@ -21,7 +21,7 @@ class Artist {
 
   factory Artist.fromJson(Map<String, dynamic> json) {
     return Artist(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
       photoUrl: json['photoUrl'],

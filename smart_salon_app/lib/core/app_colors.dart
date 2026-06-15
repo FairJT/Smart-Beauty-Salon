@@ -104,50 +104,116 @@ class AppColors {
 
   static Color statusColor(int status) {
     switch (status) {
-      case 1: return warning;
-      case 2: return success;
-      case 3: return info;
-      case 4: return textMuted;
-      case 5: return danger;
-      case 6: return danger;
-      default: return textMuted;
+      case 1:
+        return warning;
+      case 2:
+        return success;
+      case 3:
+        return info;
+      case 4:
+        return textMuted;
+      case 5:
+        return danger;
+      case 6:
+        return danger;
+      default:
+        return textMuted;
     }
   }
 
   static String statusText(int status) {
     switch (status) {
-      case 1: return 'در انتظار';
-      case 2: return 'تایید شده';
-      case 3: return 'انجام شده';
-      case 4: return 'لغو شده';
-      case 5: return 'غیبت';
-      case 6: return 'لغو توسط هنرمند';
-      default: return 'نامشخص';
+      case 1:
+        return 'در انتظار';
+      case 2:
+        return 'تایید شده';
+      case 3:
+        return 'انجام شده';
+      case 4:
+        return 'لغو شده';
+      case 5:
+        return 'غیبت';
+      case 6:
+        return 'لغو توسط هنرمند';
+      default:
+        return 'نامشخص';
     }
   }
 }
 
 class AppTextTheme {
   static TextTheme farsi({required ColorScheme colorScheme}) {
-    return TextTheme(
-      displayLarge: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 28, fontWeight: FontWeight.bold, height: 1.3),
-      displayMedium: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 24, fontWeight: FontWeight.bold, height: 1.3),
-      headlineLarge: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 22, fontWeight: FontWeight.bold, height: 1.4),
-      headlineMedium: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 18, fontWeight: FontWeight.w600, height: 1.4),
-      headlineSmall: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, fontWeight: FontWeight.w600, height: 1.4),
-      titleLarge: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, fontWeight: FontWeight.w600, height: 1.4),
-      titleMedium: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w600, height: 1.4),
-      bodyLarge: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 16, fontWeight: FontWeight.normal, height: 1.6),
-      bodyMedium: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.normal, height: 1.6),
-      bodySmall: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, fontWeight: FontWeight.normal, height: 1.5),
-      labelLarge: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 14, fontWeight: FontWeight.w600, height: 1.4),
-      labelMedium: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 12, fontWeight: FontWeight.w500, height: 1.4),
-      labelSmall: const TextStyle(fontFamily: 'Vazirmatn', fontSize: 10, fontWeight: FontWeight.w500, height: 1.4),
+    return const TextTheme(
+      displayLarge: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          height: 1.3),
+      displayMedium: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          height: 1.3),
+      headlineLarge: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          height: 1.4),
+      headlineMedium: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          height: 1.4),
+      headlineSmall: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          height: 1.4),
+      titleLarge: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          height: 1.4),
+      titleMedium: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          height: 1.4),
+      bodyLarge: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          height: 1.6),
+      bodyMedium: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          height: 1.6),
+      bodySmall: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+          height: 1.5),
+      labelLarge: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          height: 1.4),
+      labelMedium: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          height: 1.4),
+      labelSmall: TextStyle(
+          fontFamily: 'Vazirmatn',
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          height: 1.4),
     );
   }
 
   static ButtonThemeData button() {
-    return ButtonThemeData(
+    return const ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: AppSpacing.borderRadiusSm),
     );
   }

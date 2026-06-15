@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/app_colors.dart';
+import 'l10n/app_localizations.dart';
 import 'presentation/pages/splash_screen.dart';
 import 'widgets/error_boundary.dart';
 
@@ -15,6 +16,37 @@ void main() async {
     statusBarIconBrightness: Brightness.dark,
   ));
 
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+  };
+
+  ErrorWidget.builder = (details) {
+    return Material(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text(
+                'خطایی رخ داده است',
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                details.exception.toString(),
+                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  };
+
   runApp(const ProviderScope(child: SmartSalonApp()));
 }
 
@@ -27,6 +59,9 @@ class SmartSalonApp extends StatelessWidget {
       child: MaterialApp(
         title: 'سالن هوشمند',
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('fa'),
         builder: (context, child) => Directionality(
           textDirection: TextDirection.rtl,
           child: child!,

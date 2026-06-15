@@ -57,6 +57,9 @@ public static class Permissions
     public const string LoyaltyConfigManage = "loyalty.config.manage";
     public const string LoyaltyViewOwn = "loyalty.view.own";
 
+    // ─── Client self-service ─────────────────────────────────
+    public const string ClientSelf = "client.self";
+
     // ─── Notification ────────────────────────────────────────
     public const string NotificationSend = "notification.send";
     public const string NotificationViewOwn = "notification.view.own";

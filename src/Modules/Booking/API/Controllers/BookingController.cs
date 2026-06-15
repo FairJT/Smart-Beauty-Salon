@@ -9,7 +9,7 @@ using SalonOS.Shared;
 
 namespace SalonOS.Booking.API.Controllers;
 
-[Route("api/bookings")]
+[Route("api/appointments")]
 [ApiController]
 public class BookingController : ControllerBase
 {
@@ -35,6 +35,19 @@ public class BookingController : ControllerBase
         return Ok(list);
     }
 
+    [HttpGet("mine")]
+    [HasPermission(Permissions.AppointmentViewOwn)]
+    public async Task<IActionResult> GetMyBookings()
+    {
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+            return Unauthorized();
+
+        var all = await _bookings.GetByTenantIdAsync(_tenant.TenantId);
+        var mine = all.Where(b => b.ClientId == userId).ToList();
+        return Ok(mine);
+    }
+
     [HttpGet("{id}")]
     [HasPermission(Permissions.AppointmentViewOwn)]
     public async Task<IActionResult> GetBooking(Guid id)
@@ -53,13 +66,52 @@ public class BookingController : ControllerBase
     [HttpGet("slots")]
     [AllowAnonymous]
     public async Task<IActionResult> GetSlots(
-        [FromQuery] Guid artistId,
+        [FromQuery] string artistId,
         [FromQuery] DateTime date,
         [FromQuery] int durationMinutes = 30)
     {
+        if (!Guid.TryParse(artistId, out var parsedArtistId))
+            return BadRequest(new { message = "Invalid artistId" });
+
         var slots = await _bookings.GetAvailableSlotsAsync(
-            artistId, date, durationMinutes, _tenant.TenantId);
+            parsedArtistId, date, durationMinutes, _tenant.TenantId);
         return Ok(slots);
+    }
+
+    [HttpPost("simple")]
+    [HasPermission(Permissions.AppointmentCreate)]
+    public async Task<IActionResult> CreateBookingSimple([FromBody] SimpleCreateBookingRequest request)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        Guid.TryParse(request.ArtistId, out var artistGuid);
+        Guid.TryParse(request.ServiceId, out var serviceGuid);
+
+        var startsAt = DateTime.Parse(request.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+        var endsAt = DateTime.Parse(request.EndTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+        var duration = (int)(endsAt - startsAt).TotalMinutes;
+
+        var booking = new Domain.Booking
+        {
+            ClientId        = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? string.Empty,
+            ArtistId        = artistGuid,
+            ServiceId       = serviceGuid,
+            StartsAt        = startsAt,
+            EndsAt          = endsAt,
+            DurationMinutes = duration > 0 ? duration : 30,
+            EstimatedPrice  = Money.Of(request.EstimatedPriceAmount, request.Currency),
+            DepositAmount   = Money.Of(request.DepositAmountValue, request.Currency),
+            Notes           = request.Notes,
+        };
+
+        var created = await _bookings.CreateAsync(booking);
+        return CreatedAtAction(nameof(GetBooking), new { id = created.Id },
+            new CreateBookingResponseDto
+            {
+                Message = "Booking created",
+                Id      = created.Id,
+                Deposit = request.DepositAmountValue
+            });
     }
 
     [HttpPost]
@@ -183,4 +235,17 @@ public class RateRequestDto
 
     [MaxLength(500)]
     public string? Comment { get; set; }
+}
+
+public class SimpleCreateBookingRequest
+{
+    public string ArtistId { get; set; } = string.Empty;
+    public string ServiceId { get; set; } = string.Empty;
+    public string StartTime { get; set; } = string.Empty;
+    public string EndTime { get; set; } = string.Empty;
+    public long EstimatedPriceAmount { get; set; }
+    public string Currency { get; set; } = "IRR";
+    public long DepositAmountValue { get; set; }
+    [MaxLength(500)]
+    public string? Notes { get; set; }
 }

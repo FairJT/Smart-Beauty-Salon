@@ -185,9 +185,10 @@ public class AuthService : IAuthService
             }
         }
 
-        var jwtKey = _config["JwtSettings:Key"]
-            ?? Environment.GetEnvironmentVariable("JWT_SECRET")
-            ?? throw new InvalidOperationException("JWT key is not configured.");
+        var jwtKey = _config["JwtSettings:Key"];
+        if (string.IsNullOrEmpty(jwtKey))
+            jwtKey = Environment.GetEnvironmentVariable("JWT_SECRET")
+                ?? throw new InvalidOperationException("JWT key is not configured.");
 
         var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -12,7 +12,8 @@ class ArtistManagementScreen extends ConsumerStatefulWidget {
       _ArtistManagementScreenState();
 }
 
-class _ArtistManagementScreenState extends ConsumerState<ArtistManagementScreen> {
+class _ArtistManagementScreenState
+    extends ConsumerState<ArtistManagementScreen> {
   List<_ArtistInfo> _artists = [];
   bool _loading = true;
   String? _error;
@@ -47,7 +48,8 @@ class _ArtistManagementScreenState extends ConsumerState<ArtistManagementScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('مدیریت هنرمندان', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('مدیریت هنرمندان',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.person_add_outlined),
@@ -98,7 +100,9 @@ class _ArtistManagementScreenState extends ConsumerState<ArtistManagementScreen>
           children: [
             const Icon(Icons.wifi_off, size: 60, color: Colors.grey),
             const SizedBox(height: 12),
-            Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey)),
+            Text(_error!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _loadArtists,
@@ -119,7 +123,8 @@ class _ArtistManagementScreenState extends ConsumerState<ArtistManagementScreen>
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+            content: Text(e.toString()), backgroundColor: AppColors.danger),
       );
     }
   }
@@ -184,7 +189,8 @@ class _ArtistManagementScreenState extends ConsumerState<ArtistManagementScreen>
     );
   }
 
-  Future<void> _addArtist(String phone, String firstName, String lastName) async {
+  Future<void> _addArtist(
+      String phone, String firstName, String lastName) async {
     try {
       await DioClient.instance.post(
         ApiConstants.artists,
@@ -198,7 +204,8 @@ class _ArtistManagementScreenState extends ConsumerState<ArtistManagementScreen>
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+            content: Text(e.toString()), backgroundColor: AppColors.danger),
       );
     }
   }
@@ -274,12 +281,14 @@ class _ArtistCard extends StatelessWidget {
                     children: [
                       Text(
                         artist.fullName,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         artist.phoneNumber,
-                        style: const TextStyle(color: Colors.grey, fontSize: 13),
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 13),
                       ),
                     ],
                   ),
@@ -290,11 +299,13 @@ class _ArtistCard extends StatelessWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.star, color: AppColors.warning, size: 16),
+                          const Icon(Icons.star,
+                              color: AppColors.warning, size: 16),
                           const SizedBox(width: 4),
                           Text(
                             artist.rating.toStringAsFixed(1),
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                         ],
                       ),
@@ -302,7 +313,7 @@ class _ArtistCard extends StatelessWidget {
                     Switch(
                       value: artist.isActive,
                       onChanged: (_) => onToggleActive(),
-                      activeColor: AppColors.success,
+                      thumbColor: WidgetStateProperty.resolveWith((states) => states.contains(WidgetState.selected) ? AppColors.success : null),
                     ),
                   ],
                 ),
@@ -311,7 +322,8 @@ class _ArtistCard extends StatelessWidget {
             const Divider(height: 20),
             Row(
               children: [
-                const Icon(Icons.calendar_today_outlined, size: 16, color: AppColors.primary),
+                const Icon(Icons.calendar_today_outlined,
+                    size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Text(
                   '${artist.totalAppointments} نوبت انجام شده',
@@ -319,14 +331,17 @@ class _ArtistCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: artist.isActive
                         ? AppColors.success.withValues(alpha: 0.1)
                         : AppColors.danger.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: artist.isActive ? AppColors.success : AppColors.danger,
+                      color: artist.isActive
+                          ? AppColors.success
+                          : AppColors.danger,
                     ),
                   ),
                   child: Text(
@@ -334,7 +349,9 @@ class _ArtistCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: artist.isActive ? AppColors.success : AppColors.danger,
+                      color: artist.isActive
+                          ? AppColors.success
+                          : AppColors.danger,
                     ),
                   ),
                 ),

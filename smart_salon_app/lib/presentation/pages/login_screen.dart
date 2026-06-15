@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
 import '../../core/validators.dart';
 import '../providers/auth_provider.dart';
-import 'home_screen.dart';
 import 'register_screen.dart';
 import 'otp_screen.dart';
 import 'client_home_screen.dart';
@@ -98,20 +97,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ],
                       ),
-                      child: const Icon(Icons.content_cut_rounded, size: 56, color: Colors.white),
+                      child: const Icon(Icons.content_cut_rounded,
+                          size: 56, color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Text(
                     'سالن هوشمند ابری',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.textPrimary, fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
                   const Text(
                     'وارد حساب کاربری خود شوید',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                    style:
+                        TextStyle(color: AppColors.textSecondary, fontSize: 14),
                   ),
                   const SizedBox(height: 48),
                   TextFormField(
@@ -162,16 +166,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         shadowColor: Colors.transparent,
                         foregroundColor: Colors.white,
                         minimumSize: const Size(double.infinity, 52),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
                       ),
                       onPressed: _loading ? null : _login,
                       child: _loading
                           ? const SizedBox(
                               width: 24,
                               height: 24,
-                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: Colors.white),
                             )
-                          : const Text('ورود', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          : const Text('ورود',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -180,7 +188,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       context,
                       MaterialPageRoute(builder: (_) => const RegisterScreen()),
                     ),
-                    child: const Text('حساب ندارید؟ ثبت‌نام کنید', style: TextStyle(color: AppColors.primary)),
+                    child: const Text('حساب ندارید؟ ثبت‌نام کنید',
+                        style: TextStyle(color: AppColors.primary)),
                   ),
                   const SizedBox(height: 8),
                   TextButton(
@@ -189,16 +198,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => OtpScreen(phoneNumber: _mobileController.text.trim()),
+                            builder: (_) => OtpScreen(
+                                phoneNumber: _mobileController.text.trim()),
                           ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('لطفاً شماره موبایل را وارد کنید'), backgroundColor: Colors.orange),
+                          const SnackBar(
+                              content: Text('لطفاً شماره موبایل را وارد کنید'),
+                              backgroundColor: Colors.orange),
                         );
                       }
                     },
-                    child: const Text('ورود با کد یکبار مصرف', style: TextStyle(color: AppColors.primary)),
+                    child: const Text('ورود با کد یکبار مصرف',
+                        style: TextStyle(color: AppColors.primary)),
                   ),
                 ],
               ),

@@ -5,26 +5,26 @@ import '../../models/dashboard_models.dart';
 
 class FavoritesState {
   final List<FavoriteSalon> favorites;
-  final Set<int> favoriteIds;
+  final Set<String> favoriteSlugs;
   final bool loading;
   final String? error;
 
   const FavoritesState({
     this.favorites = const [],
-    this.favoriteIds = const {},
+    this.favoriteSlugs = const {},
     this.loading = true,
     this.error,
   });
 
   FavoritesState copyWith({
     List<FavoriteSalon>? favorites,
-    Set<int>? favoriteIds,
+    Set<String>? favoriteSlugs,
     bool? loading,
     String? error,
   }) {
     return FavoritesState(
       favorites: favorites ?? this.favorites,
-      favoriteIds: favoriteIds ?? this.favoriteIds,
+      favoriteSlugs: favoriteSlugs ?? this.favoriteSlugs,
       loading: loading ?? this.loading,
       error: error,
     );
@@ -43,7 +43,7 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
           .toList();
       state = FavoritesState(
         favorites: list,
-        favoriteIds: list.map((f) => f.salonId).toSet(),
+        favoriteSlugs: list.map((f) => f.slug).toSet(),
         loading: false,
       );
     } catch (e) {
@@ -51,9 +51,9 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
     }
   }
 
-  Future<bool> add(int salonId, String salonName, {String? logoUrl}) async {
+  Future<bool> add(String slug, String salonName, {String? logoUrl}) async {
     try {
-      await ApiService.post('${ApiConstants.favorites}/$salonId', {
+      await ApiService.post('${ApiConstants.favorites}/$slug', {
         'salonName': salonName,
         if (logoUrl != null) 'logoUrl': logoUrl,
       });
@@ -65,9 +65,9 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
     }
   }
 
-  Future<bool> remove(int salonId) async {
+  Future<bool> remove(String slug) async {
     try {
-      await ApiService.delete('${ApiConstants.favorites}/$salonId');
+      await ApiService.delete('${ApiConstants.favorites}/$slug');
       await load();
       return true;
     } catch (e) {
@@ -76,15 +76,15 @@ class FavoritesNotifier extends StateNotifier<FavoritesState> {
     }
   }
 
-  Future<bool> toggle(int salonId, String salonName, {String? logoUrl}) async {
-    if (state.favoriteIds.contains(salonId)) {
-      return remove(salonId);
+  Future<bool> toggle(String slug, String salonName, {String? logoUrl}) async {
+    if (state.favoriteSlugs.contains(slug)) {
+      return remove(slug);
     } else {
-      return add(salonId, salonName, logoUrl: logoUrl);
+      return add(slug, salonName, logoUrl: logoUrl);
     }
   }
 
-  bool isFavorite(int salonId) => state.favoriteIds.contains(salonId);
+  bool isFavorite(String slug) => state.favoriteSlugs.contains(slug);
 }
 
 final favoritesProvider =

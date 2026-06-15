@@ -1,9 +1,9 @@
+import '../../types.dart';
 import 'base_entity.dart';
 
 class SlotEntity extends BaseEntity {
   final DateTime startTime;
   final DateTime endTime;
-  final int artistId;
   final bool isAvailable;
 
   String get start => '${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}';
@@ -12,7 +12,6 @@ class SlotEntity extends BaseEntity {
     required super.id,
     required this.startTime,
     required this.endTime,
-    required this.artistId,
     this.isAvailable = true,
     super.createdAt,
     super.updatedAt,

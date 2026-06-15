@@ -170,9 +170,9 @@ class _AdminDashboardState extends ConsumerState<AdminDashboard>
         itemBuilder: (_, i) => _SalonCard(
           salon: state.salons[i],
           onToggleActive: () =>
-              ref.read(adminProvider.notifier).toggleSalonActive(state.salons[i].id),
+              ref.read(adminProvider.notifier).toggleSalonActive(state.salons[i].slug),
           onToggleVip: () =>
-              ref.read(adminProvider.notifier).toggleSalonVip(state.salons[i].id),
+              ref.read(adminProvider.notifier).toggleSalonVip(state.salons[i].slug),
         ),
       ),
     );

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'api_constants.dart';
 
 class ApiException implements Exception {
   final String message;
@@ -65,7 +64,8 @@ class ApiService {
   static Future<dynamic> post(String url, Map<String, dynamic> body) async {
     try {
       final response = await http
-          .post(Uri.parse(url), headers: await _headers(), body: jsonEncode(body))
+          .post(Uri.parse(url),
+              headers: await _headers(), body: jsonEncode(body))
           .timeout(_timeout);
       return _handleResponse(response);
     } on TimeoutException {
@@ -81,7 +81,8 @@ class ApiService {
   static Future<dynamic> put(String url, Map<String, dynamic> body) async {
     try {
       final response = await http
-          .put(Uri.parse(url), headers: await _headers(), body: jsonEncode(body))
+          .put(Uri.parse(url),
+              headers: await _headers(), body: jsonEncode(body))
           .timeout(_timeout);
       return _handleResponse(response);
     } on TimeoutException {
@@ -121,7 +122,8 @@ class ApiService {
       return data;
     }
 
-    final message = data['message'] ?? data['errors'] ?? 'خطا در ارتباط با سرور';
+    final message =
+        data['message'] ?? data['errors'] ?? 'خطا در ارتباط با سرور';
     throw ApiException(message is String ? message : message.toString(),
         statusCode: response.statusCode);
   }

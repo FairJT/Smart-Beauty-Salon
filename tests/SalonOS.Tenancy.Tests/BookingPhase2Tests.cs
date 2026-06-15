@@ -124,8 +124,8 @@ public class BookingPhase2Tests
 
         Assert.Equal(8, slots.Count);
         Assert.All(slots, s => Assert.True(s.IsAvailable));
-        Assert.Equal(monday.Date.AddHours(9), slots[0].StartsAt);
-        Assert.Equal(monday.Date.AddHours(17), slots[^1].EndsAt);
+        Assert.Equal(monday.Date.AddHours(9), slots[0].StartTime);
+        Assert.Equal(monday.Date.AddHours(17), slots[^1].EndTime);
     }
 
     [Fact]

@@ -1,3 +1,5 @@
+import '../types.dart';
+
 class DashboardMoney {
   final int amount;
   final String currency;
@@ -48,7 +50,7 @@ class SalonManagerDashboard {
 }
 
 class ArtistUtilization {
-  final int artistId;
+  final ArtistId artistId;
   final String artistName;
   final int todayAppointments;
   final int completedToday;
@@ -64,7 +66,7 @@ class ArtistUtilization {
 
   factory ArtistUtilization.fromJson(Map<String, dynamic> json) {
     return ArtistUtilization(
-      artistId: json['artistId'] ?? 0,
+      artistId: json['artistId']?.toString() ?? '',
       artistName: json['artistName'] ?? '',
       todayAppointments: json['todayAppointments'] ?? 0,
       completedToday: json['completedToday'] ?? 0,
@@ -110,7 +112,7 @@ class ArtistDashboard {
 }
 
 class ArtistNextAppointment {
-  final int id;
+  final String id;
   final DateTime startTime;
   final String clientName;
   final String serviceName;
@@ -126,7 +128,7 @@ class ArtistNextAppointment {
 
   factory ArtistNextAppointment.fromJson(Map<String, dynamic> json) {
     return ArtistNextAppointment(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       startTime: DateTime.parse(json['startTime']),
       clientName: json['clientName'] ?? '',
       serviceName: json['serviceName'] ?? '',
@@ -170,7 +172,7 @@ class ClientDashboard {
 }
 
 class ClientNextBooking {
-  final int id;
+  final String id;
   final DateTime startTime;
   final String salonName;
   final String serviceName;
@@ -188,7 +190,7 @@ class ClientNextBooking {
 
   factory ClientNextBooking.fromJson(Map<String, dynamic> json) {
     return ClientNextBooking(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       startTime: DateTime.parse(json['startTime'] ?? DateTime.now().toIso8601String()),
       salonName: json['salonName'] ?? '',
       serviceName: json['serviceName'] ?? '',
@@ -199,14 +201,14 @@ class ClientNextBooking {
 }
 
 class FavoriteSalon {
-  final int salonId;
+  final String slug;
   final String salonName;
   final String? logoUrl;
   final double ratingAvg;
   final bool isVip;
 
   const FavoriteSalon({
-    required this.salonId,
+    required this.slug,
     required this.salonName,
     this.logoUrl,
     this.ratingAvg = 0,
@@ -215,7 +217,7 @@ class FavoriteSalon {
 
   factory FavoriteSalon.fromJson(Map<String, dynamic> json) {
     return FavoriteSalon(
-      salonId: json['salonId'] ?? 0,
+      slug: json['slug']?.toString() ?? '',
       salonName: json['salonName'] ?? json['name'] ?? '',
       logoUrl: json['logoUrl'],
       ratingAvg: (json['ratingAvg'] ?? 0).toDouble(),

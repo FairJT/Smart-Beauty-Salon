@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
-using SalonOS.Shared.Authorization;
 
 namespace SalonOS.Identity.API.Controllers;
 
@@ -40,6 +39,20 @@ public class NotificationsController : ControllerBase
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         return Ok(new { message = "Notification sent" });
+    }
+
+    [HttpPut("{id}/read")]
+    [HasPermission(Permissions.NotificationViewOwn)]
+    public IActionResult MarkAsRead(Guid id)
+    {
+        return Ok(new { message = "Notification marked as read" });
+    }
+
+    [HttpPut("read-all")]
+    [HasPermission(Permissions.NotificationViewOwn)]
+    public IActionResult MarkAllAsRead()
+    {
+        return Ok(new { message = "All notifications marked as read" });
     }
 }
 

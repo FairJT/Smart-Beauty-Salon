@@ -28,6 +28,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
       ASPNETCORE_URLS: "http://+:5016"
+      JWT_SECRET: "${JWT_SECRET}"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=SalonOSDB;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True"
     ports:
       - "5016:5016"
     depends_on:

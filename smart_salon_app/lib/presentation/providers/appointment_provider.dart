@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/appointment_entity.dart';
 import '../../domain/repositories/appointment_repository.dart';
 import '../../data/repositories/appointment_repository_impl.dart';
+import '../../types.dart';
 
 class AppointmentListState {
   final List<AppointmentEntity> appointments;
@@ -48,18 +49,17 @@ class AppointmentListNotifier extends StateNotifier<AppointmentListState> {
   }
 
   Future<bool> create({
-    required int artistId,
-    required int salonId,
-    required int serviceId,
+    required String slug,
+    required ArtistId artistId,
+    required ServiceId serviceId,
     required DateTime startTime,
     required int durationMinutes,
-    required double estimatedPrice,
-    String? notes,
+    double estimatedPrice = 0,
   }) async {
     try {
       final endTime = startTime.add(Duration(minutes: durationMinutes));
       await _appointmentRepository.createAppointment(CreateAppointmentInput(
-        salonId: salonId,
+        slug: slug,
         artistId: artistId,
         serviceId: serviceId,
         startTime: startTime,
@@ -75,7 +75,7 @@ class AppointmentListNotifier extends StateNotifier<AppointmentListState> {
     }
   }
 
-  Future<void> cancel(int id) async {
+  Future<void> cancel(AppointmentId id) async {
     await _appointmentRepository.cancelAppointment(id);
     await load();
   }

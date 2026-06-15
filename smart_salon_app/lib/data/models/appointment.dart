@@ -1,5 +1,5 @@
 class AppointmentItem {
-  final int id;
+  final String id;
   final DateTime startTime;
   final DateTime endTime;
   final int status;
@@ -29,7 +29,7 @@ class AppointmentItem {
 
   factory AppointmentItem.fromJson(Map<String, dynamic> json) {
     return AppointmentItem(
-      id: json['id'] ?? 0,
+      id: json['id']?.toString() ?? '',
       startTime: DateTime.parse(json['startTime']),
       endTime: DateTime.parse(json['endTime']),
       status: json['status'] ?? 0,

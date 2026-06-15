@@ -11,9 +11,9 @@ import '../../data/repositories/artist_repository_impl.dart';
 import 'otp_screen.dart';
 
 class GuestBookingScreen extends ConsumerStatefulWidget {
-  final int salonId;
+  final String slug;
 
-  const GuestBookingScreen({super.key, required this.salonId});
+  const GuestBookingScreen({super.key, required this.slug});
 
   @override
   ConsumerState<GuestBookingScreen> createState() => _GuestBookingScreenState();
@@ -53,9 +53,9 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
       final serviceRepo = ServiceRepositoryImpl();
       final artistRepo = ArtistRepositoryImpl();
 
-      _salon = await salonRepo.getSalonById(widget.salonId);
-      _services = await serviceRepo.getServicesBySalon(widget.salonId);
-      _artists = await artistRepo.getArtistsBySalon(widget.salonId);
+      _salon = await salonRepo.getSalonBySlug(widget.slug);
+      _services = await serviceRepo.getServicesBySalon(_salon!.id);
+      _artists = await artistRepo.getArtistsBySalon(_salon!.id);
       setState(() { _loading = false; });
     } catch (e) {
       setState(() { _error = e.toString().replaceAll('Exception: ', ''); _loading = false; });

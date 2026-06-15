@@ -74,6 +74,7 @@ public static class RolePermissions
         },
         ["Client"] = new[]
         {
+            Permissions.ClientSelf,
             Permissions.AppointmentViewOwn,
             Permissions.AppointmentCreate,
             Permissions.AppointmentCancelOwn,
