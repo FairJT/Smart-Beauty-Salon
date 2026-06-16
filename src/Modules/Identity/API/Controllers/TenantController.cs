@@ -13,6 +13,7 @@ namespace SalonOS.Identity.API.Controllers;
 /// </summary>
 [Route("api/tenants")]
 [ApiController]
+[Authorize]
 public class TenantController : ControllerBase
 {
     // ── GET /api/tenants — PlatformOwner only (cross-tenant list) ─────────────

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using SalonOS.Inventory.Application.DTOs;
 
 namespace SalonOS.Inventory.API.Controllers;
@@ -10,6 +11,7 @@ namespace SalonOS.Inventory.API.Controllers;
 /// </summary>
 [Route("api/stock-movements")]
 [ApiController]
+[Authorize]
 public class StockMovementController : ControllerBase
 {
     [HttpGet]

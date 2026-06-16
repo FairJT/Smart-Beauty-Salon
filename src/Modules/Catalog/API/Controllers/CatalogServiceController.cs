@@ -6,11 +6,13 @@ using SalonOS.Catalog.Infrastructure;
 using SalonOS.Shared;
 using SalonOS.Shared.Authorization;
 using SalonOS.Shared.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalonOS.Catalog.API.Controllers;
 
 [Route("api/catalog-services")]
 [ApiController]
+[Authorize]
 public class CatalogServiceController : ControllerBase
 {
     private readonly CatalogDbContext _db;

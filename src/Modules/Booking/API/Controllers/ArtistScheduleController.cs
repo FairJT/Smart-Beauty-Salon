@@ -10,6 +10,7 @@ namespace SalonOS.Booking.API.Controllers;
 
 [Route("api/artist-schedules")]
 [ApiController]
+[Authorize]
 public class ArtistScheduleController : ControllerBase
 {
     private readonly BookingDbContext _db;

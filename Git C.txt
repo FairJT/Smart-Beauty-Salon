@@ -2,5 +2,5 @@ git init
 git branch -M main
 git remote add origin https://github.com/FairJT/Smart-Beauty-Salon.git
 git add .
-git commit -m "New version"
+git commit -m "V.6"
 git push -u origin main

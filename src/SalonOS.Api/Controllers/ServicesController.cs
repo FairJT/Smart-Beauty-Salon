@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SalonOS.Catalog.Infrastructure;
 using SalonOS.Identity.Infrastructure;
@@ -7,6 +8,7 @@ namespace SalonOS.Api.Controllers;
 
 [Route("api/services")]
 [ApiController]
+[Authorize]
 public class ServicesController : ControllerBase
 {
     private readonly CatalogDbContext _catalogDb;

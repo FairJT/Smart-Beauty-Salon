@@ -12,6 +12,7 @@ namespace SalonOS.Marketplace.API.Controllers;
 /// </summary>
 [Route("api/package-listings")]
 [ApiController]
+[Authorize]
 public class PackageListingController : ControllerBase
 {
     [HttpGet]

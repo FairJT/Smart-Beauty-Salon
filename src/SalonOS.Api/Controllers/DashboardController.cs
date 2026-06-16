@@ -12,6 +12,7 @@ using System.Security.Claims;
 namespace SalonOS.Api.Controllers;
 
 [ApiController]
+[Authorize]
 public class DashboardController : ControllerBase
 {
     private readonly BookingDbContext _bookingDb;

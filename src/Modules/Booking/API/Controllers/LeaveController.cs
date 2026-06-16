@@ -10,6 +10,7 @@ namespace SalonOS.Booking.API.Controllers;
 
 [Route("api/leaves")]
 [ApiController]
+[Authorize]
 public class LeaveController : ControllerBase
 {
     private readonly BookingDbContext _db;

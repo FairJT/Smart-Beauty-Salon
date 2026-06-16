@@ -11,6 +11,7 @@ namespace SalonOS.Booking.API.Controllers;
 
 [Route("api/appointments")]
 [ApiController]
+[Authorize]
 public class BookingController : ControllerBase
 {
     private readonly IBookingService _bookings;

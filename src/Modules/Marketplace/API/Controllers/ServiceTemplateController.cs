@@ -11,6 +11,7 @@ namespace SalonOS.Marketplace.API.Controllers;
 /// </summary>
 [Route("api/service-templates")]
 [ApiController]
+[Authorize]
 public class ServiceTemplateController : ControllerBase
 {
     // TODO: Implement service template service

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using SalonOS.Identity.Application.DTOs;
 
 namespace SalonOS.Identity.API.Controllers;
@@ -12,6 +13,7 @@ namespace SalonOS.Identity.API.Controllers;
 /// </summary>
 [Route("api/memberships")]
 [ApiController]
+[Authorize]
 public class MembershipController : ControllerBase
 {
     // ── GET /api/memberships — staff.view ─────────────────────────────────────

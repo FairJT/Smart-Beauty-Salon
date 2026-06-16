@@ -14,6 +14,7 @@ namespace SalonOS.Identity.API.Controllers;
 /// </summary>
 [Route("api/auth")]
 [ApiController]
+[Authorize]
 [Authorize]                 // default: every action requires a valid JWT …
 public class AuthController : ControllerBase
 {

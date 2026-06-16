@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SalonOS.Identity.Infrastructure;
 using SalonOS.Catalog.Infrastructure;
@@ -9,6 +10,7 @@ namespace SalonOS.Api.Controllers;
 
 [Route("salon/{slug}")]
 [ApiController]
+[Authorize]
 public class SalonPageController : ControllerBase
 {
     private readonly IdentityDbContext _identityDb;

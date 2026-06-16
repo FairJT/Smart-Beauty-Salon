@@ -10,6 +10,7 @@ namespace SalonOS.Api.Controllers;
 
 [Route("api/me/favorites")]
 [ApiController]
+[Authorize]
 public class FavoritesController : ControllerBase
 {
     private readonly IdentityDbContext _db;

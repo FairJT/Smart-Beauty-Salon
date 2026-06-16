@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SalonOS.Shared.Authorization;
 using SalonOS.Infrastructure.Admin;
@@ -10,6 +11,7 @@ namespace SalonOS.Api.Controllers;
 
 [Route("api/admin")]
 [ApiController]
+[Authorize]
 [HasPermission(Permissions.TenantManage)]
 public class PlatformAdminController : ControllerBase
 {

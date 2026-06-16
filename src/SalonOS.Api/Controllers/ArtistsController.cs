@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SalonOS.Identity.Domain;
 using SalonOS.Identity.Infrastructure;
@@ -9,6 +10,7 @@ namespace SalonOS.Api.Controllers;
 
 [Route("api/artists")]
 [ApiController]
+[Authorize]
 public class ArtistsController : ControllerBase
 {
     private readonly IdentityDbContext _identityDb;

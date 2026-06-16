@@ -4,11 +4,13 @@ using SalonOS.Catalog.Application.DTOs;
 using SalonOS.Catalog.Domain;
 using SalonOS.Catalog.Infrastructure;
 using SalonOS.Shared.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalonOS.Catalog.API.Controllers;
 
 [Route("api/service-types")]
 [ApiController]
+[Authorize]
 public class ServiceTypesController : ControllerBase
 {
     private readonly CatalogDbContext _db;

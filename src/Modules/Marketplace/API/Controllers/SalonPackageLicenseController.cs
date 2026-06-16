@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SalonOS.Shared.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using SalonOS.Marketplace.Application.DTOs;
 
 namespace SalonOS.Marketplace.API.Controllers;
@@ -10,6 +11,7 @@ namespace SalonOS.Marketplace.API.Controllers;
 /// </summary>
 [Route("api/salon-package-licenses")]
 [ApiController]
+[Authorize]
 public class SalonPackageLicenseController : ControllerBase
 {
     [HttpGet]
