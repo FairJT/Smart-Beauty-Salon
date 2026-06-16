@@ -27,3 +27,6 @@ smart_salon_app/.pub/
 # Python
 __pycache__/
 *.pyc
+obj/
+bin/
+obj/
