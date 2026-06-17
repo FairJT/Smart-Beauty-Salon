@@ -61,7 +61,7 @@ services:
         API_BASE_URL: /api
     container_name: FlutterWeb
     ports:
-      - "8081:80"
+      - "8080:80"
     depends_on:
       salonos-api:
         condition: service_started

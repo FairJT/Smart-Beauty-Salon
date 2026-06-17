@@ -198,7 +198,7 @@ builder.Services.AddExceptionHandler(options =>
 var app = builder.Build();
 
     // ─── Auto-migrate & seed database in Docker ─────────────────
-    if (app.Environment.EnvironmentName == "Docker")
+    if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
     {
         using var scope = app.Services.CreateScope();
         var identityDb = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();

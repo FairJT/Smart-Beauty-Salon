@@ -93,6 +93,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get errorInvalidCredentials => 'شماره موبایل یا رمز عبور اشتباه است';
 
   @override
+  String get errorUnknown => 'خطای غیرمنتظره‌ای رخ داده است';
+
+  @override
   String get successLogin => 'با موفقیت وارد شدید';
 
   @override
@@ -175,10 +178,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get finalPrice => 'قیمت نهایی';
 
   @override
-  String get statusPending => 'در انتظار تأیید';
+  String get statusPending => 'در انتظار';
 
   @override
-  String get statusConfirmed => 'تأیید شده';
+  String get statusConfirmed => 'تایید شده';
 
   @override
   String get statusInProgress => 'در حال انجام';
@@ -191,12 +194,6 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get statusNoShow => 'حاضر نشده';
-
-  @override
-  String get reminderSent => 'یادآوری ارسال شد';
-
-  @override
-  String get errorUnknown => 'خطای غیرمنتظره‌ای رخ داده است';
 
   @override
   String get statusCancelledByArtist => 'لغو توسط هنرمند';
@@ -217,7 +214,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get passwordMinLength => 'رمز عبور حداقل ۸ کاراکتر باشد';
 
   @override
-  String fieldRequired(String fieldName) => '$fieldName الزامی است';
+  String fieldRequired(Object fieldName) {
+    return '$fieldName الزامی است';
+  }
 
   @override
   String get nationalCodeRequired => 'کد ملی الزامی است';
@@ -251,4 +250,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get dayFri => 'جمعه';
+
+  @override
+  String get reminderSent => 'یادآوری ارسال شد';
 }

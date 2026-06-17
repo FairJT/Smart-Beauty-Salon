@@ -93,6 +93,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorInvalidCredentials => 'Invalid mobile number or password.';
 
   @override
+  String get errorUnknown => 'An unexpected error occurred';
+
+  @override
   String get successLogin => 'Logged in successfully.';
 
   @override
@@ -193,12 +196,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statusNoShow => 'No Show';
 
   @override
-  String get reminderSent => 'Reminder Sent';
-
-  @override
-  String get errorUnknown => 'An unexpected error occurred';
-
-  @override
   String get statusCancelledByArtist => 'Cancelled by Artist';
 
   @override
@@ -217,7 +214,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordMinLength => 'Password must be at least 8 characters';
 
   @override
-  String fieldRequired(String fieldName) => '$fieldName is required';
+  String fieldRequired(Object fieldName) {
+    return '$fieldName is required';
+  }
 
   @override
   String get nationalCodeRequired => 'National code is required';
@@ -251,4 +250,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dayFri => 'Friday';
+
+  @override
+  String get reminderSent => 'Reminder Sent';
 }
