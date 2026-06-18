@@ -490,7 +490,10 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
 
 app.UseExceptionHandler();
 app.UseRateLimiter();
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment() && app.Environment.EnvironmentName != "Docker")
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors(app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker" ? "AllowAll" : "Production");
 
