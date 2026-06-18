@@ -80,14 +80,16 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
 
   Widget _buildFavorites(FavoritesState state) {
     if (state.loading) return const LoadingState();
-    if (state.error != null)
+    if (state.error != null) {
       return ErrorState(
           message: state.error!,
           onRetry: () => ref.read(favoritesProvider.notifier).load());
-    if (state.favorites.isEmpty)
+    }
+    if (state.favorites.isEmpty) {
       return const EmptyState(
           message: 'هنوز سالنی را به علاقه‌مندی‌ها اضافه نکرده‌اید',
           icon: Icons.favorite_outline);
+    }
 
     return RefreshIndicator(
       onRefresh: () => ref.read(favoritesProvider.notifier).load(),
@@ -151,10 +153,11 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
 
   Widget _buildDashboard(ClientDashboardState state) {
     if (state.loading) return const LoadingState();
-    if (state.error != null)
+    if (state.error != null) {
       return ErrorState(
           message: state.error!,
           onRetry: () => ref.read(clientDashboardProvider.notifier).load());
+    }
     final data = state.data;
     if (data == null) return const EmptyState(message: 'داده‌ای یافت نشد');
 

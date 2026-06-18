@@ -14,9 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.3.9" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Include="Microsoft.Data.SqlClient.SNI.All" Version="5.2.2" />
-    <PackageReference Include="Microsoft.Data.SqlClient.SNI.Runtime.Linux-x64" Version="5.2.2" />
-    <PackageReference Include="Microsoft.Data.SqlClient.SNI.Runtime.Win-x64" Version="5.2.2" />
+    
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>

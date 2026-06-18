@@ -1,4 +1,3 @@
-import '../../types.dart';
 import 'base_entity.dart';
 
 class ArtistEntity extends BaseEntity {

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/datasources/dio_client.dart';
 import '../../data/datasources/api_constants.dart';
 import '../../domain/entities/appointment_entity.dart';
-import '../../types.dart';
 
 class ArtistScheduleState {
   final List<AppointmentEntity> appointments;
@@ -39,7 +38,8 @@ class ArtistScheduleNotifier extends StateNotifier<ArtistScheduleState> {
   Future<void> load() async {
     state = state.copyWith(loading: true, error: null);
     try {
-      final response = await DioClient.instance.get(ApiConstants.artistSchedule);
+      final response =
+          await DioClient.instance.get(ApiConstants.artistSchedule);
       final data = response.data as List;
       state = state.copyWith(
         appointments: data

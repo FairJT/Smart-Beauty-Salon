@@ -1,7 +1,7 @@
 # SmartSalon Monolith - Build from source
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY SmartSalon/SmartSalon/*.csproj ./SmartSalon/
+COPY SmartSalon/*.csproj ./SmartSalon/
 RUN dotnet restore "./SmartSalon/SmartSalon.csproj"
 # Copy source code for build
 COPY SmartSalon/. ./SmartSalon/

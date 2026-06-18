@@ -1,5 +1,3 @@
-import '../../types.dart';
-
 abstract class BaseEntity {
   final String id;
   final DateTime? createdAt;
