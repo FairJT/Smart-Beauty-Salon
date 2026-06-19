@@ -21,7 +21,7 @@ class AuthState {
   bool get isSuperAdmin => user?.isSuperAdmin ?? false;
   bool get isSalonManager => user?.isSalonManager ?? false;
   bool get isArtist => user?.isArtist ?? false;
-  bool get isClient => user?.isClient ?? false;
+  bool get isClient => user?.userType == 4;
 }
 
 class AuthNotifier extends StateNotifier<AuthState> {

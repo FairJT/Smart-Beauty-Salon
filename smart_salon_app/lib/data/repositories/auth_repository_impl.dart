@@ -1,11 +1,12 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/dio_client.dart';
 import '../datasources/api_constants.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  static const _storage = FlutterSecureStorage();
+  // Using SharedPreferences for token storage
+  // Placeholder not needed; will retrieve instance as needed
   static const _tokenKey = 'auth_token';
 
   static int _parseUserType(dynamic value) {
@@ -89,7 +90,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _storage.delete(key: _tokenKey);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_tokenKey);
   }
 
   @override
@@ -100,10 +102,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<String?> getToken() async {
-    return await _storage.read(key: _tokenKey);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_tokenKey);
   }
 
   Future<void> _saveToken(String token) async {
-    await _storage.write(key: _tokenKey, value: token);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_tokenKey, token);
   }
 }

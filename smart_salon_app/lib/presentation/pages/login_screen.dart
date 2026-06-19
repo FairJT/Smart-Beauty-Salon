@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
+import 'package:smart_salon_app/l10n/app_localizations.dart';
 import '../../core/validators.dart';
 import '../providers/auth_provider.dart';
 import 'register_screen.dart';
@@ -177,8 +178,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               child: CircularProgressIndicator(
                                   strokeWidth: 2, color: Colors.white),
                             )
-                          : const Text('ورود',
-                              style: TextStyle(
+                          : Text(AppLocalizations.of(context)!.login,
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -210,8 +211,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         );
                       }
                     },
-                    child: const Text('ورود با کد یکبار مصرف',
-                        style: TextStyle(color: AppColors.primary)),
+                    child: Text(
+                        "${AppLocalizations.of(context)!.login} با کد یکبار مصرف",
+                        style: const TextStyle(color: AppColors.primary)),
                   ),
                 ],
               ),

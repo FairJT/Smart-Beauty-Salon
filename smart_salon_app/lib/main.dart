@@ -77,6 +77,7 @@ class SmartSalonApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.background,
         fontFamily: 'Vazirmatn',
+        fontFamilyFallback: const ['Vazirmatn'],
         textTheme: AppTextTheme.farsi(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         ),

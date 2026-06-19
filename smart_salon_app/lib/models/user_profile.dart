@@ -32,5 +32,5 @@ class UserProfile {
     );
   }
 
-  String get fullName => '$firstName $lastName';
+  String get fullName => '\$firstName \$lastName';
 }

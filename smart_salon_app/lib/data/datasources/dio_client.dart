@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'api_constants.dart';
 
 class DioClient {
   static Dio? _dio;
   static String? _tenantId;
 
-  static const _storage = FlutterSecureStorage();
+  static final SharedPreferences? _prefs =
+      null; // placeholder, will be initialized at runtime
   static const _tokenKey = 'auth_token';
 
   static Dio get instance {
@@ -41,8 +42,10 @@ class DioClient {
 
 class _AuthInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    final token = await DioClient._storage.read(key: DioClient._tokenKey);
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(DioClient._tokenKey);
 
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -54,7 +57,8 @@ class _AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      await DioClient._storage.delete(key: DioClient._tokenKey);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove(DioClient._tokenKey);
     }
 
     handler.next(err);

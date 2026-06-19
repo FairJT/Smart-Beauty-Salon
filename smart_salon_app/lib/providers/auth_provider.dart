@@ -37,12 +37,12 @@ class AuthState {
     String? role,
   }) {
     return AuthState(
-      isLoggedIn:      isLoggedIn      ?? this.isLoggedIn,
-      profile:         profile         ?? this.profile,
-      loading:         loading         ?? this.loading,
-      permissions:     permissions     ?? this.permissions,
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      profile: profile ?? this.profile,
+      loading: loading ?? this.loading,
+      permissions: permissions ?? this.permissions,
       isPlatformOwner: isPlatformOwner ?? this.isPlatformOwner,
-      role:            role            ?? this.role,
+      role: role ?? this.role,
     );
   }
 }
@@ -127,17 +127,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String token,
     required UserProfile profile,
   }) {
-    final perms    = JwtDecoder.extractPermissions(token);
-    final isOwner  = JwtDecoder.isPlatformOwner(token);
+    final perms = JwtDecoder.extractPermissions(token);
+    final isOwner = JwtDecoder.isPlatformOwner(token);
     final roleName = JwtDecoder.role(token);
 
     return AuthState(
-      isLoggedIn:      true,
-      profile:         profile,
-      loading:         false,
-      permissions:     PermissionService(perms),
+      isLoggedIn: true,
+      profile: profile,
+      loading: false,
+      permissions: PermissionService(perms),
       isPlatformOwner: isOwner,
-      role:            roleName,
+      role: roleName,
     );
   }
 }
