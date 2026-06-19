@@ -44,7 +44,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return UserEntity(
       id: data['user']['id']?.toString() ?? '',
-      phoneNumber: data['user']['phoneNumber'],
+      phoneNumber: data['user']['mobile'],
       firstName: data['user']['firstName'],
       lastName: data['user']['lastName'],
       userType: _parseUserType(data['user']['userType']),
@@ -53,12 +53,15 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserEntity> register(String phoneNumber, String password,
-      String firstName, String lastName) async {
+      String firstName, String lastName, String nationalCode) async {
     final response = await DioClient.instance.post(
       ApiConstants.register,
       data: {
         'mobile': phoneNumber,
         'password': password,
+        'firstName': firstName,
+        'lastName': lastName,
+        'nationalCode': nationalCode,
       },
     );
 
@@ -67,7 +70,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return UserEntity(
       id: data['user']['id']?.toString() ?? '',
-      phoneNumber: data['user']['phoneNumber'],
+      phoneNumber: data['user']['mobile'],
       firstName: data['user']['firstName'],
       lastName: data['user']['lastName'],
       userType: _parseUserType(data['user']['userType']),
@@ -81,7 +84,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return UserEntity(
       id: data['id']?.toString() ?? '',
-      phoneNumber: data['phoneNumber'],
+      phoneNumber: data['mobile'],
       firstName: data['firstName'],
       lastName: data['lastName'],
       userType: _parseUserType(data['userType']),

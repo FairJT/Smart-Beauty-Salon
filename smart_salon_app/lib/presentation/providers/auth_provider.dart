@@ -68,7 +68,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String? nationalCode,
   }) async {
     final user = await _authRepository.register(
-        mobile ?? '', password, firstName, lastName);
+        mobile ?? '', password, firstName, lastName, nationalCode ?? '');
     state = AuthState(
       isLoggedIn: true,
       user: user,
