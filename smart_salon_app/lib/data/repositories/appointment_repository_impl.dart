@@ -16,12 +16,14 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
 
   @override
   Future<AppointmentEntity> getAppointmentById(AppointmentId id) async {
-    final response = await DioClient.instance.get('${ApiConstants.appointments}/$id');
+    final response =
+        await DioClient.instance.get('${ApiConstants.appointments}/$id');
     return _parseAppointment(response.data);
   }
 
   @override
-  Future<AppointmentEntity> createAppointment(CreateAppointmentInput input) async {
+  Future<AppointmentEntity> createAppointment(
+      CreateAppointmentInput input) async {
     final response = await DioClient.instance.post(
       '${ApiConstants.appointments}/simple',
       data: {
@@ -34,36 +36,22 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     );
 
     final json = response.data;
-    return AppointmentEntity(
-      id: json['id']?.toString() ?? '',
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
-      status: json['status'] ?? 1,
-      estimatedPrice: (json['estimatedPrice'] ?? 0).toDouble(),
-      depositAmount: (json['depositAmount'] ?? 0).toDouble(),
-    );
+    return await getAppointmentById(json['id'].toString());
   }
 
   @override
   Future<AppointmentEntity> cancelAppointment(AppointmentId id) async {
-    final response = await DioClient.instance.put(
+    await DioClient.instance.put(
       '${ApiConstants.appointments}/$id/cancel',
       data: {},
     );
 
-    final json = response.data;
-    return AppointmentEntity(
-      id: id,
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
-      status: 5,
-      estimatedPrice: (json['estimatedPrice'] ?? 0).toDouble(),
-      depositAmount: (json['depositAmount'] ?? 0).toDouble(),
-    );
+    return await getAppointmentById(id);
   }
 
   @override
-  Future<List<SlotEntity>> getAvailableSlots(ArtistId artistId, ServiceId serviceId, DateTime date) async {
+  Future<List<SlotEntity>> getAvailableSlots(
+      ArtistId artistId, ServiceId serviceId, DateTime date) async {
     final response = await DioClient.instance.get(
       ApiConstants.slots,
       queryParameters: {
@@ -74,22 +62,24 @@ class AppointmentRepositoryImpl implements AppointmentRepository {
     );
 
     final data = response.data as List;
-    return data.map((json) => SlotEntity(
-      id: json['id']?.toString() ?? '',
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
-      isAvailable: json['isAvailable'] ?? true,
-    )).toList();
+    return data
+        .map((json) => SlotEntity(
+              id: json['id']?.toString() ?? '',
+              startTime: DateTime.parse(json['startTime']),
+              endTime: DateTime.parse(json['endTime']),
+              isAvailable: json['isAvailable'] ?? true,
+            ))
+        .toList();
   }
 
   AppointmentEntity _parseAppointment(Map<String, dynamic> json) {
     return AppointmentEntity(
       id: json['id']?.toString() ?? '',
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
+      startTime: DateTime.parse(json['startsAt']),
+      endTime: DateTime.parse(json['endsAt']),
       status: json['status'] ?? 1,
-      estimatedPrice: (json['estimatedPrice'] ?? 0).toDouble(),
-      depositAmount: (json['depositAmount'] ?? 0).toDouble(),
+      estimatedPrice: (json['estimatedPriceAmount'] ?? 0).toDouble(),
+      depositAmount: (json['depositAmountValue'] ?? 0).toDouble(),
       isRated: json['isRated'] ?? false,
       rating: json['rating'] ?? 0,
       comment: json['comment'],
