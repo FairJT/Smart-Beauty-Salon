@@ -8,6 +8,26 @@ class AuthRepositoryImpl implements AuthRepository {
   static const _storage = FlutterSecureStorage();
   static const _tokenKey = 'auth_token';
 
+  static int _parseUserType(dynamic value) {
+    if (value is int) return value;
+    if (value is String) {
+      switch (value) {
+        case 'SuperAdmin':
+          return 1;
+        case 'SalonManager':
+          return 2;
+        case 'Artist':
+          return 3;
+        case 'Client':
+          return 4;
+        default:
+          final parsed = int.tryParse(value);
+          return parsed ?? 4;
+      }
+    }
+    return 4; // default to Client
+  }
+
   @override
   Future<UserEntity> login(String phoneNumber, String password) async {
     final response = await DioClient.instance.post(
@@ -26,12 +46,13 @@ class AuthRepositoryImpl implements AuthRepository {
       phoneNumber: data['user']['phoneNumber'],
       firstName: data['user']['firstName'],
       lastName: data['user']['lastName'],
-      userType: data['user']['userType'] ?? 1,
+      userType: _parseUserType(data['user']['userType']),
     );
   }
 
   @override
-  Future<UserEntity> register(String phoneNumber, String password, String firstName, String lastName) async {
+  Future<UserEntity> register(String phoneNumber, String password,
+      String firstName, String lastName) async {
     final response = await DioClient.instance.post(
       ApiConstants.register,
       data: {
@@ -48,7 +69,7 @@ class AuthRepositoryImpl implements AuthRepository {
       phoneNumber: data['user']['phoneNumber'],
       firstName: data['user']['firstName'],
       lastName: data['user']['lastName'],
-      userType: data['user']['userType'] ?? 1,
+      userType: _parseUserType(data['user']['userType']),
     );
   }
 
@@ -62,7 +83,7 @@ class AuthRepositoryImpl implements AuthRepository {
       phoneNumber: data['phoneNumber'],
       firstName: data['firstName'],
       lastName: data['lastName'],
-      userType: data['userType'] ?? 1,
+      userType: _parseUserType(data['userType']),
     );
   }
 
