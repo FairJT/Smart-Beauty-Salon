@@ -162,9 +162,10 @@ public class AuthService : IAuthService
             {
                 claims.Add(new Claim("tenant_id", membership.TenantId.ToString()));
 
-                // Receptionist has its own MembershipRole value (Task 7.2).
+                // Receptionist folded into SalonManager (book-on-behalf). Any legacy
+                // Receptionist membership now authenticates as SalonManager.
                 if (membership.Role == MembershipRole.Receptionist)
-                    roleName = "Receptionist";
+                    roleName = "SalonManager";
             }
 
             claims.Add(new Claim("role", roleName));

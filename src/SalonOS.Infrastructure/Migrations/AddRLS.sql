@@ -22,7 +22,7 @@ GO
 -- Returns 1 (allow) when:
 --   a) The row's TenantId matches the session-context TenantId, OR
 --   b) The session-context IsPlatformOwner flag is 1.
--- Returns 0 (deny) for all other cases, including unauthenticated connections
+-- Returns 0 (deny) for all other cases, including un‑authenticated connections
 -- that have not set the session context.
 CREATE OR ALTER FUNCTION Security.fn_tenant(@TenantId UNIQUEIDENTIFIER)
 RETURNS TABLE
@@ -38,7 +38,7 @@ RETURN
         CAST(SESSION_CONTEXT(N'IsPlatformOwner') AS BIT) = 1;
 GO
 
--- ── 3. Security policy — drop first if re-running ─────────────────────────
+-- ── 3. Security policy — drop first if re‑running ─────────────────────────
 IF EXISTS (
     SELECT 1 FROM sys.security_policies
     WHERE name = N'TenantFilter' AND schema_id = SCHEMA_ID(N'Security')
@@ -46,7 +46,7 @@ IF EXISTS (
     DROP SECURITY POLICY [Security].[TenantFilter];
 GO
 
--- ── 4. Apply FILTER + BLOCK predicates to every tenant-owned table ─────────
+-- ── 4. Apply FILTER + BLOCK predicates to every tenant‑owned table ─────────
 --
 -- FILTER predicate : hides rows that don't belong to the current tenant on SELECT.
 -- BLOCK  predicate : prevents INSERT of rows with a foreign TenantId (AFTER INSERT).
@@ -55,7 +55,7 @@ GO
 --   dbo.Bookings, dbo.CatalogServices, dbo.CatalogServiceOptions,
 --   dbo.InventoryItems, dbo.StockMovements, dbo.SalonPackageLicenses
 --
--- Add additional tenant-owned tables here as modules grow.
+-- Add additional tenant‑owned tables here as modules grow.
 CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Bookings],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Bookings]  AFTER INSERT,
@@ -73,7 +73,13 @@ CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[StockMovements]  AFTER INSERT,
 
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonPackageLicenses],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonPackageLicenses]  AFTER INSERT
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonPackageLicenses]  AFTER INSERT,
+
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ArtistSchedules],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ArtistSchedules]  AFTER INSERT,
+
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Leaves],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Leaves]  AFTER INSERT
 
     WITH (STATE = ON, SCHEMABINDING = ON);
 GO

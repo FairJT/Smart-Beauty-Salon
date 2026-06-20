@@ -27,6 +27,7 @@ public static class RolePermissions
             Permissions.CatalogDelete,
             Permissions.CatalogPackageManage,
             Permissions.AppointmentViewAll,
+            Permissions.AppointmentCreate,      // book-on-behalf (replaces Receptionist role)
             Permissions.AppointmentConfirm,
             Permissions.AppointmentComplete,
             Permissions.AppointmentCancelAll,
@@ -43,21 +44,6 @@ public static class RolePermissions
             Permissions.NotificationViewOwn,
             Permissions.MarketplaceBrowse,
             Permissions.MarketplaceLicensePurchase,
-        },
-        ["Receptionist"] = new[]
-        {
-            Permissions.SalonView,
-            Permissions.StaffView,
-            Permissions.CatalogView,
-            Permissions.AppointmentViewAll,
-            Permissions.AppointmentCreate,
-            Permissions.AppointmentConfirm,
-            Permissions.AppointmentComplete,
-            Permissions.AppointmentCancelAll,
-            Permissions.InventoryView,
-            Permissions.FinanceDepositTake,
-            Permissions.NotificationSend,
-            Permissions.NotificationViewOwn,
         },
         ["Artist"] = new[]
         {

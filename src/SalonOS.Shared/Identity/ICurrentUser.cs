@@ -14,7 +14,7 @@ public interface ICurrentUser
     Guid? ArtistId { get; }
 
     /// <summary>
-    /// The role name as stored in the token: SalonManager, Receptionist, Artist,
+    /// The role name as stored in the token: SalonManager, Artist,
     /// Client, or PlatformOwner.
     /// </summary>
     string Role { get; }

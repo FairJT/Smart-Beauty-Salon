@@ -6,6 +6,7 @@ public class ClientProfile
     public string UserId { get; set; } = string.Empty;
     public int LoyaltyPoints { get; set; }
     public int TotalVisits { get; set; }
+    public bool JobSeekerEnabled { get; set; } = false;   // opt-in JobSeeker capability
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ApplicationUser User { get; set; } = null!;

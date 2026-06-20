@@ -26,7 +26,7 @@ public enum MembershipRole
     Owner        = 1,
     Admin        = 2,
     Manager      = 3,
-    Receptionist = 4,   // Task 7.2 — front-desk role (booking + deposit, no admin)
+    Receptionist = 4,   // DEPRECATED — folded into SalonManager (book-on-behalf). Do not assign.
     Staff        = 5,   // Artist / stylist
     Member       = 6    // Client
 }

@@ -7,7 +7,7 @@ namespace SalonOS.Inventory.API.Controllers;
 
 /// <summary>
 /// Inventory controller.
-/// inventory.view — SalonManager, Receptionist.
+/// inventory.view — SalonManager.
 /// inventory.adjust / inventory.manage — SalonManager only.
 /// Authorize on permission strings — never on role names (R2).
 /// </summary>

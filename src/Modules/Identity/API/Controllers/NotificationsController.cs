@@ -5,7 +5,7 @@ namespace SalonOS.Identity.API.Controllers;
 
 /// <summary>
 /// Notifications controller.
-/// Task 6.6: notification.send (SalonManager, Receptionist, Artist) and
+/// Task 6.6: notification.send (SalonManager, Artist) and
 /// notification.view.own (all roles) per §R4.
 /// Authorize on permission strings — never on role names (R2).
 /// </summary>
@@ -32,7 +32,7 @@ public class NotificationsController : ControllerBase
     }
 
     // ── POST /api/notifications/send — notification.send ──────────────────────
-    // SalonManager, Receptionist, Artist can send notifications.
+        // SalonManager, Artist can send notifications.
     [HttpPost("send")]
     [HasPermission(Permissions.NotificationSend)]
     public IActionResult SendNotification([FromBody] SendNotificationDto dto)

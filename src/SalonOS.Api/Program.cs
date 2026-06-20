@@ -231,6 +231,31 @@ var app = builder.Build();
         // Apply Booking migrations if any
         try { bookingDb.Database.Migrate(); } catch { }
 
+        // Apply Row-Level Security (idempotent). The .sql uses GO batch separators,
+        // which ExecuteSqlRaw can't run, so split on them first.
+        try
+        {
+            var rlsPath = Path.Combine(AppContext.BaseDirectory, "Migrations", "AddRLS.sql");
+            if (File.Exists(rlsPath))
+            {
+                var sql = File.ReadAllText(rlsPath);
+                foreach (var batch in System.Text.RegularExpressions.Regex.Split(
+                             sql, @"^\s*GO\s*$",
+                             System.Text.RegularExpressions.RegexOptions.Multiline))
+                {
+                    if (!string.IsNullOrWhiteSpace(batch))
+                        appDb.Database.ExecuteSqlRaw(batch);
+                }
+            }
+        }
+        catch { /* RLS is a backstop; don't block boot */ }
+
+        // ── Ensure Phase 2 booking tables exist ──
+
+
+
+
+
         // ── Ensure Phase 2 booking tables exist ──
         identityDb.Database.ExecuteSqlRaw(@"
             IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'ArtistSchedules')

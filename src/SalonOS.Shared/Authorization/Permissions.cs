@@ -69,6 +69,12 @@ public static class Permissions
     public const string MarketplaceLicensePurchase = "marketplace.license.purchase";
     public const string MarketplaceTemplateManage = "marketplace.template.manage";
 
+    // ─── JobSeeker / Job market ──────────────────────────────
+    public const string JobSeekerProfileManage = "jobseeker.profile.manage";
+    public const string JobPostingView         = "job.posting.view";
+    public const string JobPostingManage       = "job.posting.manage";   // SalonManager
+    public const string JobApplicationCreate   = "job.application.create";
+
     // ─── Platform / Tenant ──────────────────────────────────
     public const string TenantManage = "tenant.manage";
     public const string TenantBillingManage = "tenant.billing.manage";
