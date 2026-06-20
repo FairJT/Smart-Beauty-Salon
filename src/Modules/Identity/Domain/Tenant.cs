@@ -20,4 +20,6 @@ public class Tenant
     public bool IsActive { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string Region { get; set; } = "IR";
+        public long RatingSum { get; set; }    // running sum of all booking ratings
+        public int RatingCount { get; set; }   // number of ratings; avg = RatingSum / RatingCount
 }

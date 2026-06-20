@@ -1,6 +1,7 @@
 using SalonOS.Booking.Domain;
 using SalonOS.Booking.Application.DTOs;
 using SalonOS.Shared;
+using SalonOS.Shared.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace SalonOS.Booking.Infrastructure;
@@ -22,10 +23,14 @@ public interface IBookingService
 public class BookingService : IBookingService
 {
     private readonly BookingDbContext _context;
+    private readonly ISalonRatingUpdater _ratingUpdater;
 
-    public BookingService(BookingDbContext context)
+    public BookingService(
+        BookingDbContext context,
+        ISalonRatingUpdater ratingUpdater)
     {
         _context = context;
+        _ratingUpdater = ratingUpdater;
     }
 
     public async Task<SalonOS.Booking.Domain.Booking?> GetByIdAsync(Guid id, Guid tenantId)
@@ -205,5 +210,8 @@ public class BookingService : IBookingService
         booking.IsRated = true;
 
         await _context.SaveChangesAsync();
+
+        // Keep the salon's denormalized rating in sync (read by the public pages).
+        await _ratingUpdater.AddRatingAsync(tenantId, rating);
     }
 }
