@@ -6,8 +6,6 @@ class DioClient {
   static Dio? _dio;
   static String? _tenantId;
 
-  static final SharedPreferences? _prefs =
-      null; // placeholder, will be initialized at runtime
   static const _tokenKey = 'auth_token';
 
   static Dio get instance {

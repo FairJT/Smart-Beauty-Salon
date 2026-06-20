@@ -45,15 +45,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = ref.watch(authProvider);
-
-    if (auth.isSuperAdmin) {
-      return const AdminDashboard();
-    }
-
-    if (auth.isArtist) {
-      return const ArtistScheduleScreen();
-    }
-
     final salonState = ref.watch(salonListProvider);
 
     return Scaffold(

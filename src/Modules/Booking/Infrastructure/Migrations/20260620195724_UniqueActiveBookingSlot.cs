@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace SalonOS.Identity.Infrastructure.Migrations
+namespace SalonOS.Booking.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddJobSeekerEnabledFlag : Migration
+    public partial class UniqueActiveBookingSlot : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/app_colors.dart';
-import '../../core/format/money_formatter.dart';
 import '../../core/format/jalaali_helper.dart';
 
 // ─── Shared state widgets ─────────────────────────────────────
@@ -147,7 +146,9 @@ class StatTile extends StatelessWidget {
         Icon(icon, size: 20, color: iconColor ?? AppColors.primary),
         const SizedBox(width: AppSpacing.xs),
         Expanded(
-          child: Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13)),
+          child: Text(label,
+              style: const TextStyle(
+                  color: AppColors.textSecondary, fontSize: 13)),
         ),
         Text(
           value,
@@ -233,7 +234,8 @@ class QuickLink extends StatelessWidget {
           children: [
             Icon(icon, size: 18, color: AppColors.primary),
             const SizedBox(width: AppSpacing.xxs),
-            Text(label, style: const TextStyle(color: AppColors.primary, fontSize: 13)),
+            Text(label,
+                style: const TextStyle(color: AppColors.primary, fontSize: 13)),
           ],
         ),
       ),
@@ -305,8 +307,7 @@ class AppointmentCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: statusClr.withValues(alpha: 0.1),
                   borderRadius: AppSpacing.borderRadiusSm,

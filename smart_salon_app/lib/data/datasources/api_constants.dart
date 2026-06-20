@@ -1,4 +1,6 @@
 class ApiConstants {
+  // PROD: pass --dart-define=API_BASE_URL=https://<your-domain> (behind nginx) at build time.
+  // The localhost default below is for LOCAL dev only and bypasses nginx.
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
     defaultValue: 'http://localhost:5016',

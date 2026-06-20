@@ -42,7 +42,10 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
   }
 
   Future<void> _loadSalon() async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       final salonRepo = SalonRepositoryImpl();
       final serviceRepo = ServiceRepositoryImpl();
@@ -51,9 +54,14 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
       _salon = await salonRepo.getSalonBySlug(widget.slug);
       _services = await serviceRepo.getServicesBySalon(_salon!.id);
       _artists = await artistRepo.getArtistsBySalon(_salon!.id);
-      setState(() { _loading = false; });
+      setState(() {
+        _loading = false;
+      });
     } catch (e) {
-      setState(() { _error = e.toString().replaceAll('Exception: ', ''); _loading = false; });
+      setState(() {
+        _error = e.toString().replaceAll('Exception: ', '');
+        _loading = false;
+      });
     }
   }
 
@@ -81,7 +89,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
           flexibleSpace: FlexibleSpaceBar(
             title: Text(
               salon.name,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
             background: Container(
               decoration: BoxDecoration(
@@ -95,7 +104,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                       colorBlendMode: BlendMode.darken,
                     )
                   : const Center(
-                      child: Icon(Icons.content_cut_rounded, size: 80, color: Colors.white24),
+                      child: Icon(Icons.content_cut_rounded,
+                          size: 80, color: Colors.white24),
                     ),
             ),
           ),
@@ -106,12 +116,17 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (salon.address != null) _infoRow(Icons.location_on_outlined, salon.address!),
-                if (salon.phoneNumber != null) _infoRow(Icons.phone_outlined, salon.phoneNumber!),
-                _infoRow(Icons.star_outline, 'امتیاز: ${salon.rating.toStringAsFixed(1)}'),
+                if (salon.address != null)
+                  _infoRow(Icons.location_on_outlined, salon.address!),
+                if (salon.phoneNumber != null)
+                  _infoRow(Icons.phone_outlined, salon.phoneNumber!),
+                _infoRow(Icons.star_outline,
+                    'امتیاز: ${salon.rating.toStringAsFixed(1)}'),
                 if (salon.description != null) ...[
                   const SizedBox(height: 12),
-                  Text(salon.description!, style: const TextStyle(color: Colors.grey, fontSize: 14, height: 1.6)),
+                  Text(salon.description!,
+                      style: const TextStyle(
+                          color: Colors.grey, fontSize: 14, height: 1.6)),
                 ],
                 const SizedBox(height: 20),
                 TabBar(
@@ -131,17 +146,20 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.info_outline, color: AppColors.primary, size: 18),
+                        const Icon(Icons.info_outline,
+                            color: AppColors.primary, size: 18),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             'خدمت «${_selectedService!.name}» انتخاب شد. حالا پرسنل را انتخاب کنید.',
-                            style: const TextStyle(color: AppColors.primary, fontSize: 13),
+                            style: const TextStyle(
+                                color: AppColors.primary, fontSize: 13),
                           ),
                         ),
                         GestureDetector(
                           onTap: () => setState(() => _selectedService = null),
-                          child: const Icon(Icons.close, color: AppColors.primary, size: 18),
+                          child: const Icon(Icons.close,
+                              color: AppColors.primary, size: 18),
                         ),
                       ],
                     ),
@@ -165,10 +183,12 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                       foregroundColor: AppColors.primary,
                       side: const BorderSide(color: AppColors.primary),
                       minimumSize: const Size(double.infinity, 52),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.person_outline),
-                    label: const Text('رزرو مهمان', style: TextStyle(fontSize: 16)),
+                    label: const Text('رزرو مهمان',
+                        style: TextStyle(fontSize: 16)),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -203,7 +223,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
 
   Widget _buildServices(List<ServiceEntity> services) {
     if (services.isEmpty) {
-      return const Center(child: Text('خدماتی ثبت نشده', style: TextStyle(color: Colors.grey)));
+      return const Center(
+          child: Text('خدماتی ثبت نشده', style: TextStyle(color: Colors.grey)));
     }
 
     return ListView.builder(
@@ -217,18 +238,29 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
           color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
-            side: isSelected ? const BorderSide(color: AppColors.primary) : BorderSide.none,
+            side: isSelected
+                ? const BorderSide(color: AppColors.primary)
+                : BorderSide.none,
           ),
           child: ListTile(
             leading: CircleAvatar(
-              backgroundColor: isSelected ? AppColors.primary : AppColors.primary.withValues(alpha: 0.1),
-              child: Icon(Icons.spa_outlined, color: isSelected ? Colors.white : AppColors.primary, size: 20),
+              backgroundColor: isSelected
+                  ? AppColors.primary
+                  : AppColors.primary.withValues(alpha: 0.1),
+              child: Icon(Icons.spa_outlined,
+                  color: isSelected ? Colors.white : AppColors.primary,
+                  size: 20),
             ),
-            title: Text(s.name, style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
-            subtitle: Text('${s.durationMinutes} دقیقه - ${s.price.toStringAsFixed(0)} تومان'),
+            title: Text(s.name,
+                style: TextStyle(
+                    fontWeight:
+                        isSelected ? FontWeight.bold : FontWeight.normal)),
+            subtitle: Text(
+                '${s.durationMinutes} دقیقه - ${s.price.toStringAsFixed(0)} تومان'),
             trailing: isSelected
                 ? const Icon(Icons.check_circle, color: AppColors.primary)
-                : const Icon(Icons.arrow_back_ios, size: 14, color: Colors.grey),
+                : const Icon(Icons.arrow_back_ios,
+                    size: 14, color: Colors.grey),
             onTap: () {
               setState(() => _selectedService = s);
               _tabController.animateTo(1);
@@ -241,7 +273,8 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
 
   Widget _buildArtists(List<ArtistEntity> allArtists) {
     if (allArtists.isEmpty) {
-      return const Center(child: Text('پرسنلی ثبت نشده', style: TextStyle(color: Colors.grey)));
+      return const Center(
+          child: Text('پرسنلی ثبت نشده', style: TextStyle(color: Colors.grey)));
     }
 
     if (_selectedService == null) {
@@ -249,10 +282,12 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.touch_app_outlined, size: 50, color: Colors.grey.shade400),
+            Icon(Icons.touch_app_outlined,
+                size: 50, color: Colors.grey.shade400),
             const SizedBox(height: 12),
             const Text('ابتدا از تب «خدمات» یک خدمت انتخاب کنید',
-                style: TextStyle(color: Colors.grey), textAlign: TextAlign.center),
+                style: TextStyle(color: Colors.grey),
+                textAlign: TextAlign.center),
           ],
         ),
       );
@@ -265,18 +300,23 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
 
         return Card(
           margin: const EdgeInsets.only(bottom: 8),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: AppColors.primary,
-              backgroundImage: a.profileImageUrl != null ? CachedNetworkImageProvider(a.profileImageUrl!) : null,
+              backgroundImage: a.profileImageUrl != null
+                  ? CachedNetworkImageProvider(a.profileImageUrl!)
+                  : null,
               child: a.profileImageUrl == null
                   ? Text(a.name[0], style: const TextStyle(color: Colors.white))
                   : null,
             ),
-            title: Text(a.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            title: Text(a.name,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(a.specialization ?? ''),
-            trailing: const Icon(Icons.arrow_back_ios, size: 14, color: Colors.grey),
+            trailing:
+                const Icon(Icons.arrow_back_ios, size: 14, color: Colors.grey),
             onTap: () {
               Navigator.push(
                 context,

@@ -1,8 +1,8 @@
 class MoneyFormatter {
   MoneyFormatter._();
 
-  /// Formats an integer amount in minor units (Rials) to a display string.
-  /// 150000 → "۱۵۰,۰۰۰ ریال"
+  /// Formats an integer Rial amount to a Toman display string (Rials ÷ 10).
+  /// 150000 (Rials) → "۱۵,۰۰۰ تومان"
   static String format(int amount, {String currency = 'IRR'}) {
     final toman = amount ~/ 10;
     return '${_formatNumber(toman)} ${currency == 'IRR' ? 'تومان' : currency}';
@@ -43,11 +43,11 @@ class MoneyFormatter {
     final toman = amount ~/ 10;
     final label = currency == 'IRR' ? 'تومان' : currency;
     if (toman >= 1000000000) {
-      return '${_toPersianDigits((toman / 1000000000).toStringAsFixed(1))}B $label';
+      return '${_toPersianDigits((toman / 1000000000).toStringAsFixed(1))} میلیارد $label';
     } else if (toman >= 1000000) {
-      return '${_toPersianDigits((toman / 1000000).toStringAsFixed(1))}M $label';
+      return '${_toPersianDigits((toman / 1000000).toStringAsFixed(1))} میلیون $label';
     } else if (toman >= 1000) {
-      return '${_toPersianDigits((toman / 1000).toStringAsFixed(1))}K $label';
+      return '${_toPersianDigits((toman / 1000).toStringAsFixed(1))} هزار $label';
     }
     return '${_toPersianDigits(toman.toString())} $label';
   }

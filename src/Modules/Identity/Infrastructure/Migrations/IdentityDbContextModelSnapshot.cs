@@ -292,7 +292,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("ArtistProfiles");
+                    b.ToTable("ArtistProfiles", (string)null);
                 });
 
             modelBuilder.Entity("SalonOS.Identity.Domain.ClientProfile", b =>
@@ -322,7 +322,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("ClientProfiles");
+                    b.ToTable("ClientProfiles", (string)null);
                 });
 
             modelBuilder.Entity("SalonOS.Identity.Domain.JobSeekerProfile", b =>
@@ -368,7 +368,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("JobSeekerProfiles");
+                    b.ToTable("JobSeekerProfiles", (string)null);
                 });
 
             modelBuilder.Entity("SalonOS.Identity.Domain.Membership", b =>
@@ -406,7 +406,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
 
                     SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("TenantId", "UserId"));
 
-                    b.ToTable("Memberships");
+                    b.ToTable("Memberships", (string)null);
                 });
 
             modelBuilder.Entity("SalonOS.Identity.Domain.SalonManagerProfile", b =>
@@ -441,7 +441,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("SalonManagerProfiles");
+                    b.ToTable("SalonManagerProfiles", (string)null);
                 });
 
             modelBuilder.Entity("SalonOS.Identity.Domain.SavedSalon", b =>
@@ -477,7 +477,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
 
                     SqlServerIndexBuilderExtensions.IsClustered(b.HasIndex("UserId", "Slug"));
 
-                    b.ToTable("SavedSalons");
+                    b.ToTable("SavedSalons", (string)null);
                 });
 
             modelBuilder.Entity("SalonOS.Identity.Domain.Tenant", b =>
@@ -526,12 +526,6 @@ namespace SalonOS.Identity.Infrastructure.Migrations
                     b.Property<string>("PrimaryColor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RatingCount")
-                        .HasColumnType("int");
-
-                    b.Property<long>("RatingSum")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -559,7 +553,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Tenants");
+                    b.ToTable("Tenants", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -644,7 +638,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
 
                             b1.HasKey("ArtistProfileId");
 
-                            b1.ToTable("ArtistProfiles");
+                            b1.ToTable("ArtistProfiles", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ArtistProfileId");
@@ -667,7 +661,7 @@ namespace SalonOS.Identity.Infrastructure.Migrations
 
                             b1.HasKey("ArtistProfileId");
 
-                            b1.ToTable("ArtistProfiles");
+                            b1.ToTable("ArtistProfiles", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ArtistProfileId");
