@@ -7,7 +7,7 @@ FROM --platform=$BUILDPLATFORM ghcr.io/cirruslabs/flutter:3.27.1 AS build
 WORKDIR /app
 
 # API base the app calls; /api is proxied by nginx to SalonOS
-ARG API_BASE_URL=/api
+ARG API_BASE_URL=http://localhost:5016/api
 
 # Pub/SDK mirrors — now ARGs so they're overridable per build environment.
 # Defaults are the China mirror; for CI elsewhere pass

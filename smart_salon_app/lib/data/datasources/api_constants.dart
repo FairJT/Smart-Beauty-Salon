@@ -1,7 +1,7 @@
 class ApiConstants {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: '/api',
+    defaultValue: 'http://localhost:6608/api',
   );
 
   static const String register = '$baseUrl/auth/register';

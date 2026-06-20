@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../providers/auth_provider.dart';
+import '../../core/permissions.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 import '../../core/app_colors.dart';
 import '../../domain/entities/slot_entity.dart';
 
-class BookingScreen extends StatefulWidget {
+class BookingScreen extends ConsumerStatefulWidget {
   final String slug;
   final String artistId;
   final String artistName;
@@ -24,10 +27,10 @@ class BookingScreen extends StatefulWidget {
   });
 
   @override
-  State<BookingScreen> createState() => _BookingScreenState();
+  ConsumerState<BookingScreen> createState() => _BookingScreenState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
+class _BookingScreenState extends ConsumerState<BookingScreen> {
   DateTime _selectedDate = DateTime.now().add(const Duration(days: 1));
   String? _selectedSlot;
   List<SlotEntity> _slots = [];
@@ -183,7 +186,16 @@ class _BookingScreenState extends State<BookingScreen> {
                     style: const TextStyle(color: Colors.red)),
               ),
             ElevatedButton(
-              onPressed: _booking ? null : _book,
+              onPressed: _booking
+                  ? null
+                  : () {
+                      final perms = ref.read(permissionProvider);
+                      if (perms.can(AppPermissions.appointmentCreate)) {
+                        _book();
+                      } else {
+                        setState(() => _error = 'Permission denied');
+                      }
+                    },
               child: _booking
                   ? const CircularProgressIndicator(color: Colors.white)
                   : const Text('ثبت رزرو', style: TextStyle(fontSize: 18)),

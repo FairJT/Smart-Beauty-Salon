@@ -23,11 +23,11 @@ public interface IBookingService
 public class BookingService : IBookingService
 {
     private readonly BookingDbContext _context;
-    private readonly ISalonRatingUpdater _ratingUpdater;
+    private readonly ISalonRatingUpdater? _ratingUpdater;
 
     public BookingService(
         BookingDbContext context,
-        ISalonRatingUpdater ratingUpdater)
+        ISalonRatingUpdater? ratingUpdater = null)
     {
         _context = context;
         _ratingUpdater = ratingUpdater;
@@ -212,6 +212,9 @@ public class BookingService : IBookingService
         await _context.SaveChangesAsync();
 
         // Keep the salon's denormalized rating in sync (read by the public pages).
-        await _ratingUpdater.AddRatingAsync(tenantId, rating);
+        if (_ratingUpdater != null)
+        {
+            await _ratingUpdater.AddRatingAsync(tenantId, rating);
+        }
     }
 }

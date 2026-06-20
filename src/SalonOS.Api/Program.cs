@@ -136,6 +136,7 @@ builder.Services.AddScoped<PlatformAdminService>();
 // Add Identity Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<SalonOS.Shared.Identity.ISalonRatingUpdater, SalonOS.Identity.Infrastructure.SalonRatingUpdater>();
+builder.Services.AddScoped<SalonOS.Shared.Identity.ISalonRatingUpdater, SalonOS.Identity.Infrastructure.SalonRatingUpdater>();
 
 // Add Booking Services
 builder.Services.AddScoped<IBookingService, BookingService>();
