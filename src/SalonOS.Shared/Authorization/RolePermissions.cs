@@ -44,6 +44,8 @@ namespace SalonOS.Shared.Authorization
                 Permissions.NotificationViewOwn,
                 Permissions.MarketplaceBrowse,
                 Permissions.MarketplaceLicensePurchase,
+                Permissions.JobPostingView,
+                Permissions.JobPostingManage,
             },
             ["Receptionist"] = new[]
             {

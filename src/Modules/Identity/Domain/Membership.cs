@@ -28,5 +28,6 @@ public enum MembershipRole
     Manager      = 3,
     Receptionist = 4,   // DEPRECATED — folded into SalonManager (book-on-behalf). Do not assign.
     Staff        = 5,   // Artist / stylist
-    Member       = 6    // Client
+    Member       = 6,   // Client
+    Support      = 7   // نیروی خدماتی — account only (for payroll), NO panel access
 }

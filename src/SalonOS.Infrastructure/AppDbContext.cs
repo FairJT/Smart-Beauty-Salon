@@ -17,10 +17,22 @@ public class AppDbContext : DbContext
 
     // ── Outbox ────────────────────────────────────────────────────────────────
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
+    public DbSet<SalonAmenity> SalonAmenities { get; set; }
+    public DbSet<SalonNotice> SalonNotices { get; set; }
+    public DbSet<WorkingHour> WorkingHours { get; set; }
+    public DbSet<SalonClosure> SalonClosures { get; set; }
+    public DbSet<StaffServiceContract> StaffServiceContracts { get; set; }
+    public DbSet<FinancialTransaction> FinancialTransactions { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
+    public DbSet<JobPosting> JobPostings { get; set; }
+    public DbSet<JobApplication> JobApplications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<StaffServiceContract>(e => e.OwnsOne(c => c.Amount));
+        builder.Entity<FinancialTransaction>(e => e.OwnsOne(t => t.Amount));
 
         builder.Entity<OutboxMessage>(e =>
         {
