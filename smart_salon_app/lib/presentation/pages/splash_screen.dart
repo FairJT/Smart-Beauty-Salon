@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
@@ -16,37 +17,44 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
     _navigate();
   }
 
-  Future<void> _navigate() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (!mounted) return;
+  void _navigate() {
+    _timer = Timer(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      final auth = ref.read(authProvider);
+      if (!auth.isLoggedIn) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+        return;
+      }
 
-    final auth = ref.read(authProvider);
+      Widget destination;
+      if (auth.isSuperAdmin) {
+        destination = const AdminDashboard();
+      } else if (auth.isSalonManager) {
+        destination = const ManagerDashboardScreen();
+      } else if (auth.isArtist) {
+        destination = const ArtistDashboardScreen();
+      } else {
+        destination = const ClientHomeScreen();
+      }
 
-    if (!auth.isLoggedIn) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const LoginScreen()));
-      return;
-    }
+          context, MaterialPageRoute(builder: (_) => destination));
+    });
+  }
 
-    Widget destination;
-    if (auth.isSuperAdmin) {
-      destination = const AdminDashboard();
-    } else if (auth.isSalonManager) {
-      destination = const ManagerDashboardScreen();
-    } else if (auth.isArtist) {
-      destination = const ArtistDashboardScreen();
-    } else {
-      destination = const ClientHomeScreen();
-    }
-
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => destination));
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override

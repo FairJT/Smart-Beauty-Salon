@@ -1,6 +1,6 @@
 ﻿-- ============================================================
--- SalonOS â€” Row-Level Security (RLS) Migration
--- Task 8.1  (Â§R6.6)
+-- SalonOS — Row-Level Security (RLS) Migration
+-- Task 8.1  (§R6.6)
 --
 -- Run this script ONCE against the application database after
 -- applying EF migrations. It creates:
@@ -10,19 +10,19 @@
 --   3. FILTER + BLOCK predicates on every tenant-owned table.
 --
 -- The session context is set per-request by the DbContext interceptor
--- (Task 8.2) â€” never by client input.
+-- (Task 8.2) — never by client input.
 -- ============================================================
 
--- â”€â”€ 1. Security schema â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 1. Security schema ──────────────────────────────────────────
 IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = N'Security')
     EXEC('CREATE SCHEMA [Security]');
 GO
 
--- â”€â”€ 2. Tenant filter function â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 2. Tenant filter function ───────────────────────────────────
 -- Returns 1 (allow) when:
 --   a) The row's TenantId matches the session-context TenantId, OR
 --   b) The session-context IsPlatformOwner flag is 1.
--- Returns 0 (deny) for all other cases, including unâ€‘authenticated connections
+-- Returns 0 (deny) for all other cases, including unauthenticated connections
 -- that have not set the session context.
 CREATE OR ALTER FUNCTION Security.fn_tenant(@TenantId UNIQUEIDENTIFIER)
 RETURNS TABLE
@@ -34,11 +34,11 @@ RETURN
         -- Row belongs to the current request's tenant
         @TenantId = CAST(SESSION_CONTEXT(N'TenantId') AS UNIQUEIDENTIFIER)
         OR
-        -- PlatformOwner bypass â€” set by Task 8.2 interceptor
+        -- PlatformOwner bypass — set by Task 8.2 interceptor
         CAST(SESSION_CONTEXT(N'IsPlatformOwner') AS BIT) = 1;
 GO
 
--- â”€â”€ 3. Security policy â€” drop first if reâ€‘running â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 3. Security policy — drop first if re-running ───────────────
 IF EXISTS (
     SELECT 1 FROM sys.security_policies
     WHERE name = N'TenantFilter' AND schema_id = SCHEMA_ID(N'Security')
@@ -46,16 +46,23 @@ IF EXISTS (
     DROP SECURITY POLICY [Security].[TenantFilter];
 GO
 
--- â”€â”€ 4. Apply FILTER + BLOCK predicates to every tenantâ€‘owned table â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 4. Apply FILTER + BLOCK predicates to every tenant-owned table
 --
 -- FILTER predicate : hides rows that don't belong to the current tenant on SELECT.
 -- BLOCK  predicate : prevents INSERT of rows with a foreign TenantId (AFTER INSERT).
 --
--- Tables covered (all inherit TenantEntity):
+-- Tables covered:
 --   dbo.Bookings, dbo.CatalogServices, dbo.CatalogServiceOptions,
---   dbo.InventoryItems, dbo.StockMovements, dbo.SalonPackageLicenses
+--   dbo.InventoryItems, dbo.StockMovements, dbo.SalonPackageLicenses,
+--   dbo.ArtistSchedules, dbo.Leaves,
+--   dbo.SalonAmenities, dbo.SalonNotices, dbo.WorkingHours, dbo.SalonClosures,
+--   dbo.StaffServiceContracts, dbo.FinancialTransactions, dbo.Discounts,
+--   dbo.JobPostings, dbo.JobApplications,
+--   dbo.ClientNotes, dbo.StaffRequests, dbo.RescheduleRequests, dbo.ProductUsages,
+--   dbo.ClientFeedbacks,
+--   dbo.ArtistProfiles, dbo.Memberships, dbo.SalonManagerProfiles
 --
--- Add additional tenantâ€‘owned tables here as modules grow.
+-- Add additional tenant-owned tables here as modules grow.
 CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Bookings],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Bookings]  AFTER INSERT,
@@ -79,9 +86,8 @@ CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ArtistSchedules]  AFTER INSERT,
 
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Leaves],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Leaves]  AFTER INSERT
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Leaves]  AFTER INSERT,
 
-    ,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonAmenities],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonAmenities]  AFTER INSERT,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonNotices],
@@ -99,29 +105,8 @@ CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobPostings],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobPostings]  AFTER INSERT,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications]  AFTER INSERT
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications]  AFTER INSERT,
 
-    ,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonAmenities],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonAmenities]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonNotices],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonNotices]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[WorkingHours],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[WorkingHours]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonClosures],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonClosures]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[StaffServiceContracts],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[StaffServiceContracts]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[FinancialTransactions],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[FinancialTransactions]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Discounts],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Discounts]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobPostings],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobPostings]  AFTER INSERT,
-    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications]  AFTER INSERT
-
-    ,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientNotes],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientNotes]  AFTER INSERT,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[StaffRequests],
@@ -129,16 +114,22 @@ CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[RescheduleRequests],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[RescheduleRequests]  AFTER INSERT,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages]  AFTER INSERT
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages]  AFTER INSERT,
 
-    ,
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientFeedbacks],
-    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientFeedbacks]  AFTER INSERT
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientFeedbacks]  AFTER INSERT,
+
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ArtistProfiles],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ArtistProfiles]  AFTER INSERT,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Memberships],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[Memberships]  AFTER INSERT,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonManagerProfiles],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[SalonManagerProfiles]  AFTER INSERT
 
     WITH (STATE = ON, SCHEMABINDING = ON);
 GO
 
--- â”€â”€ 5. Verification query (run manually to confirm) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- ── 5. Verification query (run manually to confirm) ─────────────
 -- EXEC sp_set_session_context N'TenantId', '<your-test-tenant-guid>';
 -- EXEC sp_set_session_context N'IsPlatformOwner', 0;
 -- SELECT COUNT(*) FROM dbo.Bookings;   -- should return only that tenant's rows

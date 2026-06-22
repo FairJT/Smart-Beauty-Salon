@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SalonOS.Identity.Domain;
@@ -11,9 +12,12 @@ namespace SalonOS.Identity.Infrastructure;
 /// </summary>
 public class IdentityDbContext : IdentityDbContext<ApplicationUser>
 {
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+    private readonly ITenantContext _tenant;
+
+    public IdentityDbContext(DbContextOptions<IdentityDbContext> options, ITenantContext tenant)
         : base(options)
     {
+        _tenant = tenant;
     }
 
     public DbSet<Tenant> Tenants { get; set; }
@@ -131,5 +135,30 @@ public class IdentityDbContext : IdentityDbContext<ApplicationUser>
             e.HasKey(s => s.Id).IsClustered(false);
             e.HasIndex(s => new { s.UserId, s.Slug }).IsClustered().IsUnique();
         });
+
+        // ── RLS query-filter backstop for tenant-scoped Identity entities ──
+        // Membership, ArtistProfile, and SalonManagerProfile carry TenantId but
+        // don't inherit TenantEntity, so we add the same filter pattern manually.
+        //
+        // The expression captures '_tenant' by reference (via Expression.Constant)
+        // so that EF re-reads TenantId / IsPlatformOwner on every query execution.
+        ApplyTenantFilter<Membership>(builder);
+        ApplyTenantFilter<ArtistProfile>(builder);
+        ApplyTenantFilter<SalonManagerProfile>(builder);
+    }
+
+    private void ApplyTenantFilter<TEntity>(ModelBuilder builder) where TEntity : class
+    {
+        var p = Expression.Parameter(typeof(TEntity), "e");
+        var tenantConst = Expression.Constant(_tenant);
+
+        var tenantIdProp = Expression.Property(p, "TenantId");
+        var tenantCtxTenantId = Expression.Property(tenantConst, nameof(ITenantContext.TenantId));
+        var tenantMatch = Expression.Equal(tenantIdProp, tenantCtxTenantId);
+
+        var isPlatformOwner = Expression.Property(tenantConst, nameof(ITenantContext.IsPlatformOwner));
+        var body = Expression.OrElse(tenantMatch, isPlatformOwner);
+
+        builder.Entity<TEntity>().HasQueryFilter(Expression.Lambda(body, p));
     }
 }

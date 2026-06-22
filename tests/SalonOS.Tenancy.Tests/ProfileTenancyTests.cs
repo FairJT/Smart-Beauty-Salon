@@ -13,7 +13,15 @@ public class ProfileTenancyTests
         var opts = new DbContextOptionsBuilder<SalonOS.Identity.Infrastructure.IdentityDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-        return new SalonOS.Identity.Infrastructure.IdentityDbContext(opts);
+        var tenant = new FakeTenantContext();
+        return new SalonOS.Identity.Infrastructure.IdentityDbContext(opts, tenant);
+    }
+
+    private class FakeTenantContext : ITenantContext
+    {
+        public Guid TenantId { get; private set; } = Guid.NewGuid();
+        public bool IsPlatformOwner { get; } = false;
+        public void SetPublicTenant(Guid tenantId) => TenantId = tenantId;
     }
 
     private static async Task<ApplicationUser> CreateUserAsync(

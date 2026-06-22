@@ -31,7 +31,15 @@ public class CatalogScopingFixtures
         var opts = new DbContextOptionsBuilder<IdentityDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-        return new IdentityDbContext(opts);
+        var tenant = new FakeTenantContext();
+        return new IdentityDbContext(opts, tenant);
+    }
+
+    private class FakeTenantContext : ITenantContext
+    {
+        public Guid TenantId { get; private set; } = Guid.NewGuid();
+        public bool IsPlatformOwner { get; } = false;
+        public void SetPublicTenant(Guid tenantId) => TenantId = tenantId;
     }
 
     /// <summary>

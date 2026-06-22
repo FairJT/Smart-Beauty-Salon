@@ -11,6 +11,13 @@ class ErrorBoundary extends StatefulWidget {
 }
 
 class _ErrorBoundaryState extends State<ErrorBoundary> {
+  @override
+  void dispose() {
+    // Reset the global error handler to avoid calling setState after this widget is disposed
+    FlutterError.onError = FlutterError.dumpErrorToConsole;
+    super.dispose();
+  }
+
   String? _error;
 
   @override
