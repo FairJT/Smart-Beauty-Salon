@@ -121,6 +121,16 @@ CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[JobApplications]  AFTER INSERT
 
+    ,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientNotes],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientNotes]  AFTER INSERT,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[StaffRequests],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[StaffRequests]  AFTER INSERT,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[RescheduleRequests],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[RescheduleRequests]  AFTER INSERT,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages]  AFTER INSERT
+
     WITH (STATE = ON, SCHEMABINDING = ON);
 GO
 

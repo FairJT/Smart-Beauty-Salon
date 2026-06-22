@@ -18,6 +18,7 @@ public class Booking : TenantEntity, IHasDomainEvents
     public Money? FinalPrice { get; set; }
     public Money DepositAmount { get; set; }
     public BookingStatus Status { get; set; } = BookingStatus.Pending;
+    public DateTime? CheckedInAt { get; set; }   // set when the client arrives (item 6/7)
     public string? Notes { get; set; }
     public bool IsRated { get; set; } = false;
     public int? Rating { get; set; }

@@ -17,8 +17,14 @@ public class AppDbContext : DbContext
 
     // ── Outbox ────────────────────────────────────────────────────────────────
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
-    public DbSet<SalonAmenity> SalonAmenities { get; set; }
+    public DbSet<ProductUsage> ProductUsages { get; set; }
+    public DbSet<RescheduleRequest> RescheduleRequests { get; set; }
+    public DbSet<StaffRequest> StaffRequests { get; set; }
     public DbSet<SalonNotice> SalonNotices { get; set; }
+    public DbSet<SalonAmenity> SalonAmenities { get; set; }
+    public DbSet<ArtistLeave> ArtistLeaves { get; set; }
+    public DbSet<ArtistContract> ArtistContracts { get; set; }
+    public DbSet<ClientNote> ClientNotes { get; set; }
     public DbSet<WorkingHour> WorkingHours { get; set; }
     public DbSet<SalonClosure> SalonClosures { get; set; }
     public DbSet<StaffServiceContract> StaffServiceContracts { get; set; }
@@ -30,6 +36,8 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<ProductUsage>(e => e.Property(p => p.Quantity).HasColumnType("decimal(18,4)"));
 
         builder.Entity<StaffServiceContract>(e => e.OwnsOne(c => c.Amount));
         builder.Entity<FinancialTransaction>(e => e.OwnsOne(t => t.Amount));
@@ -45,7 +53,7 @@ public class AppDbContext : DbContext
         {
             builder.Entity(et.ClrType).HasIndex(nameof(TenantEntity.TenantId));
 
-            var p    = Expression.Parameter(et.ClrType, "e");
+            var p = Expression.Parameter(et.ClrType, "e");
             var tenantIdProp = Expression.Property(p, nameof(TenantEntity.TenantId));
 
             var tenantMatch = Expression.Equal(

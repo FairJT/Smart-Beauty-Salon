@@ -1,44 +1,31 @@
-# Agent Tasks — SalonManager full build (M2–M8)
+# Agent Tasks — Artist build (A1–A5)
 
-These implement the rest of the SalonManager spec. Each file = one feature with small numbered
-steps. Do files in order; inside a file do steps in order. Flags: 🟢 safe · 🟡 review after.
+Implements the optimized Artist spec (`Artist-spec.md`). Same low-risk pattern as the manager
+features: new entities inherit `TenantEntity` → auto tenant-scoped by `AppDbContext`.
 
 > Rule: do ONLY what each step says. If a "Find" isn't found exactly, STOP and report.
-> Apply Batch M1 (`agent-tasks-4`) FIRST. Then these.
+> "My own" data is resolved from the JWT claim `User.FindFirst("artist_id")`.
 
-## The repeating pattern (why this is low-risk)
-
-`AppDbContext` (in `src/SalonOS.Infrastructure/AppDbContext.cs`) automatically gives EVERY class
-that inherits `TenantEntity`:
-- tenant scoping (`TenantId == current tenant`), RLS session context, soft-delete filter, and
-- **auto-stamps `TenantId` on save** — so controllers never set it.
-
-So each feature is just: **(1)** create an entity inheriting `TenantEntity`, **(2)** add a `DbSet`
-to `AppDbContext`, **(3)** migration, **(4)** a controller injecting `AppDbContext`. No new context,
-no manual tenant filtering.
-
-- Entity files go in `src/SalonOS.Infrastructure/SalonMgmt/` with `namespace SalonOS.Infrastructure;`
-- Controllers go in `src/SalonOS.Api/Controllers/` with `namespace SalonOS.Api.Controllers;`
-- Migration command (always the same context):
-  ```powershell
-  dotnet ef migrations add <Name> --project src\SalonOS.Infrastructure --startup-project src\SalonOS.Api --context AppDbContext
-  ```
+## Already working (no task needed)
+- View daily schedule / assigned appointments → `GET /api/artist-schedule/my` ✅
+- Daily/month customer count → `GET /api/artist-schedule/my/stats` ✅
+- Receive instructions (notices) → `GET /api/salon/notices` (Artist has `SalonView`) ✅
+- Complete / cancel own appointment → `AppointmentComplete` / `AppointmentCancelOwn` ✅
 
 ## Order
 
 | # | File | Feature | Flag |
 |---|------|---------|------|
-| M2 | `M2-amenities-and-notices.md` | Salon amenities + notice board | 🟡 |
-| M3 | `M3-hours-and-closures.md` | Working hours + salon closures | 🟡 |
-| M4 | `M4-staff-service-contracts.md` | Per-service staff contracts + discount | 🟡 |
-| M5 | `M5-finance-and-support.md` | Financial-transaction ledger + support staff | 🟡 |
-| M6 | `M6-discounts.md` | Discounts / coupon codes | 🟡 |
-| M7 | `M7-hiring.md` | Job postings + applications | 🟡 |
-| M8 | `M8-manager-views.md` | Manager review view + customer list | 🟢 |
-| MZ | `MZ-rls-and-permissions.md` | Put new tables under RLS + map hiring perms | 🟡 |
+| A1 | `A1-leave-and-contract.md` | Artist can request leave + view own contracts (+ all new perms) | 🟡 |
+| A2 | `A2-client-notes.md` | Customer notes / suggestions / product tips (`ClientNote`) | 🟡 |
+| A3 | `A3-staff-requests.md` | Report issues + equipment requests (`StaffRequest`) | 🟡 |
+| A4 | `A4-checkin-and-reschedule.md` | Check-in field + reschedule REQUEST | 🟡 |
+| A5 | `A5-product-usage.md` | Record products consumed (`ProductUsage`) | 🟡 |
+| AZ | `AZ-rls.md` | Put the 4 new artist tables under RLS (do LAST) | 🟡 |
 
-Do MZ LAST (after the entities exist). After everything: `dotnet build SalonOS.slnx`.
+Do A1 first (it adds ALL the new Artist permissions in one go). After everything: `dotnet build SalonOS.slnx`.
 
-## Not here (stays with Claude — design)
-- Money unit contract (Rial enforcement) · Booking deposit/hold state machine · the cross-tenant
-  jobseeker browse side of hiring · the other entities (SuperAdmin / Artist / Client).
+## Stays with Claude (design)
+- Item 12 "multiple services performed per visit" → part of the booking state-machine work.
+- Decrementing real inventory from `ProductUsage` (cross-module) → Claude.
+- Contract-based leave auto-approval (fixed→pending, rental→auto) → refinement after A1.

@@ -20,13 +20,29 @@ public class StaffServiceContractController : ControllerBase
         long AmountValue, string Currency, int? DiscountPercent,
         DateTime StartDate, DateTime? EndDate, string? ContractFileUrl, string? GuaranteeNote);
 
-    [HttpGet]
-    [HasPermission(Permissions.StaffView)]
-    public async Task<IActionResult> List([FromQuery] Guid? artistId)
+        [HttpGet]
+        [HasPermission(Permissions.StaffView)]
+        public async Task<IActionResult> List([FromQuery] Guid? artistId)
+        {
+            var query = _db.StaffServiceContracts.Where(c => c.IsActive);
+            if (artistId.HasValue) query = query.Where(c => c.ArtistId == artistId.Value);
+            return Ok(await query.ToListAsync());
+        }
+
+        // Artist view own contracts
+    [HttpGet("my")]
+    [HasPermission(Permissions.StaffPerformanceView)]
+    public async Task<IActionResult> MyContracts()
     {
-        var query = _db.StaffServiceContracts.Where(c => c.IsActive);
-        if (artistId.HasValue) query = query.Where(c => c.ArtistId == artistId.Value);
-        return Ok(await query.ToListAsync());
+        var artistId = User.FindFirst("artist_id")?.Value;
+        if (string.IsNullOrEmpty(artistId) || !Guid.TryParse(artistId, out var parsedArtistId))
+            return Forbid();
+
+        var contracts = await _db.StaffServiceContracts
+            .Where(c => c.ArtistId == parsedArtistId && c.IsActive)
+            .ToListAsync();
+
+        return Ok(contracts);
     }
 
     [HttpPost]

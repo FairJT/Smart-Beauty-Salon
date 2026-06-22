@@ -44,6 +44,32 @@ public class LeaveController : ControllerBase
         return Ok(leaves);
     }
 
+    // Artist creates a leave request for themselves (pending approval)
+    [HttpPost("my")]
+    [HasPermission(Permissions.LeaveRequestOwn)]
+    public async Task<IActionResult> RequestMine([FromBody] CreateLeaveDto dto)
+    {
+        var artistId = User.FindFirst("artist_id")?.Value;
+        if (string.IsNullOrEmpty(artistId) || !Guid.TryParse(artistId, out var parsedArtistId))
+            return Forbid();
+
+        var leave = new Leave
+        {
+            ArtistId = parsedArtistId,
+            StartDateTime = dto.StartDateTime,
+            EndDateTime = dto.EndDateTime,
+            Reason = dto.Reason,
+            Status = LeaveStatus.Pending,
+            TenantId = _tenant.TenantId
+        };
+
+        _db.Leaves.Add(leave);
+        await _db.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetByArtist), new { artistId = leave.ArtistId }, leave);
+    }
+
+    // Admin or manager creates a leave directly (approved)
     [HttpPost]
     [HasPermission(Permissions.SalonEdit)]
     public async Task<IActionResult> Create([FromBody] CreateLeaveDto dto)
@@ -62,6 +88,7 @@ public class LeaveController : ControllerBase
 
         _db.Leaves.Add(leave);
         await _db.SaveChangesAsync();
+
         return CreatedAtAction(nameof(GetByArtist), new { artistId = leave.ArtistId }, leave);
     }
 

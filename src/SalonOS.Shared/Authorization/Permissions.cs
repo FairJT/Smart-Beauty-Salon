@@ -18,6 +18,16 @@ public static class Permissions
     public const string StaffDelete = "staff.delete";
     public const string StaffContractManage = "staff.contract.manage";
     public const string StaffPerformanceView = "staff.performance.view";
+    // Artist leave & contract permissions
+    public const string ArtistLeaveView = "artist.leave.view";
+    public const string ArtistLeaveManage = "artist.leave.manage";
+    public const string ArtistContractView = "artist.contract.view";
+    public const string ArtistContractManage = "artist.contract.manage";
+    public const string ClientNoteCreate = "client.note.create";
+    public const string ClientNoteView = "client.note.view";
+    public const string ClientNoteDelete = "client.note.delete";
+    public const string StaffRequestCreate = "staff.request.create";
+    public const string StaffRequestView = "staff.request.view";
 
     // ─── Catalog / Service ───────────────────────────────────
     public const string CatalogView = "catalog.view";
@@ -74,6 +84,13 @@ public static class Permissions
     public const string JobPostingView         = "job.posting.view";
     public const string JobPostingManage       = "job.posting.manage";   // SalonManager
     public const string JobApplicationCreate   = "job.application.create";
+
+    // ─── Artist self-service ─────────────────────────────────
+    public const string LeaveRequestOwn        = "leave.request.own";
+    public const string AppointmentCheckIn     = "appointment.checkin";
+    public const string RescheduleRequestCreate = "reschedule.request.create";
+    public const string ClientNoteManageOwn    = "clientnote.manage.own";
+    public const string ProductUsageRecord     = "productusage.record";
 
     // ─── Platform / Tenant ──────────────────────────────────
     public const string TenantManage = "tenant.manage";
