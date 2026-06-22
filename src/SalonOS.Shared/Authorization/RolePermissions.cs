@@ -107,9 +107,11 @@ namespace SalonOS.Shared.Authorization
                 Permissions.AppointmentCreate,
                 Permissions.AppointmentCancelOwn,
                 Permissions.AppointmentRate,
-                Permissions.LoyaltyViewOwn,
-                Permissions.NotificationViewOwn,
-            },
-        };
+            Permissions.LoyaltyViewOwn,
+            Permissions.NotificationViewOwn,
+            Permissions.CatalogView,
+            Permissions.ClientFeedbackCreate,
+        },
+    };
     }
 }

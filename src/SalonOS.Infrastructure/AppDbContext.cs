@@ -16,7 +16,8 @@ public class AppDbContext : DbContext
     }
 
     // ── Outbox ────────────────────────────────────────────────────────────────
-    public DbSet<OutboxMessage> OutboxMessages { get; set; }
+public DbSet<OutboxMessage> OutboxMessages { get; set; }
+public DbSet<ClientFeedback> ClientFeedbacks { get; set; }
     public DbSet<ProductUsage> ProductUsages { get; set; }
     public DbSet<RescheduleRequest> RescheduleRequests { get; set; }
     public DbSet<StaffRequest> StaffRequests { get; set; }

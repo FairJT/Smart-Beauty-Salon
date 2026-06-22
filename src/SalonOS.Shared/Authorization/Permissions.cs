@@ -69,6 +69,7 @@ public static class Permissions
 
     // ─── Client self-service ─────────────────────────────────
     public const string ClientSelf = "client.self";
+    public const string ClientFeedbackCreate = "clientfeedback.create";
 
     // ─── Notification ────────────────────────────────────────
     public const string NotificationSend = "notification.send";

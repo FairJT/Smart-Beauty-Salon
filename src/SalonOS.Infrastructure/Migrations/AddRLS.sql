@@ -131,6 +131,10 @@ CREATE SECURITY POLICY [Security].[TenantFilter]
     ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages],
     ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ProductUsages]  AFTER INSERT
 
+    ,
+    ADD FILTER PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientFeedbacks],
+    ADD BLOCK  PREDICATE [Security].[fn_tenant]([TenantId]) ON [dbo].[ClientFeedbacks]  AFTER INSERT
+
     WITH (STATE = ON, SCHEMABINDING = ON);
 GO
 
