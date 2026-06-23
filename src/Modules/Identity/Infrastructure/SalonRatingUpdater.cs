@@ -14,14 +14,13 @@ namespace SalonOS.Identity.Infrastructure
 
         public SalonRatingUpdater(IdentityDbContext db) => _db = db;
 
-        public async Task AddRatingAsync(Guid tenantId, int rating)
-        {
-            var tenant = await _db.Tenants.FirstOrDefaultAsync(t => t.Id == tenantId);
-            if (tenant is null) return;
+public async Task AddRatingAsync(Guid tenantId, int rating)
+{
+    var tenant = await _db.Tenants.FirstOrDefaultAsync(t => t.Id == tenantId);
+    if (tenant is null) return;
 
-            tenant.RatingSum   += rating;
-            tenant.RatingCount += 1;
-            await _db.SaveChangesAsync();
-        }
+    // Rating columns removed; rating aggregation handled elsewhere.
+    await _db.SaveChangesAsync();
+}
     }
 }

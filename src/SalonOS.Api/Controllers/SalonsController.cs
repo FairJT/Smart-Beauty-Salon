@@ -29,6 +29,7 @@ public class SalonsController : ControllerBase
         _tenant = tenant;
     }
 
+    // GET /api/salons?search=
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> GetSalons([FromQuery] string? search)
@@ -47,8 +48,8 @@ public class SalonsController : ControllerBase
                 address = t.Address,
                 phoneNumber = t.Phone,
                 imageUrl = t.LogoUrl,
-                rating = t.RatingCount > 0 ? (double)t.RatingSum / t.RatingCount : 0,
-                reviewCount = t.RatingCount
+                rating = 0.0,            // Rating column removed; default to 0
+                reviewCount = 0
             })
             .ToListAsync();
 
@@ -56,7 +57,7 @@ public class SalonsController : ControllerBase
     }
 
     // Public availability for one of a salon's artists. Resolves the tenant from the
-    // PUBLIC slug, then scopes the request so RLS allows that salon's schedule/bookings.
+    // public slug, then scopes the request so RLS allows that salon's schedule/bookings.
     [HttpGet("{slug}/slots")]
     [AllowAnonymous]
     public async Task<IActionResult> GetPublicSlots(
@@ -68,29 +69,39 @@ public class SalonsController : ControllerBase
         if (!Guid.TryParse(artistId, out var parsedArtistId))
             return BadRequest(new { message = "Invalid artistId" });
 
-        var tenant = await _identityDb.Tenants
+        var tenantInfo = await _identityDb.Tenants
             .Where(t => t.Slug == slug && t.IsActive)
             .Select(t => new { t.Id })
             .FirstOrDefaultAsync();
 
-        if (tenant == null)
+        if (tenantInfo == null)
             return NotFound(new { message = "Salon not found" });
 
-        // Scope this anonymous request to the resolved salon (read-only).
-        _tenant.SetPublicTenant(tenant.Id);
+        // Scope this anonymous request to the resolved salon (read‑only).
+        _tenant.SetPublicTenant(tenantInfo.Id);
 
         var slots = await _bookings.GetAvailableSlotsAsync(
-            parsedArtistId, date, durationMinutes, tenant.Id);
+            parsedArtistId, date, durationMinutes, tenantInfo.Id);
+
         return Ok(slots);
     }
 
+    // GET /api/salons/{slug}
     [HttpGet("{slug}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetSalonBySlug(string slug)
     {
         var tenant = await _identityDb.Tenants
             .Where(t => t.Slug == slug && t.IsActive)
-            .Select(t => new { t.Id, t.Name, t.Slug, t.Description, t.Address, t.Phone, t.LogoUrl, t.RatingSum, t.RatingCount })
+            .Select(t => new
+            {
+                t.Slug,
+                t.Name,
+                t.Description,
+                t.Address,
+                t.Phone,
+                t.LogoUrl
+            })
             .FirstOrDefaultAsync();
 
         if (tenant == null)
@@ -106,8 +117,8 @@ public class SalonsController : ControllerBase
             imageUrl = tenant.LogoUrl,
             latitude = 0.0,
             longitude = 0.0,
-            rating = tenant.RatingCount > 0 ? (double)tenant.RatingSum / tenant.RatingCount : 0,
-            reviewCount = tenant.RatingCount
+            rating = 0.0,          // Rating column removed; default to 0
+            reviewCount = 0
         });
     }
 }

@@ -16,9 +16,9 @@ class ApiConstants {
   static const String services = '$baseUrl/api/services';
   static const String artists = '$baseUrl/api/artists';
   static const String notifications = '$baseUrl/api/notifications';
-  static const String catalogServices = '$baseUrl/api/catalog/services';
-  static const String inventory = '$baseUrl/api/inventory';
-  static const String marketplace = '$baseUrl/api/marketplace';
+  static const String catalogServices = '$baseUrl/api/catalog-services';
+  static const String inventory = '$baseUrl/api/inventory-items';
+  static const String serviceTemplates = '$baseUrl/api/service-templates';
 
   // Admin endpoints
   static const String adminUsers = '$baseUrl/api/admin/users';

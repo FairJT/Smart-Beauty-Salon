@@ -41,6 +41,7 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddDbContext<IdentityDbContext>((sp, options) =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
 });
 
 // Add EF Core for main app
@@ -138,7 +139,6 @@ builder.Services.AddScoped<PlatformAdminService>();
 // Add Identity Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<SalonOS.Shared.Identity.ISalonRatingUpdater, SalonOS.Identity.Infrastructure.SalonRatingUpdater>();
-builder.Services.AddScoped<SalonOS.Shared.Identity.ISalonRatingUpdater, SalonOS.Identity.Infrastructure.SalonRatingUpdater>();
 
 // Add Booking Services
 builder.Services.AddScoped<IBookingService, BookingService>();
@@ -204,11 +204,14 @@ var app = builder.Build();
     // ─── Auto-migrate & seed database in Docker ─────────────────
     if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
     {
-        using var scope = app.Services.CreateScope();
-        var identityDb = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
-        var appDb = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var bookingDb = scope.ServiceProvider.GetRequiredService<BookingDbContext>();
-        var catalogDb = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+using var scope = app.Services.CreateScope();
+var identityDb = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+var appDb = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+var bookingDb = scope.ServiceProvider.GetRequiredService<BookingDbContext>();
+var catalogDb = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+
+// Ensure Identity migrations are applied before custom RLS script
+identityDb.Database.Migrate();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         // Apply pending migrations if any
@@ -260,51 +263,55 @@ var app = builder.Build();
 
 
 
-        // ── Ensure Phase 2 booking tables exist ──
-        identityDb.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'ArtistSchedules')
-            CREATE TABLE [ArtistSchedules] (
-                [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
-                [TenantId] UNIQUEIDENTIFIER NOT NULL,
-                [ArtistId] UNIQUEIDENTIFIER NOT NULL,
-                [DayOfWeek] INT NOT NULL,
-                [StartTime] TIME NOT NULL,
-                [EndTime] TIME NOT NULL,
-                [IsActive] BIT NOT NULL DEFAULT 1,
-                [IsDeleted] BIT NOT NULL DEFAULT 0,
-                [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
-                [UpdatedAt] DATETIME2 NULL,
-                [DeletedAt] DATETIME2 NULL
-            )");
-        identityDb.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Leaves')
-            CREATE TABLE [Leaves] (
-                [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
-                [TenantId] UNIQUEIDENTIFIER NOT NULL,
-                [ArtistId] UNIQUEIDENTIFIER NOT NULL,
-                [StartDateTime] DATETIME2 NOT NULL,
-                [EndDateTime] DATETIME2 NOT NULL,
-                [Reason] NVARCHAR(500) NULL,
-                [Status] INT NOT NULL DEFAULT 1,
-                [IsDeleted] BIT NOT NULL DEFAULT 0,
-                [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
-                [UpdatedAt] DATETIME2 NULL,
-                [DeletedAt] DATETIME2 NULL
-            )");
+ // Ensure Identity migrations are applied before creating tables that depend on AspNetUsers
+ identityDb.Database.Migrate();
 
-        // ── Ensure profile tables exist (for DBs created before profiles were added) ──
-        identityDb.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SalonManagerProfiles')
-            CREATE TABLE [SalonManagerProfiles] (
-                [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
-                [UserId] NVARCHAR(450) NOT NULL,
-                [TenantId] UNIQUEIDENTIFIER NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
-                [SalonId] INT NULL,
-                [IsOwner] BIT NOT NULL DEFAULT 0,
-                [IsActive] BIT NOT NULL DEFAULT 1,
-                [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
-                CONSTRAINT [FK_SalonManagerProfiles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers]([Id]) ON DELETE CASCADE
-            )");
+ // ── Ensure Phase 2 booking tables exist ──
+ identityDb.Database.ExecuteSqlRaw(@"
+    IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'ArtistSchedules')
+    CREATE TABLE [ArtistSchedules] (
+        [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
+        [TenantId] UNIQUEIDENTIFIER NOT NULL,
+        [ArtistId] UNIQUEIDENTIFIER NOT NULL,
+        [DayOfWeek] INT NOT NULL,
+        [StartTime] TIME NOT NULL,
+        [EndTime] TIME NOT NULL,
+        [IsActive] BIT NOT NULL DEFAULT 1,
+        [IsDeleted] BIT NOT NULL DEFAULT 0,
+        [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+        [UpdatedAt] DATETIME2 NULL,
+        [DeletedAt] DATETIME2 NULL
+    )");
+ identityDb.Database.ExecuteSqlRaw(@"
+    IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Leaves')
+    CREATE TABLE [Leaves] (
+        [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
+        [TenantId] UNIQUEIDENTIFIER NOT NULL,
+        [ArtistId] UNIQUEIDENTIFIER NOT NULL,
+        [StartDateTime] DATETIME2 NOT NULL,
+        [EndDateTime] DATETIME2 NOT NULL,
+        [Reason] NVARCHAR(500) NULL,
+        [Status] INT NOT NULL DEFAULT 1,
+        [IsDeleted] BIT NOT NULL DEFAULT 0,
+        [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+        [UpdatedAt] DATETIME2 NULL,
+        [DeletedAt] DATETIME2 NULL
+    )");
+
+ // ── Ensure profile tables exist (for DBs created before profiles were added) ──
+ // Identity tables are ensured above, so FK constraints to AspNetUsers are safe
+ identityDb.Database.ExecuteSqlRaw(@"
+        IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'SalonManagerProfiles')
+        CREATE TABLE [SalonManagerProfiles] (
+            [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
+            [UserId] NVARCHAR(450) NOT NULL,
+            [TenantId] UNIQUEIDENTIFIER NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
+            [SalonId] INT NULL,
+            [IsOwner] BIT NOT NULL DEFAULT 0,
+            [IsActive] BIT NOT NULL DEFAULT 1,
+            [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+            CONSTRAINT [FK_SalonManagerProfiles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers]([Id]) ON DELETE CASCADE
+        )");
         identityDb.Database.ExecuteSqlRaw(@"
             IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = 'IX_SalonManagerProfiles_UserId')
             CREATE UNIQUE INDEX [IX_SalonManagerProfiles_UserId] ON [SalonManagerProfiles]([UserId])");
@@ -437,28 +444,26 @@ var app = builder.Build();
                 [UpdatedAt] DATETIME2 NULL,
                 [DeletedAt] DATETIME2 NULL
             )");
-        identityDb.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Materials')
-            CREATE TABLE [Materials] (
+identityDb.Database.ExecuteSqlRaw(@"
+            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Tenants')
+            CREATE TABLE [Tenants] (
                 [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
-                [Name] NVARCHAR(200) NOT NULL,
-                [Description] NVARCHAR(MAX) NULL,
-                [Price_Amount] BIGINT NOT NULL DEFAULT 0,
-                [Price_Currency] NVARCHAR(3) NOT NULL DEFAULT 'IRR',
-                [Unit] NVARCHAR(50) NULL,
-                [TenantId] UNIQUEIDENTIFIER NOT NULL,
-                [IsActive] BIT NOT NULL DEFAULT 1,
-                [IsDeleted] BIT NOT NULL DEFAULT 0,
+                [Address] NVARCHAR(500) NULL,
                 [CreatedAt] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
-                [UpdatedAt] DATETIME2 NULL,
-                [DeletedAt] DATETIME2 NULL
-            )");
-        identityDb.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'CatalogServiceMaterials')
-            CREATE TABLE [CatalogServiceMaterials] (
-                [CatalogServiceId] UNIQUEIDENTIFIER NOT NULL,
-                [MaterialId] UNIQUEIDENTIFIER NOT NULL,
-                PRIMARY KEY ([CatalogServiceId], [MaterialId])
+                [Description] NVARCHAR(MAX) NULL,
+                [Email] NVARCHAR(200) NULL,
+                [Fax] NVARCHAR(30) NULL,
+                [FontColor] NVARCHAR(20) NULL,
+                [Grade] NVARCHAR(50) NULL,
+                [IsActive] BIT NOT NULL DEFAULT 1,
+                [License] NVARCHAR(100) NULL,
+                [LogoUrl] NVARCHAR(500) NULL,
+                [Name] NVARCHAR(200) NOT NULL,
+                [Phone] NVARCHAR(30) NULL,
+                [PrimaryColor] NVARCHAR(20) NULL,
+                [Region] NVARCHAR(100) NULL,
+                [Slug] NVARCHAR(450) NOT NULL,
+                [WorkingHours] NVARCHAR(500) NULL
             )");
         // Update Identity tables with Phase 1 columns (IF NOT EXISTS for each)
         identityDb.Database.ExecuteSqlRaw(@"

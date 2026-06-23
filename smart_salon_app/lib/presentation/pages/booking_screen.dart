@@ -51,8 +51,6 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
       _selectedSlot = null;
     });
     try {
-      final dateStr =
-          '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}';
       // TODO: Implement slot loading using the new repository
       setState(() {
         _slots = [];

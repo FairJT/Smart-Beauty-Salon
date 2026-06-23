@@ -27,7 +27,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Future<void> _loadProfile() async {
     try {
       final authState = ref.read(authProvider);
-      setState(() { _user = authState.user; _loading = false; });
+      setState(() {
+        _user = authState.user;
+        _loading = false;
+      });
     } catch (_) {
       setState(() => _loading = false);
     }
@@ -38,7 +41,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final notifState = ref.watch(notificationProvider);
 
     return RefreshIndicator(
-      onRefresh: () async { await _loadProfile(); await ref.read(notificationProvider.notifier).load(); },
+      onRefresh: () async {
+        await _loadProfile();
+        await ref.read(notificationProvider.notifier).load();
+      },
       child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -47,27 +53,34 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           const SizedBox(height: 16),
           if (!_loading && _user != null) _buildLoyaltyCard(),
           const SizedBox(height: 16),
-          if (!_loading && _user != null) _buildLoyaltyLevel(_user!.loyaltyPoints ?? 0),
+          if (!_loading && _user != null)
+            _buildLoyaltyLevel(_user!.loyaltyPoints),
           const SizedBox(height: 16),
-          _buildMenuItem(icon: Icons.calendar_month, title: 'رزروهای من', onTap: () {}),
+          _buildMenuItem(
+              icon: Icons.calendar_month, title: 'رزروهای من', onTap: () {}),
           Card(
             margin: const EdgeInsets.only(bottom: 8),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  const Icon(Icons.notifications_outlined, color: AppColors.primary),
+                  const Icon(Icons.notifications_outlined,
+                      color: AppColors.primary),
                   if (notifState.unreadCount > 0)
                     Positioned(
                       right: -4,
                       top: -4,
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                        constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                        decoration: const BoxDecoration(
+                            color: Colors.red, shape: BoxShape.circle),
+                        constraints:
+                            const BoxConstraints(minWidth: 16, minHeight: 16),
                         child: Text('${notifState.unreadCount}',
-                            style: const TextStyle(color: Colors.white, fontSize: 10),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 10),
                             textAlign: TextAlign.center),
                       ),
                     ),
@@ -75,19 +88,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               ),
               title: const Text('اعلان‌ها'),
               trailing: const Icon(Icons.arrow_back_ios, size: 16),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const NotificationsScreen())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const NotificationsScreen())),
             ),
           ),
-          _buildMenuItem(icon: Icons.help_outline, title: 'راهنما', onTap: () {}),
-          _buildMenuItem(icon: Icons.info_outline, title: 'درباره ما', onTap: () {}),
+          _buildMenuItem(
+              icon: Icons.help_outline, title: 'راهنما', onTap: () {}),
+          _buildMenuItem(
+              icon: Icons.info_outline, title: 'درباره ما', onTap: () {}),
           const SizedBox(height: 20),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.danger,
               foregroundColor: Colors.white,
               minimumSize: const Size(double.infinity, 52),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
             ),
             icon: const Icon(Icons.logout),
             label: const Text('خروج از حساب', style: TextStyle(fontSize: 16)),
@@ -123,15 +141,21 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  child: const Icon(Icons.person, size: 50, color: Colors.white),
+                  child:
+                      const Icon(Icons.person, size: 50, color: Colors.white),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   _user?.fullName ?? '',
-                  style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
-                Text(_user?.phoneNumber ?? '', style: const TextStyle(color: Colors.white70, fontSize: 14)),
+                Text(_user?.phoneNumber ?? '',
+                    style:
+                        const TextStyle(color: Colors.white70, fontSize: 14)),
               ],
             ),
     );
@@ -152,18 +176,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('امتیاز وفاداری شما', style: TextStyle(color: Colors.white70, fontSize: 13)),
+                const Text('امتیاز وفاداری شما',
+                    style: TextStyle(color: Colors.white70, fontSize: 13)),
                 Text('${_user?.loyaltyPoints ?? 0} امتیاز',
-                    style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text('تعداد مراجعات', style: TextStyle(color: Colors.white70, fontSize: 12)),
+              const Text('تعداد مراجعات',
+                  style: TextStyle(color: Colors.white70, fontSize: 12)),
               Text('${_user?.totalVisits ?? 0} بار',
-                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold)),
             ],
           ),
         ],
@@ -179,13 +211,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     double progress;
 
     if (points >= 500) {
-      level = 'الماس'; color = Colors.blue; nextLevel = 'بالاترین سطح'; pointsNeeded = 0; progress = 1.0;
+      level = 'الماس';
+      color = Colors.blue;
+      nextLevel = 'بالاترین سطح';
+      pointsNeeded = 0;
+      progress = 1.0;
     } else if (points >= 200) {
-      level = 'طلایی'; color = Colors.amber; nextLevel = 'الماس'; pointsNeeded = 500 - points; progress = (points - 200) / 300;
+      level = 'طلایی';
+      color = Colors.amber;
+      nextLevel = 'الماس';
+      pointsNeeded = 500 - points;
+      progress = (points - 200) / 300;
     } else if (points >= 50) {
-      level = 'نقره‌ای'; color = Colors.grey; nextLevel = 'طلایی'; pointsNeeded = 200 - points; progress = (points - 50) / 150;
+      level = 'نقره‌ای';
+      color = Colors.grey;
+      nextLevel = 'طلایی';
+      pointsNeeded = 200 - points;
+      progress = (points - 50) / 150;
     } else {
-      level = 'برنزی'; color = Colors.brown; nextLevel = 'نقره‌ای'; pointsNeeded = 50 - points; progress = points / 50;
+      level = 'برنزی';
+      color = Colors.brown;
+      nextLevel = 'نقره‌ای';
+      pointsNeeded = 50 - points;
+      progress = points / 50;
     }
 
     return Card(
@@ -197,10 +245,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           children: [
             Row(
               children: [
-                Text('سطح: $level', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: color)),
+                Text('سطح: $level',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: color)),
                 const Spacer(),
                 if (pointsNeeded > 0)
-                  Text('$pointsNeeded امتیاز تا $nextLevel', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                  Text('$pointsNeeded امتیاز تا $nextLevel',
+                      style: const TextStyle(color: Colors.grey, fontSize: 12)),
               ],
             ),
             const SizedBox(height: 8),
@@ -210,7 +263,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 value: progress.clamp(0.0, 1.0),
                 minHeight: 10,
                 backgroundColor: Colors.grey.shade200,
-                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                valueColor:
+                    const AlwaysStoppedAnimation<Color>(AppColors.primary),
               ),
             ),
           ],
@@ -219,7 +273,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  Widget _buildMenuItem({required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _buildMenuItem(
+      {required IconData icon,
+      required String title,
+      required VoidCallback onTap}) {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
