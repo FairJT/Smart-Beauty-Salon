@@ -58,7 +58,7 @@ services:
       context: .
       dockerfile: Dockerfile.FlutterWeb
       args:
-        API_BASE_URL: /api
+        API_BASE_URL: ""
     container_name: FlutterWeb
     ports:
       - "5080:80"

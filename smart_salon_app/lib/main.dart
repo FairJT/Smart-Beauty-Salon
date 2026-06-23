@@ -4,6 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/app_colors.dart';
 import 'l10n/app_localizations.dart';
 import 'presentation/pages/splash_screen.dart';
+import 'presentation/pages/generated/onboarding_screen.dart';
+import 'presentation/pages/login_screen.dart';
+import 'presentation/pages/otp_screen.dart';
+import 'presentation/pages/register_screen.dart';
+import 'presentation/pages/generated/home_screen.dart';
+import 'presentation/pages/generated/salon_detail_screen.dart';
+import 'presentation/pages/booking_screen.dart';
+import 'presentation/pages/profile_screen.dart';
+import 'presentation/pages/generated/onboarding_screen.dart';
+import 'presentation/pages/generated/artist_public_screen.dart';
+import 'presentation/pages/generated/artist_dashboard_screen.dart';
+import 'presentation/pages/generated/manager_dashboard_screen.dart';
+import 'presentation/pages/generated/admin_dashboard_screen.dart';
+import 'presentation/pages/generated/salon_detail_screen.dart';
+import 'presentation/pages/generated/my_appointments_screen.dart';
+import 'presentation/pages/generated/home_screen.dart';
+import 'presentation/pages/generated/booking_flow_screen.dart';
 import 'widgets/error_boundary.dart';
 
 void main() async {
@@ -32,10 +49,9 @@ void main() async {
               children: [
                 const Icon(Icons.error_outline, size: 64, color: Colors.red),
                 const SizedBox(height: 16),
-                Text(
+                const Text(
                   'خطایی رخ داده است',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -69,6 +85,60 @@ class SmartSalonApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: ErrorBoundary(child: child!),
       ),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/onboarding':
+            return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+          case '/login':
+            return MaterialPageRoute(builder: (_) => const LoginScreen());
+          case '/otp':
+            return MaterialPageRoute(builder: (_) => const OtpScreen());
+          case '/register':
+            return MaterialPageRoute(builder: (_) => const RegisterScreen());
+          case '/home':
+            return MaterialPageRoute(builder: (_) => const HomeScreen());
+          case '/salon-detail':
+            return MaterialPageRoute(builder: (_) => const SalonDetailScreen());
+          case '/booking':
+            return MaterialPageRoute(
+                builder: (_) => const BookingScreen(
+                      slug: 'default',
+                      artistId: '',
+                      artistName: '',
+                      serviceId: '',
+                      serviceName: '',
+                      durationMinutes: 0,
+                      price: 0,
+                    ));
+          case '/profile':
+            return MaterialPageRoute(builder: (_) => const ProfileScreen());
+          case '/artist-public':
+            return MaterialPageRoute(
+                builder: (_) => const ArtistPublicScreen());
+          case '/artist-dashboard':
+            return MaterialPageRoute(
+                builder: (_) => const ArtistDashboardScreen());
+          case '/manager-dashboard':
+            return MaterialPageRoute(
+                builder: (_) => const ManagerDashboardScreen());
+          case '/admin-dashboard':
+            return MaterialPageRoute(
+                builder: (_) => const AdminDashboardScreen());
+          case '/my-appointments':
+            return MaterialPageRoute(
+                builder: (_) => const MyAppointmentsScreen());
+          case '/generated-salon-detail':
+            return MaterialPageRoute(builder: (_) => const SalonDetailScreen());
+          case '/generated-home':
+            return MaterialPageRoute(builder: (_) => const HomeScreen());
+          case '/generated-booking':
+            return MaterialPageRoute(builder: (_) => const BookingFlowScreen());
+          case '/generated-onboarding':
+            return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+          default:
+            return MaterialPageRoute(builder: (_) => const SplashScreen());
+        }
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.primary,
@@ -94,7 +164,7 @@ class SmartSalonApp extends StatelessWidget {
             foregroundColor: Colors.white,
             minimumSize: const Size(double.infinity, 52),
             elevation: 0,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: AppSpacing.borderRadiusMd,
             ),
             textStyle: const TextStyle(
@@ -103,34 +173,33 @@ class SmartSalonApp extends StatelessWidget {
             ),
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
             borderRadius: AppSpacing.borderRadiusMd,
-            borderSide: const BorderSide(color: AppColors.border),
+            borderSide: BorderSide(color: AppColors.border),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: AppSpacing.borderRadiusMd,
-            borderSide: const BorderSide(color: AppColors.border),
+            borderSide: BorderSide(color: AppColors.border),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: AppSpacing.borderRadiusMd,
-            borderSide:
-                const BorderSide(color: AppColors.primaryLight, width: 2),
+            borderSide: BorderSide(color: AppColors.primaryLight, width: 2),
           ),
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding: EdgeInsets.symmetric(
             horizontal: AppSpacing.md,
             vertical: 14,
           ),
-          hintStyle: const TextStyle(color: AppColors.textMuted),
+          hintStyle: TextStyle(color: AppColors.textMuted),
         ),
-        cardTheme: CardThemeData(
+        cardTheme: const CardThemeData(
           color: AppColors.surface,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: AppSpacing.borderRadiusLg,
-            side: const BorderSide(color: AppColors.border),
+            side: BorderSide(color: AppColors.border),
           ),
         ),
         navigationBarTheme: NavigationBarThemeData(
@@ -151,7 +220,7 @@ class SmartSalonApp extends StatelessWidget {
             );
           }),
         ),
-        snackBarTheme: SnackBarThemeData(
+        snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: AppSpacing.borderRadiusMd,

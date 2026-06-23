@@ -6,7 +6,7 @@ import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
 /// ---------------------------------------------------------------------------
 
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Center(
@@ -17,7 +17,7 @@ class OnboardingScreen extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('خانه')),
@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class SalonDetailScreen extends StatelessWidget {
-  const SalonDetailScreen({Key? key}) : super(key: key);
+  const SalonDetailScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('سالن')),
@@ -37,7 +37,7 @@ class SalonDetailScreen extends StatelessWidget {
 }
 
 class ArtistPublicScreen extends StatelessWidget {
-  const ArtistPublicScreen({Key? key}) : super(key: key);
+  const ArtistPublicScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('آرتیست')),
@@ -46,7 +46,7 @@ class ArtistPublicScreen extends StatelessWidget {
 }
 
 class BlogListScreen extends StatelessWidget {
-  const BlogListScreen({Key? key}) : super(key: key);
+  const BlogListScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('بلاگ‌ها')),
@@ -55,7 +55,7 @@ class BlogListScreen extends StatelessWidget {
 }
 
 class BlogPostScreen extends StatelessWidget {
-  const BlogPostScreen({Key? key}) : super(key: key);
+  const BlogPostScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مقاله')),
@@ -64,7 +64,7 @@ class BlogPostScreen extends StatelessWidget {
 }
 
 class JoinSalonFormScreen extends StatelessWidget {
-  const JoinSalonFormScreen({Key? key}) : super(key: key);
+  const JoinSalonFormScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('درخواست پیوستن')),
@@ -73,7 +73,7 @@ class JoinSalonFormScreen extends StatelessWidget {
 }
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('ورود')),
@@ -82,7 +82,7 @@ class LoginScreen extends StatelessWidget {
 }
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('ثبت نام')),
@@ -91,7 +91,7 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class OtpScreen extends StatelessWidget {
-  const OtpScreen({Key? key}) : super(key: key);
+  const OtpScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('کد تایید')),
@@ -104,7 +104,7 @@ class OtpScreen extends StatelessWidget {
 /// ---------------------------------------------------------------------------
 
 class BookingFlowScreen extends StatelessWidget {
-  const BookingFlowScreen({Key? key}) : super(key: key);
+  const BookingFlowScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('نوبت‌گیری')),
@@ -113,7 +113,7 @@ class BookingFlowScreen extends StatelessWidget {
 }
 
 class AppointmentListScreen extends StatelessWidget {
-  const AppointmentListScreen({Key? key}) : super(key: key);
+  const AppointmentListScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('نوبت‌های من')),
@@ -122,7 +122,7 @@ class AppointmentListScreen extends StatelessWidget {
 }
 
 class ServiceHistoryScreen extends StatelessWidget {
-  const ServiceHistoryScreen({Key? key}) : super(key: key);
+  const ServiceHistoryScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('سابقه خدمات')),
@@ -131,7 +131,7 @@ class ServiceHistoryScreen extends StatelessWidget {
 }
 
 class InvoiceScreen extends StatelessWidget {
-  const InvoiceScreen({Key? key}) : super(key: key);
+  const InvoiceScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('فاکتور')),
@@ -140,7 +140,7 @@ class InvoiceScreen extends StatelessWidget {
 }
 
 class OffersScreen extends StatelessWidget {
-  const OffersScreen({Key? key}) : super(key: key);
+  const OffersScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('تخفیف‌ها')),
@@ -149,7 +149,7 @@ class OffersScreen extends StatelessWidget {
 }
 
 class FeedbackScreen extends StatelessWidget {
-  const FeedbackScreen({Key? key}) : super(key: key);
+  const FeedbackScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('بازخورد')),
@@ -158,7 +158,7 @@ class FeedbackScreen extends StatelessWidget {
 }
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('پروفایل')),
@@ -167,7 +167,7 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class NotificationsScreen extends StatelessWidget {
-  const NotificationsScreen({Key? key}) : super(key: key);
+  const NotificationsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('اعلان‌ها')),
@@ -180,7 +180,7 @@ class NotificationsScreen extends StatelessWidget {
 /// ---------------------------------------------------------------------------
 
 class ArtistDashboardScreen extends StatelessWidget {
-  const ArtistDashboardScreen({Key? key}) : super(key: key);
+  const ArtistDashboardScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('داشبورد آرتیست')),
@@ -189,7 +189,7 @@ class ArtistDashboardScreen extends StatelessWidget {
 }
 
 class ArtistScheduleScreen extends StatelessWidget {
-  const ArtistScheduleScreen({Key? key}) : super(key: key);
+  const ArtistScheduleScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('زمان‌بندی')),
@@ -198,7 +198,7 @@ class ArtistScheduleScreen extends StatelessWidget {
 }
 
 class ArtistAppointmentsScreen extends StatelessWidget {
-  const ArtistAppointmentsScreen({Key? key}) : super(key: key);
+  const ArtistAppointmentsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('نوبت‌ها')),
@@ -207,7 +207,7 @@ class ArtistAppointmentsScreen extends StatelessWidget {
 }
 
 class LeaveRequestScreen extends StatelessWidget {
-  const LeaveRequestScreen({Key? key}) : super(key: key);
+  const LeaveRequestScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('درخواست مرخصی')),
@@ -216,7 +216,7 @@ class LeaveRequestScreen extends StatelessWidget {
 }
 
 class ClientNotesScreen extends StatelessWidget {
-  const ClientNotesScreen({Key? key}) : super(key: key);
+  const ClientNotesScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('نکات مشتری‌ها')),
@@ -225,7 +225,7 @@ class ClientNotesScreen extends StatelessWidget {
 }
 
 class ProductUsageScreen extends StatelessWidget {
-  const ProductUsageScreen({Key? key}) : super(key: key);
+  const ProductUsageScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مصرف محصول')),
@@ -234,7 +234,7 @@ class ProductUsageScreen extends StatelessWidget {
 }
 
 class StaffRequestsScreen extends StatelessWidget {
-  const StaffRequestsScreen({Key? key}) : super(key: key);
+  const StaffRequestsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('درخواست‌های پرسنل')),
@@ -243,7 +243,7 @@ class StaffRequestsScreen extends StatelessWidget {
 }
 
 class ContractsScreen extends StatelessWidget {
-  const ContractsScreen({Key? key}) : super(key: key);
+  const ContractsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('قراردادها')),
@@ -252,7 +252,7 @@ class ContractsScreen extends StatelessWidget {
 }
 
 class NoticesScreen extends StatelessWidget {
-  const NoticesScreen({Key? key}) : super(key: key);
+  const NoticesScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('اعلان‌ها')),
@@ -265,7 +265,7 @@ class NoticesScreen extends StatelessWidget {
 /// ---------------------------------------------------------------------------
 
 class ManagerDashboardScreen extends StatelessWidget {
-  const ManagerDashboardScreen({Key? key}) : super(key: key);
+  const ManagerDashboardScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('داشبورد مدیر')),
@@ -274,7 +274,7 @@ class ManagerDashboardScreen extends StatelessWidget {
 }
 
 class SalonProfileScreen extends StatelessWidget {
-  const SalonProfileScreen({Key? key}) : super(key: key);
+  const SalonProfileScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('پروفایل سالن')),
@@ -283,7 +283,7 @@ class SalonProfileScreen extends StatelessWidget {
 }
 
 class WorkingHoursScreen extends StatelessWidget {
-  const WorkingHoursScreen({Key? key}) : super(key: key);
+  const WorkingHoursScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('ساعات کاری')),
@@ -292,7 +292,7 @@ class WorkingHoursScreen extends StatelessWidget {
 }
 
 class ServicesManagementScreen extends StatelessWidget {
-  const ServicesManagementScreen({Key? key}) : super(key: key);
+  const ServicesManagementScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مدیریت خدمات')),
@@ -301,7 +301,7 @@ class ServicesManagementScreen extends StatelessWidget {
 }
 
 class StaffManagementScreen extends StatelessWidget {
-  const StaffManagementScreen({Key? key}) : super(key: key);
+  const StaffManagementScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مدیریت پرسنل')),
@@ -310,7 +310,7 @@ class StaffManagementScreen extends StatelessWidget {
 }
 
 class ManagerAppointmentsScreen extends StatelessWidget {
-  const ManagerAppointmentsScreen({Key? key}) : super(key: key);
+  const ManagerAppointmentsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('نوبت‌ها')),
@@ -319,7 +319,7 @@ class ManagerAppointmentsScreen extends StatelessWidget {
 }
 
 class ManagerCustomersScreen extends StatelessWidget {
-  const ManagerCustomersScreen({Key? key}) : super(key: key);
+  const ManagerCustomersScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مشتریان')),
@@ -328,7 +328,7 @@ class ManagerCustomersScreen extends StatelessWidget {
 }
 
 class ManagerDiscountsScreen extends StatelessWidget {
-  const ManagerDiscountsScreen({Key? key}) : super(key: key);
+  const ManagerDiscountsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('تخفیف‌ها')),
@@ -337,7 +337,7 @@ class ManagerDiscountsScreen extends StatelessWidget {
 }
 
 class FinanceLedgerScreen extends StatelessWidget {
-  const FinanceLedgerScreen({Key? key}) : super(key: key);
+  const FinanceLedgerScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('دفتر مالی')),
@@ -346,7 +346,7 @@ class FinanceLedgerScreen extends StatelessWidget {
 }
 
 class HiringScreen extends StatelessWidget {
-  const HiringScreen({Key? key}) : super(key: key);
+  const HiringScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('استخدام')),
@@ -355,7 +355,7 @@ class HiringScreen extends StatelessWidget {
 }
 
 class InboxScreen extends StatelessWidget {
-  const InboxScreen({Key? key}) : super(key: key);
+  const InboxScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('صندوق ورودی')),
@@ -368,7 +368,7 @@ class InboxScreen extends StatelessWidget {
 /// ---------------------------------------------------------------------------
 
 class AdminDashboardScreen extends StatelessWidget {
-  const AdminDashboardScreen({Key? key}) : super(key: key);
+  const AdminDashboardScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('داشبورد ادمین')),
@@ -377,7 +377,7 @@ class AdminDashboardScreen extends StatelessWidget {
 }
 
 class TenantManagementScreen extends StatelessWidget {
-  const TenantManagementScreen({Key? key}) : super(key: key);
+  const TenantManagementScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مدیریت مستاجرین')),
@@ -386,7 +386,7 @@ class TenantManagementScreen extends StatelessWidget {
 }
 
 class UserManagementScreen extends StatelessWidget {
-  const UserManagementScreen({Key? key}) : super(key: key);
+  const UserManagementScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مدیریت کاربران')),
@@ -395,7 +395,7 @@ class UserManagementScreen extends StatelessWidget {
 }
 
 class ServiceTemplatesScreen extends StatelessWidget {
-  const ServiceTemplatesScreen({Key? key}) : super(key: key);
+  const ServiceTemplatesScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('قالب‌های سرویس')),
@@ -404,7 +404,7 @@ class ServiceTemplatesScreen extends StatelessWidget {
 }
 
 class PackageListingsScreen extends StatelessWidget {
-  const PackageListingsScreen({Key? key}) : super(key: key);
+  const PackageListingsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('بسته‌ها')),
@@ -413,7 +413,7 @@ class PackageListingsScreen extends StatelessWidget {
 }
 
 class HomepageCmsScreen extends StatelessWidget {
-  const HomepageCmsScreen({Key? key}) : super(key: key);
+  const HomepageCmsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('مدیریت صفحه اصلی')),
@@ -422,7 +422,7 @@ class HomepageCmsScreen extends StatelessWidget {
 }
 
 class BlogEditorScreen extends StatelessWidget {
-  const BlogEditorScreen({Key? key}) : super(key: key);
+  const BlogEditorScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('ویرایش بلاگ')),
@@ -431,7 +431,7 @@ class BlogEditorScreen extends StatelessWidget {
 }
 
 class PlacementsScreen extends StatelessWidget {
-  const PlacementsScreen({Key? key}) : super(key: key);
+  const PlacementsScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('پیشنهادات ویژه')),
@@ -440,7 +440,7 @@ class PlacementsScreen extends StatelessWidget {
 }
 
 class JoinRequestsAdminScreen extends StatelessWidget {
-  const JoinRequestsAdminScreen({Key? key}) : super(key: key);
+  const JoinRequestsAdminScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('درخواست‌های پیوستن')),
@@ -449,7 +449,7 @@ class JoinRequestsAdminScreen extends StatelessWidget {
 }
 
 class PlatformAccountingScreen extends StatelessWidget {
-  const PlatformAccountingScreen({Key? key}) : super(key: key);
+  const PlatformAccountingScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('حسابداری پلتفرم')),

@@ -225,7 +225,7 @@ class QuickLink extends StatelessWidget {
           horizontal: AppSpacing.md,
           vertical: AppSpacing.sm,
         ),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.primary50,
           borderRadius: AppSpacing.borderRadiusMd,
         ),

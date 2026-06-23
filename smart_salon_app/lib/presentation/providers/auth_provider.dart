@@ -5,14 +5,21 @@ import '../../data/repositories/auth_repository_impl.dart';
 
 class AuthState {
   final bool isLoggedIn;
+  final bool isGuest;
   final UserEntity? user;
   final bool loading;
 
-  AuthState({this.isLoggedIn = false, this.user, this.loading = true});
+  AuthState(
+      {this.isLoggedIn = false,
+      this.isGuest = false,
+      this.user,
+      this.loading = true});
 
-  AuthState copyWith({bool? isLoggedIn, UserEntity? user, bool? loading}) {
+  AuthState copyWith(
+      {bool? isLoggedIn, bool? isGuest, UserEntity? user, bool? loading}) {
     return AuthState(
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      isGuest: isGuest ?? this.isGuest,
       user: user ?? this.user,
       loading: loading ?? this.loading,
     );
@@ -75,6 +82,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
       loading: false,
     );
     return true;
+  }
+
+  void loginAsGuest() {
+    state = AuthState(
+      isLoggedIn: false,
+      isGuest: true,
+      user: null,
+      loading: false,
+    );
   }
 
   Future<void> logout() async {

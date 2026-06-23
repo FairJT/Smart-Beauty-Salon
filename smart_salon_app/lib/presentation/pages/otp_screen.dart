@@ -1,221 +1,194 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/app_colors.dart';
-import 'home_screen.dart';
+import '../../core/fresha/fresha_ui.dart';
 
-class OtpScreen extends ConsumerStatefulWidget {
-  final String phoneNumber;
-
-  const OtpScreen({super.key, required this.phoneNumber});
+class OtpScreen extends StatefulWidget {
+  const OtpScreen({super.key});
 
   @override
-  ConsumerState<OtpScreen> createState() => _OtpScreenState();
+  State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends ConsumerState<OtpScreen> {
+class _OtpScreenState extends State<OtpScreen> {
   final List<TextEditingController> _controllers =
-      List.generate(6, (_) => TextEditingController());
-  final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+      List.generate(5, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(5, (_) => FocusNode());
+  int _timer = 60;
   bool _loading = false;
-  String? _error;
-  int _resendSeconds = 60;
 
   @override
   void initState() {
     super.initState();
-    _startResendTimer();
+    _startTimer();
   }
 
-  @override
-  void dispose() {
-    for (final controller in _controllers) {
-      controller.dispose();
-    }
-    for (final node in _focusNodes) {
-      node.dispose();
-    }
-    super.dispose();
-  }
-
-  void _startResendTimer() {
+  void _startTimer() {
     Future.delayed(const Duration(seconds: 1), () {
-      if (mounted && _resendSeconds > 0) {
-        setState(() => _resendSeconds--);
-        _startResendTimer();
+      if (!mounted) return;
+      if (_timer > 0) {
+        setState(() => _timer--);
+        _startTimer();
       }
     });
   }
 
-  String get _otpCode => _controllers.map((c) => c.text).join();
-
-  Future<void> _verifyOtp() async {
-    if (_otpCode.length != 6) {
-      setState(() => _error = 'لطفاً کد ۶ رقمی را وارد کنید');
-      return;
+  @override
+  void dispose() {
+    for (final c in _controllers) {
+      c.dispose();
     }
-
-    setState(() {
-      _loading = true;
-      _error = null;
-    });
-    try {
-      // TODO: Implement OTP verification with the backend
-      // For now, navigate to home screen
-      if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const HomeScreen()),
-      );
-    } catch (e) {
-      setState(() => _error = e.toString().replaceAll('Exception: ', ''));
-    } finally {
-      if (mounted) setState(() => _loading = false);
+    for (final f in _focusNodes) {
+      f.dispose();
     }
+    super.dispose();
   }
 
-  Future<void> _resendOtp() async {
-    if (_resendSeconds > 0) return;
+  String get _code => _controllers.map((c) => c.text).join();
 
-    try {
-      // TODO: Implement resend OTP with the backend
-      setState(() => _resendSeconds = 60);
-      _startResendTimer();
-      if (!mounted) return;
+  void _verify() async {
+    if (_code.length != 5) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('کد جدید ارسال شد'), backgroundColor: Colors.green),
+        const SnackBar(content: Text('کد کامل وارد کنید')),
       );
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
-      );
+      return;
     }
+    setState(() => _loading = true);
+    await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
+    setState(() => _loading = false);
+    Navigator.of(context).pushReplacementNamed('/home');
+  }
+
+  void _resend() {
+    if (_timer > 0) return;
+    setState(() => _timer = 60);
+    _startTimer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: FCol.surface,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: FCol.surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: FCol.ink),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 20),
-              const Icon(Icons.lock_outline, size: 80, color: Colors.amber),
-              const SizedBox(height: 24),
-              const Text(
-                'تایید شماره موبایل',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold),
+              const Center(
+                child: Text(
+                  'تأیید شماره',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: FCol.ink,
+                  ),
+                ),
               ),
-              const SizedBox(height: 12),
-              Text(
-                'کد ۶ رقمی به شماره ${widget.phoneNumber} ارسال شد',
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
+              const SizedBox(height: 8),
+              const Center(
+                child: Text(
+                  'کد ۵ رقمی ارسال شده را وارد کنید',
+                  style: TextStyle(fontSize: 13, color: FCol.muted),
+                ),
               ),
               const SizedBox(height: 40),
-              _buildOtpFields(),
-              const SizedBox(height: 24),
-              if (_error != null)
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                      color: Colors.red.shade100,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(_error!,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                textDirection: TextDirection.ltr,
+                children: List.generate(5, (i) {
+                  return SizedBox(
+                    width: 48,
+                    height: 56,
+                    child: TextField(
+                      controller: _controllers[i],
+                      focusNode: _focusNodes[i],
+                      keyboardType: TextInputType.number,
+                      maxLength: 1,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.red)),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: FCol.ink,
+                      ),
+                      decoration: InputDecoration(
+                        counterText: '',
+                        filled: true,
+                        fillColor: FCol.surface,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: FCol.muted),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide:
+                              const BorderSide(color: FCol.olive, width: 2),
+                        ),
+                      ),
+                      onChanged: (v) {
+                        if (v.isNotEmpty && i < 4) {
+                          _focusNodes[i + 1].requestFocus();
+                        }
+                      },
+                    ),
+                  );
+                }),
+              ),
+              const SizedBox(height: 32),
+              FPrimaryButton(
+                'تأیید',
+                onTap: _loading ? null : _verify,
+              ),
+              if (_loading)
+                const Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: FLoading(),
                 ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 52),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                ),
-                onPressed: _loading ? null : _verifyOtp,
-                child: _loading
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(
-                            strokeWidth: 2, color: Colors.white),
+              const SizedBox(height: 24),
+              Center(
+                child: _timer > 0
+                    ? Text(
+                        'ارسال مجدد در $_timer ثانیه',
+                        style: const TextStyle(fontSize: 13, color: FCol.muted),
                       )
-                    : const Text('تایید',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    : GestureDetector(
+                        onTap: _resend,
+                        child: const Text(
+                          'ارسال مجدد کد',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: FCol.olive,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
               ),
               const SizedBox(height: 16),
-              TextButton(
-                onPressed: _resendSeconds > 0 ? null : _resendOtp,
-                child: Text(
-                  _resendSeconds > 0
-                      ? 'ارسال مجدد کد در $_resendSeconds ثانیه'
-                      : 'ارسال مجدد کد',
-                  style: const TextStyle(color: Colors.white70),
+              Center(
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: const Text(
+                    'تغییر شماره',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: FCol.ink,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildOtpFields() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: List.generate(6, (index) {
-        return SizedBox(
-          width: 48,
-          height: 56,
-          child: TextField(
-            controller: _controllers[index],
-            focusNode: _focusNodes[index],
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            maxLength: 1,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            decoration: InputDecoration(
-              counterText: '',
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.amber, width: 2),
-              ),
-            ),
-            onChanged: (value) {
-              if (value.length == 1 && index < 5) {
-                _focusNodes[index + 1].requestFocus();
-              } else if (value.isEmpty && index > 0) {
-                _focusNodes[index - 1].requestFocus();
-              }
-            },
-          ),
-        );
-      }),
     );
   }
 }

@@ -93,7 +93,7 @@ class _SalonDetailScreenState extends State<SalonDetailScreen>
                   color: Colors.white, fontWeight: FontWeight.bold),
             ),
             background: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: AppColors.darkGradient,
               ),
               child: salon.imageUrl != null

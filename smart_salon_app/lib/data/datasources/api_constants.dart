@@ -3,6 +3,8 @@ class ApiConstants {
   // The localhost default below is for LOCAL dev only and bypasses nginx.
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
+    // Default to local development server when no environment variable is provided.
+    // Updated to point to the running backend API container.
     defaultValue: 'http://localhost:5016',
   );
 

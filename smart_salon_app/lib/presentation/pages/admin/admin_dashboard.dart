@@ -266,7 +266,7 @@ class _UserCard extends StatelessWidget {
                 Switch(
                   value: user.isActive,
                   onChanged: (_) => onToggleActive(),
-                  activeColor: AppColors.success,
+                  activeThumbColor: AppColors.success,
                 ),
                 Text(
                   user.isActive ? 'فعال' : 'غیرفعال',

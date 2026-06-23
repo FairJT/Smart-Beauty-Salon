@@ -34,7 +34,9 @@ class FMoneyText extends StatelessWidget {
   static String _fa(String s) {
     const en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-    for (var i = 0; i < 10; i++) s = s.replaceAll(en[i], fa[i]);
+    for (var i = 0; i < 10; i++) {
+      s = s.replaceAll(en[i], fa[i]);
+    }
     return s;
   }
 
@@ -155,8 +157,8 @@ class FServiceRow extends StatelessWidget {
           Row(children: [
             const Icon(Icons.schedule, size: 13, color: FCol.muted),
             const SizedBox(width: 4),
-            Text('\${FMoneyText.fa(durationMin.toString())} دقیقه',
-                style: const TextStyle(fontSize: 11.5, color: FCol.muted)),
+            const Text('\${FMoneyText.fa(durationMin.toString())} دقیقه',
+                style: TextStyle(fontSize: 11.5, color: FCol.muted)),
             const Text(' • ', style: TextStyle(color: FCol.muted)),
             FMoneyText(priceRials, size: 11.5, weight: FontWeight.w500),
           ]),
@@ -254,7 +256,7 @@ class FStatusChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-          color: color.withOpacity(.12),
+          color: color.withValues(alpha: .12),
           borderRadius: BorderRadius.circular(11)),
       child: Text(text,
           style: TextStyle(

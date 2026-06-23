@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -33,11 +33,11 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            FCard(
-              child: const Column(
+            const FCard(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Featured Salon',
+                  Text('Featured Salon',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   SizedBox(height: 8),

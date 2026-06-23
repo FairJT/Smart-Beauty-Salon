@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
 
 class ArtistDashboardScreen extends StatelessWidget {
-  const ArtistDashboardScreen({Key? key}) : super(key: key);
+  const ArtistDashboardScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(

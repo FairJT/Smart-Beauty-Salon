@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
 
 class BookingFlowScreen extends StatefulWidget {
-  const BookingFlowScreen({Key? key}) : super(key: key);
+  const BookingFlowScreen({super.key});
   @override
   State<BookingFlowScreen> createState() => _BookingFlowScreenState();
 }
@@ -39,12 +39,12 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
                         state: FSlotState.free, onTap: () {}),
                   ),
                 )),
-            Step(
-                title: const Text('اطلاعات پرداخت'),
-                content: const Text('در اینجا فرم پرداخت نمایش می‌شود.')),
-            Step(
-                title: const Text('تایید نهایی'),
-                content: const Text('خلاصه رزرو و دکمه پرداخت نهایی.')),
+            const Step(
+                title: Text('اطلاعات پرداخت'),
+                content: Text('در اینجا فرم پرداخت نمایش می‌شود.')),
+            const Step(
+                title: Text('تایید نهایی'),
+                content: Text('خلاصه رزرو و دکمه پرداخت نهایی.')),
           ],
         ),
         bottomNavigationBar: FBottomNav(index: 1, onTap: (_) {}, items: const [

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
 
 class ArtistPublicScreen extends StatelessWidget {
-  const ArtistPublicScreen({Key? key}) : super(key: key);
+  const ArtistPublicScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -15,7 +15,7 @@ class ArtistPublicScreen extends StatelessWidget {
             const CircleAvatar(radius: 40, backgroundColor: FCol.oliveSoft),
             const SizedBox(height: 8),
             const Center(
-                child: const Text('نام آرتیست',
+                child: Text('نام آرتیست',
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
             const SizedBox(height: 12),

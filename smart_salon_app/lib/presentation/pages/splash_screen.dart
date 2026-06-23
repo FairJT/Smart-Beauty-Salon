@@ -1,106 +1,70 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/app_colors.dart';
-import '../providers/auth_provider.dart';
-import 'login_screen.dart';
-import 'admin/admin_dashboard.dart';
-import 'artist/artist_dashboard_screen.dart';
-import 'manager/manager_dashboard_screen.dart';
-import 'client_home_screen.dart';
+import '../../core/fresha/fresha_ui.dart';
 
-class SplashScreen extends ConsumerStatefulWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen> {
-  Timer? _timer;
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigate();
+    _initApp();
   }
 
-  void _navigate() {
-    _timer = Timer(const Duration(seconds: 2), () {
-      if (!mounted) return;
-      final auth = ref.read(authProvider);
-      if (!auth.isLoggedIn) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => const LoginScreen()));
-        return;
-      }
-
-      Widget destination;
-      if (auth.isSuperAdmin) {
-        destination = const AdminDashboard();
-      } else if (auth.isSalonManager) {
-        destination = const ManagerDashboardScreen();
-      } else if (auth.isArtist) {
-        destination = const ArtistDashboardScreen();
-      } else {
-        destination = const ClientHomeScreen();
-      }
-
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => destination));
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+  Future<void> _initApp() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+    Navigator.of(context).pushReplacementNamed('/login');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.darkGradient),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.4),
-                      blurRadius: 24,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.content_cut_rounded,
-                    size: 70, color: Colors.white),
+      backgroundColor: FCol.surface,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: FCol.olive,
+                borderRadius: BorderRadius.circular(24),
               ),
-              const SizedBox(height: 24),
-              const Text(
-                'سالن هوشمند',
+              child:
+                  const Icon(Icons.spa_rounded, size: 52, color: Colors.white),
+            ),
+            const SizedBox(height: 20),
+            const Text('سالن زیبایی',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Text('SMART SALON',
-                  style: TextStyle(color: Colors.white60, fontSize: 16)),
-              const SizedBox(height: 60),
-              const CircularProgressIndicator(
-                  color: Colors.white, strokeWidth: 3),
-            ],
-          ),
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    color: FCol.ink)),
+            const SizedBox(height: 6),
+            const Text('رزرو آنلاین خدمات زیبایی',
+                style: TextStyle(fontSize: 13, color: FCol.muted)),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(3, (i) {
+                return AnimatedContainer(
+                  duration: Duration(milliseconds: 400 + (i * 150)),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: FCol.olive.withValues(alpha: 0.5 + (i * 0.17)),
+                    shape: BoxShape.circle,
+                  ),
+                );
+              }),
+            ),
+          ],
         ),
       ),
     );

@@ -29,7 +29,7 @@ import 'package:smart_salon_app/presentation/widgets/dashboard_widgets.dart';
 
 // Onboarding – new (mock 1)
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,7 @@ class OnboardingScreen extends StatelessWidget {
 
 // Home / discovery – restyle
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -79,8 +79,8 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // Featured card
-            FCard(
-              child: const Column(
+            const FCard(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Featured Salon',
@@ -117,7 +117,7 @@ NavItem(Icons.person, 'پروفایل')
 
 // Salon profile – restyle
 class SalonDetailScreen extends StatelessWidget {
-  const SalonDetailScreen({Key? key}) : super(key: key);
+  const SalonDetailScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -135,9 +135,9 @@ class SalonDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // Stats row
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 FStat('4.5', 'امتیاز'),
                 FStat('120', 'نظرات'),
                 FStat('12', 'خدمات')
@@ -181,7 +181,7 @@ class SalonDetailScreen extends StatelessWidget {
 
 // Artist public page – new
 class ArtistPublicScreen extends StatelessWidget {
-  const ArtistPublicScreen({Key? key}) : super(key: key);
+  const ArtistPublicScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -235,7 +235,7 @@ class ArtistPublicScreen extends StatelessWidget {
 
 // Blog list – new
 class BlogListScreen extends StatelessWidget {
-  const BlogListScreen({Key? key}) : super(key: key);
+  const BlogListScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -263,7 +263,7 @@ class BlogListScreen extends StatelessWidget {
 // Blog post – new
 class BlogPostScreen extends StatelessWidget {
   final String postId;
-  const BlogPostScreen(this.postId, {Key? key}) : super(key: key);
+  const BlogPostScreen(this.postId, {super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -282,7 +282,7 @@ class BlogPostScreen extends StatelessWidget {
 
 // Join‑salon form – new
 class JoinSalonFormScreen extends StatelessWidget {
-  const JoinSalonFormScreen({Key? key}) : super(key: key);
+  const JoinSalonFormScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -293,12 +293,12 @@ class JoinSalonFormScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'نام سالن'),
+              const TextField(
+                decoration: InputDecoration(labelText: 'نام سالن'),
               ),
               const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(labelText: 'آدرس'),
+              const TextField(
+                decoration: InputDecoration(labelText: 'آدرس'),
               ),
               const SizedBox(height: 8),
               FPrimaryButton('ثبت', onTap: () {
@@ -312,7 +312,7 @@ class JoinSalonFormScreen extends StatelessWidget {
 
 // Login / Register / OTP – restyle
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('ورود'), backgroundColor: FCol.ink),
@@ -320,13 +320,13 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'ایمیل یا شماره تلفن'),
+              const TextField(
+                decoration: InputDecoration(labelText: 'ایمیل یا شماره تلفن'),
               ),
               const SizedBox(height: 8),
-              TextField(
+              const TextField(
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'رمز عبور'),
+                decoration: InputDecoration(labelText: 'رمز عبور'),
               ),
               const SizedBox(height: 12),
               FPrimaryButton('ورود', onTap: () {
@@ -348,7 +348,7 @@ class BookingFlowScreen extends StatefulWidget {
   State<BookingFlowScreen> createState() => _BookingFlowScreenState();
 }
 class _BookingFlowScreenState extends State<BookingFlowScreen> {
-  int _step = 0;
+  int step = 0;
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -356,9 +356,9 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
           backgroundColor: FCol.ink,
         ),
         body: Stepper(
-          currentStep: _step,
-          onStepContinue: () => setState(() => _step = (_step + 1).clamp(0, 3)),
-          onStepCancel: () => setState(() => _step = (_step - 1).clamp(0, 3)),
+          currentStep: step,
+          onStepContinue: () => setState(() => step = (step + 1).clamp(0, 3)),
+          onStepCancel: () => setState(() => step = (step - 1).clamp(0, 3)),
           steps: [
             Step(
                 title: const Text('انتخاب آرتیست'),
@@ -380,12 +380,12 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
                       (i) => FSlot('${i + 9}:00',
                           state: FSlotState.free, onTap: () {})),
                 )),
-            Step(
-                title: const Text('اطلاعات پرداخت'),
-                content: const Text('در اینجا فرم پرداخت نمایش می‌شود.')),
-            Step(
-                title: const Text('تایید نهایی'),
-                content: const Text('خلاصه رزرو و دکمه پرداخت نهایی.')),
+            const Step(
+                title: Text('اطلاعات پرداخت'),
+                content: Text('در اینجا فرم پرداخت نمایش می‌شود.')),
+            const Step(
+                title: Text('تایید نهایی'),
+                content: Text('خلاصه رزرو و دکمه پرداخت نهایی.')),
           ],
         ),
         bottomNavigationBar:
@@ -415,7 +415,7 @@ class MyAppointmentsScreen extends StatelessWidget {
                 leading: const Icon(Icons.event),
                 title: Text('نوبت $i'),
                 subtitle: const Text('جزئیات نوبت...'),
-                trailing: FStatusChip('در انتظار', Colors.orange),
+                trailing: const FStatusChip('در انتظار', Colors.orange),
               ),
             ),
           ),
@@ -511,9 +511,9 @@ class FeedbackScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              TextField(
+              const TextField(
                 maxLines: 5,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                     labelText: 'متن بازخورد',
                     border: OutlineInputBorder()),
               ),
@@ -652,16 +652,16 @@ class LeaveRequestScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Column(
             children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'دلیل مرخصی'),
+              const TextField(
+                decoration: InputDecoration(labelText: 'دلیل مرخصی'),
               ),
               const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(labelText: 'تاریخ شروع'),
+              const TextField(
+                decoration: InputDecoration(labelText: 'تاریخ شروع'),
               ),
               const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(labelText: 'تاریخ پایان'),
+              const TextField(
+                decoration: InputDecoration(labelText: 'تاریخ پایان'),
               ),
               const SizedBox(height: 12),
               FPrimaryButton('ارسال', onTap: () {

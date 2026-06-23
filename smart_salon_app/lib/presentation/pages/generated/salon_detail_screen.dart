@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
 
 class SalonDetailScreen extends StatelessWidget {
-  const SalonDetailScreen({Key? key}) : super(key: key);
+  const SalonDetailScreen({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -18,9 +18,9 @@ class SalonDetailScreen extends StatelessWidget {
               child: const Icon(Icons.photo, size: 80, color: FCol.ink),
             ),
             const SizedBox(height: 12),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 FStat('4.5', 'امتیاز'),
                 FStat('120', 'نظرات'),
                 FStat('12', 'خدمات')
