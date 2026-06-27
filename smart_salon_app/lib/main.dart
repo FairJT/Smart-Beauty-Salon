@@ -149,6 +149,7 @@ class SmartSalonApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         useMaterial3: true,
+        fontFamily: 'IRANSans',
         scaffoldBackgroundColor: AppColors.background,
         textTheme: AppTextTheme.farsi(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
@@ -227,6 +228,32 @@ class SmartSalonApp extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: AppSpacing.borderRadiusMd,
           ),
+        ),
+        dividerTheme: const DividerThemeData(
+          color: AppColors.border,
+          thickness: 1,
+          space: 1,
+        ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: AppColors.textSecondary,
+          contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+        ),
+        tabBarTheme: const TabBarThemeData(
+          labelColor: AppColors.primary,
+          unselectedLabelColor: AppColors.textMuted,
+          indicatorColor: AppColors.primary,
+          dividerColor: AppColors.border,
+          labelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: AppColors.background,
+          side: const BorderSide(color: AppColors.border),
+          labelStyle:
+              const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          shape:
+              RoundedRectangleBorder(borderRadius: AppSpacing.borderRadiusSm),
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.xs, vertical: 4),
         ),
       ),
       home: const SplashScreen(),

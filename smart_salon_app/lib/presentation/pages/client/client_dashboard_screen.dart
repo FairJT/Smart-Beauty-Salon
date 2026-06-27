@@ -4,6 +4,7 @@ import '../../../core/app_colors.dart';
 import '../../../core/format/jalaali_helper.dart';
 import '../../providers/dashboard_provider.dart';
 import '../../widgets/dashboard_widgets.dart';
+import '../../widgets/ui_kit.dart';
 import '../client_home_screen.dart';
 
 class ClientDashboardScreen extends ConsumerStatefulWidget {
@@ -78,24 +79,16 @@ class _ClientDashboardScreenState extends ConsumerState<ClientDashboardScreen> {
             title: 'دسترسی سریع',
             child: Column(
               children: [
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.event_available,
-                      color: AppColors.primary),
-                  title:
-                      const Text('نوبت‌های من', style: TextStyle(fontSize: 14)),
-                  trailing: const Icon(Icons.chevron_left,
-                      color: AppColors.textSecondary),
+                AppListRow(
+                  icon: Icons.event_available,
+                  title: 'نوبت‌های من',
+                  tint: AppColors.primary,
                   onTap: () => Navigator.pushNamed(context, '/my-appointments'),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.favorite_outline,
-                      color: AppColors.danger),
-                  title: const Text('سالن‌های مورد علاقه',
-                      style: TextStyle(fontSize: 14)),
-                  trailing: const Icon(Icons.chevron_left,
-                      color: AppColors.textSecondary),
+                AppListRow(
+                  icon: Icons.favorite_outline,
+                  title: 'سالن‌های مورد علاقه',
+                  tint: AppColors.danger,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const ClientHomeScreen()),
@@ -135,17 +128,13 @@ class _ClientDashboardScreenState extends ConsumerState<ClientDashboardScreen> {
               title: 'سالن‌های مورد علاقه',
               child: Column(
                 children: data.favoriteSalons
-                    .map((f) => ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: const Icon(Icons.favorite,
-                              color: AppColors.danger),
-                          title: Text(f.salonName,
-                              style: const TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500)),
+                    .map((f) => AppListRow(
+                          icon: Icons.favorite,
+                          title: f.salonName,
+                          tint: AppColors.danger,
                           trailing: Text(f.ratingAvg.toStringAsFixed(1),
                               style: const TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 12)),
+                                  color: AppColors.textSecondary)),
                         ))
                     .toList(),
               ),

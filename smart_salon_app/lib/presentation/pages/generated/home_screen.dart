@@ -37,11 +37,11 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Featured Salon',
+                  Text('سالن منتخب',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   SizedBox(height: 8),
-                  Text('Lorem ipsum dolor sit amet...'),
+                  Text('توضیحات سالن در اینجا نمایش داده می‌شود.'),
                 ],
               ),
             ),
@@ -51,8 +51,8 @@ class HomeScreen extends StatelessWidget {
               (i) => FCard(
                 child: ListTile(
                   leading: const Icon(Icons.store),
-                  title: Text('Salon $i'),
-                  subtitle: Text('Address $i'),
+                  title: Text('سالن $i'),
+                  subtitle: Text('آدرس $i'),
                 ),
               ),
             ),

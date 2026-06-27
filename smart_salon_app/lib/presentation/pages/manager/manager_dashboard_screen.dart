@@ -4,7 +4,8 @@ import '../../../core/app_colors.dart';
 import '../../../core/format/money_formatter.dart';
 import '../../providers/dashboard_provider.dart';
 import '../../widgets/dashboard_widgets.dart';
-import '../home_screen.dart';
+import '../../widgets/ui_kit.dart';
+import '../generated/home_screen.dart';
 import 'artist_management_screen.dart';
 import 'catalog_management_screen.dart';
 import 'finance_screen.dart';
@@ -32,11 +33,13 @@ class _ManagerDashboardScreenState
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(salonManagerDashboardProvider);
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('داشبورد مدیریت',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('داشبورد مدیریت',
+            style: textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white)),
         actions: [
           IconButton(
             icon: const Icon(Icons.home_outlined),
@@ -52,6 +55,7 @@ class _ManagerDashboardScreenState
   }
 
   Widget _buildBody(SalonManagerDashboardState state) {
+    final textTheme = Theme.of(context).textTheme;
     if (state.loading) return const LoadingState();
     if (state.error != null) {
       return ErrorState(
@@ -111,13 +115,11 @@ class _ManagerDashboardScreenState
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(a.artistName,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13)),
+                                      style: textTheme.bodySmall?.copyWith(
+                                          fontWeight: FontWeight.w500)),
                                   Text('${a.todayAppointments} نوبت',
-                                      style: const TextStyle(
-                                          color: AppColors.textSecondary,
-                                          fontSize: 12)),
+                                      style: textTheme.bodySmall?.copyWith(
+                                          color: AppColors.textSecondary)),
                                 ],
                               ),
                               const SizedBox(height: 4),
@@ -141,42 +143,33 @@ class _ManagerDashboardScreenState
             title: 'مدیریت سالن',
             child: Column(
               children: [
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.people_alt_outlined,
-                      color: AppColors.primary),
-                  title: const Text('مدیریت هنرمندان',
-                      style: TextStyle(fontSize: 14)),
-                  trailing: const Icon(Icons.chevron_left,
-                      color: AppColors.textSecondary),
+                AppListRow(
+                  icon: Icons.people_alt_outlined,
+                  title: 'مدیریت هنرمندان',
+                  subtitle: 'افزودن و ویرایش پرسنل',
+                  tint: AppColors.primary,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => const ArtistManagementScreen()),
                   ),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading:
-                      const Icon(Icons.content_cut, color: AppColors.primary),
-                  title: const Text('مدیریت خدمات',
-                      style: TextStyle(fontSize: 14)),
-                  trailing: const Icon(Icons.chevron_left,
-                      color: AppColors.textSecondary),
+                AppListRow(
+                  icon: Icons.content_cut,
+                  title: 'مدیریت خدمات',
+                  subtitle: 'افزودن و ویرایش سرویس‌ها',
+                  tint: AppColors.primary,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (_) => const CatalogManagementScreen()),
                   ),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.account_balance_wallet_outlined,
-                      color: AppColors.success),
-                  title:
-                      const Text('امور مالی', style: TextStyle(fontSize: 14)),
-                  trailing: const Icon(Icons.chevron_left,
-                      color: AppColors.textSecondary),
+                AppListRow(
+                  icon: Icons.account_balance_wallet_outlined,
+                  title: 'امور مالی',
+                  subtitle: 'مشاهده گزارش‌های مالی',
+                  tint: AppColors.success,
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const FinanceScreen()),

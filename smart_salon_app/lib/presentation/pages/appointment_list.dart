@@ -5,6 +5,7 @@ import '../../domain/entities/appointment_entity.dart';
 import '../../data/datasources/dio_client.dart';
 import '../../data/datasources/api_constants.dart';
 import '../providers/appointment_provider.dart';
+import '../widgets/ui_kit.dart';
 
 class AppointmentList extends ConsumerStatefulWidget {
   const AppointmentList({super.key});
@@ -40,7 +41,8 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
             Text(state.error!, style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => ref.read(appointmentListProvider.notifier).load(),
+              onPressed: () =>
+                  ref.read(appointmentListProvider.notifier).load(),
               child: const Text('تلاش مجدد'),
             ),
           ],
@@ -55,7 +57,7 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
           children: [
             Icon(Icons.calendar_today_outlined, size: 60, color: Colors.grey),
             SizedBox(height: 12),
-            Text('هنوز رزروی ندارید', style: TextStyle(color: Colors.grey, fontSize: 16)),
+            Text('هنوز رزروی ندارید', style: TextStyle(color: Colors.grey)),
           ],
         ),
       );
@@ -82,7 +84,9 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
         title: const Text('لغو نوبت'),
         content: const Text('آیا مطمئنید می‌خواهید این نوبت را لغو کنید؟'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('خیر')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('خیر')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
             onPressed: () => Navigator.pop(context, true),
@@ -97,7 +101,9 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
         await ref.read(appointmentListProvider.notifier).cancel(id);
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('نوبت با موفقیت لغو شد'), backgroundColor: Colors.green),
+          const SnackBar(
+              content: Text('نوبت با موفقیت لغو شد'),
+              backgroundColor: Colors.green),
         );
       } catch (e) {
         if (!mounted) return;
@@ -138,13 +144,17 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
               const SizedBox(height: 12),
               TextField(
                 controller: commentController,
-                decoration: const InputDecoration(labelText: 'نظر شما (اختیاری)', border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                    labelText: 'نظر شما (اختیاری)',
+                    border: OutlineInputBorder()),
                 maxLines: 2,
               ),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: const Text('انصراف')),
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('انصراف')),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.amber),
               onPressed: () async {
@@ -152,17 +162,24 @@ class _AppointmentListState extends ConsumerState<AppointmentList> {
                 try {
                   await DioClient.instance.post(
                     '${ApiConstants.appointments}/$id/rate',
-                    data: {'rating': selectedRating, 'comment': commentController.text},
+                    data: {
+                      'rating': selectedRating,
+                      'comment': commentController.text
+                    },
                   );
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('امتیاز با موفقیت ثبت شد'), backgroundColor: Colors.amber),
+                    const SnackBar(
+                        content: Text('امتیاز با موفقیت ثبت شد'),
+                        backgroundColor: Colors.amber),
                   );
                   ref.read(appointmentListProvider.notifier).load();
                 } catch (e) {
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
+                    SnackBar(
+                        content: Text(e.toString()),
+                        backgroundColor: Colors.red),
                   );
                 }
               },
@@ -188,8 +205,8 @@ class _AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final status = appointment.status;
-    final statusColor = AppColors.statusColor(status);
     final isRated = appointment.isRated;
 
     return Card(
@@ -204,28 +221,18 @@ class _AppointmentCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(appointment.salonName ?? '',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      style: textTheme.titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold)),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: statusColor),
-                  ),
-                  child: Text(
-                    appointment.statusText,
-                    style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ),
+                StatusPill(status),
               ],
             ),
             const Divider(height: 20),
-            _row(Icons.spa_outlined, appointment.serviceName ?? ''),
-            _row(Icons.person_outline, appointment.artistName ?? ''),
-            _row(Icons.calendar_today_outlined,
+            _row(textTheme, Icons.spa_outlined, appointment.serviceName ?? ''),
+            _row(textTheme, Icons.person_outline, appointment.artistName ?? ''),
+            _row(textTheme, Icons.calendar_today_outlined,
                 '${appointment.startTime.year}/${appointment.startTime.month}/${appointment.startTime.day}  ساعت  ${appointment.startTime.hour}:${appointment.startTime.minute.toString().padLeft(2, '0')}'),
-            _row(Icons.attach_money,
+            _row(textTheme, Icons.attach_money,
                 '${appointment.estimatedPrice} تومان  |  بیعانه: ${appointment.depositAmount} تومان'),
             if ((status == 1 || status == 2) && !isRated)
               Padding(
@@ -236,7 +243,8 @@ class _AppointmentCard extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.danger,
                       side: const BorderSide(color: AppColors.danger),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     icon: const Icon(Icons.cancel_outlined, size: 18),
                     label: const Text('لغو نوبت'),
@@ -253,7 +261,8 @@ class _AppointmentCard extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     icon: const Icon(Icons.star, size: 18),
                     label: const Text('ثبت امتیاز'),
@@ -279,14 +288,14 @@ class _AppointmentCard extends StatelessWidget {
     );
   }
 
-  Widget _row(IconData icon, String text) {
+  Widget _row(TextTheme textTheme, IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(
         children: [
           Icon(icon, size: 16, color: AppColors.primary),
           const SizedBox(width: 8),
-          Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
+          Expanded(child: Text(text, style: textTheme.bodyMedium)),
         ],
       ),
     );

@@ -6,7 +6,7 @@ import '../../core/format/jalaali_helper.dart';
 import '../providers/dashboard_provider.dart';
 import '../providers/favorites_provider.dart';
 import '../widgets/dashboard_widgets.dart';
-import 'home_screen.dart';
+import 'generated/home_screen.dart';
 import 'profile_screen.dart';
 import 'appointment_list.dart';
 import 'salon_detail_screen.dart';

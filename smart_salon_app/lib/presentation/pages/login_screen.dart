@@ -77,6 +77,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: FCol.surface,
       body: SafeArea(
@@ -100,21 +101,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              const Center(
+              Center(
                 child: Text(
                   'ورود به سالن زیبایی',
-                  style: TextStyle(
-                    fontSize: 20,
+                  style: textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: FCol.ink,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              const Center(
+              Center(
                 child: Text(
                   'شماره موبایل خود را وارد کنید',
-                  style: TextStyle(fontSize: 13, color: FCol.muted),
+                  style: textTheme.bodySmall?.copyWith(
+                    color: FCol.muted,
+                  ),
                 ),
               ),
               const SizedBox(height: 36),
@@ -173,10 +175,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   label: Text(
                     'ورود به عنوان مهمان',
-                    style: TextStyle(
-                      fontSize: 14,
+                    style: textTheme.titleMedium?.copyWith(
                       color: FCol.olive,
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   style: TextButton.styleFrom(
@@ -193,8 +193,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onTap: _guestBrowse,
                   child: Text(
                     'مرور بدون ورود',
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: textTheme.bodySmall?.copyWith(
                       color: FCol.muted,
                       decoration: TextDecoration.underline,
                     ),

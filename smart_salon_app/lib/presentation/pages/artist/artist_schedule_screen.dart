@@ -6,6 +6,7 @@ import '../../../data/datasources/dio_client.dart';
 import '../../../data/datasources/api_constants.dart';
 import '../../providers/artist_schedule_provider.dart';
 import '../../providers/auth_provider.dart';
+import '../../widgets/ui_kit.dart';
 import '../login_screen.dart';
 
 class ArtistScheduleScreen extends ConsumerStatefulWidget {
@@ -30,11 +31,12 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
     final state = ref.watch(artistScheduleProvider);
     final auth = ref.watch(authProvider);
     final userName = auth.user?.fullName ?? 'هنرمند';
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
         title: Text('برنامه کاری - $userName',
-            style: const TextStyle(fontWeight: FontWeight.bold)),
+            style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -64,14 +66,16 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
   }
 
   Widget _buildEmpty() {
-    return const Center(
+    final textTheme = Theme.of(context).textTheme;
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.event_available_outlined, size: 60, color: Colors.grey),
-          SizedBox(height: 12),
+          Icon(Icons.event_available_outlined,
+              size: 60, color: AppColors.primary),
+          const SizedBox(height: 12),
           Text('هیچ نوبتی در برنامه شما نیست',
-              style: TextStyle(color: Colors.grey, fontSize: 16)),
+              style: textTheme.bodyLarge?.copyWith(color: AppColors.primary)),
         ],
       ),
     );
@@ -84,11 +88,11 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.wifi_off, size: 60, color: Colors.grey),
+            Icon(Icons.wifi_off, size: 60, color: AppColors.primary),
             const SizedBox(height: 12),
             Text(error,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey)),
+                style: TextStyle(color: AppColors.primary)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => ref.read(artistScheduleProvider.notifier).load(),
@@ -102,7 +106,7 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
 
   Widget _buildList(ArtistScheduleState state) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.pagePadding,
       itemCount: state.appointments.length,
       itemBuilder: (_, i) => _AppointmentCard(
         appointment: state.appointments[i],
@@ -162,14 +166,14 @@ class _AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final status = appointment.status;
-    final statusColor = AppColors.statusColor(status);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.pagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -181,37 +185,22 @@ class _AppointmentCard extends StatelessWidget {
                     children: [
                       Text(
                         appointment.salonName ?? '',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                        style: textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         appointment.serviceName ?? '',
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 14),
+                        style: textTheme.bodyMedium
+                            ?.copyWith(color: AppColors.primary),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: statusColor),
-                  ),
-                  child: Text(
-                    appointment.statusText,
-                    style: TextStyle(
-                        color: statusColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                StatusPill(status),
               ],
             ),
-            const Divider(height: 20),
+            const AppDivider(),
             Row(
               children: [
                 const Icon(Icons.calendar_today_outlined,
@@ -219,7 +208,7 @@ class _AppointmentCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   '${appointment.startTime.year}/${appointment.startTime.month.toString().padLeft(2, '0')}/${appointment.startTime.day.toString().padLeft(2, '0')}',
-                  style: const TextStyle(fontSize: 14),
+                  style: textTheme.bodyMedium,
                 ),
                 const SizedBox(width: 16),
                 const Icon(Icons.access_time,
@@ -227,7 +216,7 @@ class _AppointmentCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   '${appointment.startTime.hour}:${appointment.startTime.minute.toString().padLeft(2, '0')} - ${appointment.endTime.hour}:${appointment.endTime.minute.toString().padLeft(2, '0')}',
-                  style: const TextStyle(fontSize: 14),
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),
@@ -239,7 +228,7 @@ class _AppointmentCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   '${appointment.estimatedPrice.toStringAsFixed(0)} تومان',
-                  style: const TextStyle(fontSize: 14),
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),

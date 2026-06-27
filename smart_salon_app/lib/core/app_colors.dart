@@ -62,7 +62,8 @@ class AppColors {
   static const Color textPrimary = Color(0xFF1E1B4B);
   static const Color textSecondary = Color(0xFF6B7280);
   static const Color textMuted = Color(0xFF9CA3AF);
-  static const Color border = Color(0x1A000000);
+  static const Color border = Color(0xFFECEDEF); // hairline
+  static const Color borderStrong = Color(0xFFDDE0E4); // dividers under headers
 
   // Extra colors used in screens
   static const Color gray = Color(0xFF9E9E9E);

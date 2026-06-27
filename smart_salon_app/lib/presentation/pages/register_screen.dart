@@ -46,6 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: FCol.surface,
       appBar: AppBar(
@@ -63,21 +64,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 20),
-              const Center(
+              Center(
                 child: Text(
                   'تکمیل پروفایل',
-                  style: TextStyle(
-                    fontSize: 20,
+                  style: textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: FCol.ink,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              const Center(
+              Center(
                 child: Text(
                   'اطلاعات خود را تکمیل کنید',
-                  style: TextStyle(fontSize: 13, color: FCol.muted),
+                  style: textTheme.bodySmall?.copyWith(
+                    color: FCol.muted,
+                  ),
                 ),
               ),
               const SizedBox(height: 36),
@@ -108,11 +110,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              const Text('نام و نام خانوادگی',
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: FCol.ink)),
+              Text('نام و نام خانوادگی',
+                  style: textTheme.titleMedium?.copyWith(
+                    color: FCol.ink,
+                  )),
               const SizedBox(height: 8),
               FCard(
                 child: TextField(
@@ -127,11 +128,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text('شهر (اختیاری)',
-                  style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: FCol.ink)),
+              Text('شهر (اختیاری)',
+                  style: textTheme.titleMedium?.copyWith(
+                    color: FCol.ink,
+                  )),
               const SizedBox(height: 8),
               FCard(
                 child: DropdownButtonFormField<String>(

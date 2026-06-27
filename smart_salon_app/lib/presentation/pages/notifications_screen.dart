@@ -8,7 +8,8 @@ class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
-  ConsumerState<NotificationsScreen> createState() => _NotificationsScreenState();
+  ConsumerState<NotificationsScreen> createState() =>
+      _NotificationsScreenState();
 }
 
 class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
@@ -30,8 +31,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
         actions: [
           if (state.notifications.any((n) => !n.isRead))
             TextButton(
-              onPressed: () => ref.read(notificationProvider.notifier).markAllAsRead(),
-              child: const Text('همه خوانده شد', style: TextStyle(color: Colors.white)),
+              onPressed: () =>
+                  ref.read(notificationProvider.notifier).markAllAsRead(),
+              child: const Text('همه خوانده شد',
+                  style: TextStyle(color: Colors.white)),
             ),
         ],
       ),
@@ -42,9 +45,11 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.notifications_none, size: 60, color: Colors.grey),
+                      Icon(Icons.notifications_none,
+                          size: 60, color: Colors.grey),
                       SizedBox(height: 12),
-                      Text('اعلانی ندارید', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                      Text('اعلانی ندارید',
+                          style: TextStyle(color: Colors.grey)),
                     ],
                   ),
                 )
@@ -53,7 +58,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                   itemCount: state.notifications.length,
                   itemBuilder: (_, i) => _NotificationCard(
                     notification: state.notifications[i],
-                    onRead: () => ref.read(notificationProvider.notifier).markAsRead(state.notifications[i].id),
+                    onRead: () => ref
+                        .read(notificationProvider.notifier)
+                        .markAsRead(state.notifications[i].id),
                   ),
                 ),
     );
@@ -89,7 +96,9 @@ class _NotificationCard extends StatelessWidget {
           child: Icon(icon, color: color, size: 20),
         ),
         title: Text(notification.title,
-            style: TextStyle(fontWeight: notification.isRead ? FontWeight.normal : FontWeight.bold)),
+            style: TextStyle(
+                fontWeight:
+                    notification.isRead ? FontWeight.normal : FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -97,7 +106,10 @@ class _NotificationCard extends StatelessWidget {
             if (notification.createdAt != null) ...[
               const SizedBox(height: 4),
               Text(_formatDate(notification.createdAt!),
-                  style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelSmall
+                      ?.copyWith(color: Colors.grey)),
             ],
           ],
         ),
@@ -115,19 +127,27 @@ class _NotificationCard extends StatelessWidget {
 
   Color _typeColor(String? type) {
     switch (type) {
-      case 'success': return Colors.green;
-      case 'warning': return Colors.orange;
-      case 'error': return Colors.red;
-      default: return AppColors.primary;
+      case 'success':
+        return Colors.green;
+      case 'warning':
+        return Colors.orange;
+      case 'error':
+        return Colors.red;
+      default:
+        return AppColors.primary;
     }
   }
 
   IconData _typeIcon(String? type) {
     switch (type) {
-      case 'success': return Icons.check_circle_outline;
-      case 'warning': return Icons.warning_amber_outlined;
-      case 'error': return Icons.cancel_outlined;
-      default: return Icons.notifications_outlined;
+      case 'success':
+        return Icons.check_circle_outline;
+      case 'warning':
+        return Icons.warning_amber_outlined;
+      case 'error':
+        return Icons.cancel_outlined;
+      default:
+        return Icons.notifications_outlined;
     }
   }
 

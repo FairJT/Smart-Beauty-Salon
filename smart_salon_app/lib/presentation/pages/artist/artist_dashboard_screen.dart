@@ -5,6 +5,7 @@ import '../../../core/format/money_formatter.dart';
 import '../../../core/format/jalaali_helper.dart';
 import '../../providers/dashboard_provider.dart';
 import '../../widgets/dashboard_widgets.dart';
+import '../../widgets/ui_kit.dart';
 import 'artist_schedule_screen.dart';
 
 class ArtistDashboardScreen extends ConsumerStatefulWidget {
@@ -27,11 +28,13 @@ class _ArtistDashboardScreenState extends ConsumerState<ArtistDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(artistDashboardProvider);
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('داشبورد هنرمند',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('داشبورد هنرمند',
+            style: textTheme.titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white)),
       ),
       body: _buildBody(state),
     );
@@ -85,38 +88,17 @@ class _ArtistDashboardScreenState extends ConsumerState<ArtistDashboardScreen> {
                       value: JalaaliHelper.formatDateTime(
                           data.nextAppointment!.startTime)),
                   const SizedBox(height: 4),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.statusColor(data.nextAppointment!.status)
-                          .withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      AppColors.statusText(data.nextAppointment!.status),
-                      style: TextStyle(
-                          color: AppColors.statusColor(
-                              data.nextAppointment!.status),
-                          fontSize: 12),
-                    ),
-                  ),
+                  StatusPill(data.nextAppointment!.status),
                 ],
               ),
             ),
           SummaryCard(
             title: 'برنامه کاری',
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.event_note_outlined,
-                  color: AppColors.primary),
-              title: const Text('برنامه و نوبت‌های من',
-                  style: TextStyle(fontSize: 14)),
-              subtitle: const Text('تأیید و تکمیل نوبت‌ها',
-                  style:
-                      TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-              trailing: const Icon(Icons.chevron_left,
-                  color: AppColors.textSecondary),
+            child: AppListRow(
+              icon: Icons.event_note_outlined,
+              title: 'برنامه و نوبت‌های من',
+              subtitle: 'تأیید و تکمیل نوبت‌ها',
+              tint: AppColors.primary,
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const ArtistScheduleScreen()),

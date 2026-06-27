@@ -29,3 +29,10 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  fonts:
+    - family: IRANSans
+      fonts:
+        - asset: fonts/IRANSansX-Regular.ttf
+          weight: 400
+        - asset: fonts/IRANSansX-Bold.ttf
+          weight: 700
