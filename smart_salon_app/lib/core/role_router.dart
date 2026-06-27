@@ -8,6 +8,8 @@ String roleHome(int userType) {
       return '/manager-dashboard';
     case 3:
       return '/artist-dashboard';
+    case 4:
+      return '/client-dashboard';
     default:
       return '/home';
   }

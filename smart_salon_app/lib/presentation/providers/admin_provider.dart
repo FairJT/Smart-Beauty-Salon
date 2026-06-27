@@ -94,10 +94,44 @@ class AdminSalon {
       );
 }
 
+class AdminTenant {
+  final String id;
+  final String name;
+  final String slug;
+  final String? subscriptionStatus;
+  final String? billingPlan;
+  final bool isActive;
+  final int totalArtists;
+  final int totalAppointments;
+
+  AdminTenant({
+    required this.id,
+    required this.name,
+    required this.slug,
+    this.subscriptionStatus,
+    this.billingPlan,
+    this.isActive = true,
+    this.totalArtists = 0,
+    this.totalAppointments = 0,
+  });
+
+  factory AdminTenant.fromJson(Map<String, dynamic> json) => AdminTenant(
+        id: json['id'] ?? '',
+        name: json['name'] ?? '',
+        slug: json['slug'] ?? '',
+        subscriptionStatus: json['subscriptionStatus'],
+        billingPlan: json['billingPlan'],
+        isActive: json['isActive'] ?? true,
+        totalArtists: json['totalArtists'] ?? 0,
+        totalAppointments: json['totalAppointments'] ?? 0,
+      );
+}
+
 class AdminState {
   final AdminStats? stats;
   final List<AdminUser> users;
   final List<AdminSalon> salons;
+  final List<AdminTenant> tenants;
   final bool loading;
   final String? error;
 
@@ -105,6 +139,7 @@ class AdminState {
     this.stats,
     this.users = const [],
     this.salons = const [],
+    this.tenants = const [],
     this.loading = false,
     this.error,
   });
@@ -113,6 +148,7 @@ class AdminState {
     AdminStats? stats,
     List<AdminUser>? users,
     List<AdminSalon>? salons,
+    List<AdminTenant>? tenants,
     bool? loading,
     String? error,
   }) =>
@@ -120,6 +156,7 @@ class AdminState {
         stats: stats ?? this.stats,
         users: users ?? this.users,
         salons: salons ?? this.salons,
+        tenants: tenants ?? this.tenants,
         loading: loading ?? this.loading,
         error: error,
       );
@@ -159,6 +196,20 @@ class AdminNotifier extends StateNotifier<AdminState> {
       final data = response.data['data'] as List;
       state = state.copyWith(
         salons: data.map((j) => AdminSalon.fromJson(j)).toList(),
+      );
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> loadTenants() async {
+    try {
+      final response =
+          await DioClient.instance.get('${ApiConstants.baseUrl}/admin/tenants');
+      final raw = response.data;
+      final data = raw is List ? raw : (raw['data'] ?? []) as List;
+      state = state.copyWith(
+        tenants: data.map((j) => AdminTenant.fromJson(j)).toList(),
       );
     } catch (e) {
       state = state.copyWith(error: e.toString());
@@ -206,9 +257,18 @@ class AdminNotifier extends StateNotifier<AdminState> {
       state = state.copyWith(error: e.toString());
     }
   }
+
+  Future<void> toggleTenantActive(String tenantId) async {
+    try {
+      await DioClient.instance
+          .put('${ApiConstants.baseUrl}/admin/tenants/$tenantId/toggle-active');
+      await loadTenants();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
 }
 
-final adminProvider =
-    StateNotifierProvider<AdminNotifier, AdminState>((ref) {
+final adminProvider = StateNotifierProvider<AdminNotifier, AdminState>((ref) {
   return AdminNotifier();
 });
