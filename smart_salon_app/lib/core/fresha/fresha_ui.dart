@@ -24,10 +24,10 @@ class FMoneyText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final toman = (rials / 10).round();
-    final s = toman
+    final formatted = toman
         .toString()
         .replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]},');
-    return Text('\${_fa(s)} تومان',
+    return Text('${_fa(formatted)} تومان',
         style: TextStyle(fontSize: size, fontWeight: weight, color: FCol.ink));
   }
 

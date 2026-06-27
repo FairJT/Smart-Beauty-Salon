@@ -21,7 +21,6 @@ export 'generated/admin_dashboard_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:smart_salon_app/core/fresha/fresha_ui.dart';
-import 'package:smart_salon_app/presentation/widgets/dashboard_widgets.dart';
 
 // --------------------------
 // A) Public / Guest screens

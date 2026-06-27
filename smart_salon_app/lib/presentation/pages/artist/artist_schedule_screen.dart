@@ -12,7 +12,8 @@ class ArtistScheduleScreen extends ConsumerStatefulWidget {
   const ArtistScheduleScreen({super.key});
 
   @override
-  ConsumerState<ArtistScheduleScreen> createState() => _ArtistScheduleScreenState();
+  ConsumerState<ArtistScheduleScreen> createState() =>
+      _ArtistScheduleScreenState();
 }
 
 class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
@@ -32,13 +33,14 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('برنامه کاری - $userName', style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('برنامه کاری - $userName',
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await ref.read(authProvider.notifier).logout();
-              if (!mounted) return;
+              if (!context.mounted) return;
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -54,7 +56,8 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
               : state.appointments.isEmpty
                   ? _buildEmpty()
                   : RefreshIndicator(
-                      onRefresh: () => ref.read(artistScheduleProvider.notifier).load(),
+                      onRefresh: () =>
+                          ref.read(artistScheduleProvider.notifier).load(),
                       child: _buildList(state),
                     ),
     );
@@ -83,7 +86,9 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
           children: [
             const Icon(Icons.wifi_off, size: 60, color: Colors.grey),
             const SizedBox(height: 12),
-            Text(error, textAlign: TextAlign.center, style: const TextStyle(color: Colors.grey)),
+            Text(error,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => ref.read(artistScheduleProvider.notifier).load(),
@@ -112,13 +117,15 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
       await DioClient.instance.put('${ApiConstants.appointments}/$id/confirm');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('نوبت تایید شد'), backgroundColor: AppColors.success),
+        const SnackBar(
+            content: Text('نوبت تایید شد'), backgroundColor: AppColors.success),
       );
       ref.read(artistScheduleProvider.notifier).load();
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+            content: Text(e.toString()), backgroundColor: AppColors.danger),
       );
     }
   }
@@ -128,13 +135,15 @@ class _ArtistScheduleScreenState extends ConsumerState<ArtistScheduleScreen> {
       await DioClient.instance.put('${ApiConstants.appointments}/$id/complete');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('نوبت تمام شد'), backgroundColor: AppColors.success),
+        const SnackBar(
+            content: Text('نوبت تمام شد'), backgroundColor: AppColors.success),
       );
       ref.read(artistScheduleProvider.notifier).load();
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+            content: Text(e.toString()), backgroundColor: AppColors.danger),
       );
     }
   }
@@ -172,18 +181,21 @@ class _AppointmentCard extends StatelessWidget {
                     children: [
                       Text(
                         appointment.salonName ?? '',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         appointment.serviceName ?? '',
-                        style: const TextStyle(color: Colors.grey, fontSize: 14),
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 14),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
@@ -191,7 +203,10 @@ class _AppointmentCard extends StatelessWidget {
                   ),
                   child: Text(
                     appointment.statusText,
-                    style: TextStyle(color: statusColor, fontSize: 12, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: statusColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -199,14 +214,16 @@ class _AppointmentCard extends StatelessWidget {
             const Divider(height: 20),
             Row(
               children: [
-                const Icon(Icons.calendar_today_outlined, size: 16, color: AppColors.primary),
+                const Icon(Icons.calendar_today_outlined,
+                    size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Text(
                   '${appointment.startTime.year}/${appointment.startTime.month.toString().padLeft(2, '0')}/${appointment.startTime.day.toString().padLeft(2, '0')}',
                   style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(width: 16),
-                const Icon(Icons.access_time, size: 16, color: AppColors.primary),
+                const Icon(Icons.access_time,
+                    size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Text(
                   '${appointment.startTime.hour}:${appointment.startTime.minute.toString().padLeft(2, '0')} - ${appointment.endTime.hour}:${appointment.endTime.minute.toString().padLeft(2, '0')}',
@@ -217,7 +234,8 @@ class _AppointmentCard extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.attach_money, size: 16, color: AppColors.primary),
+                const Icon(Icons.attach_money,
+                    size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Text(
                   '${appointment.estimatedPrice.toStringAsFixed(0)} تومان',
@@ -236,7 +254,8 @@ class _AppointmentCard extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.success,
                             foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
                           ),
                           icon: const Icon(Icons.check, size: 18),
                           label: const Text('تایید'),
@@ -250,7 +269,8 @@ class _AppointmentCard extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.info,
                             foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
                           ),
                           icon: const Icon(Icons.done_all, size: 18),
                           label: const Text('انجام شد'),
