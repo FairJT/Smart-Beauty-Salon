@@ -16,9 +16,9 @@ import 'presentation/pages/generated/artist_public_screen.dart';
 import 'presentation/pages/artist/artist_dashboard_screen.dart';
 import 'presentation/pages/manager/manager_dashboard_screen.dart';
 import 'presentation/pages/admin/admin_dashboard.dart';
-import 'presentation/pages/client/client_dashboard_screen.dart';
 import 'presentation/pages/generated/my_appointments_screen.dart';
 import 'presentation/pages/generated/booking_flow_screen.dart';
+import 'presentation/pages/main_shell.dart';
 import 'widgets/error_boundary.dart';
 
 void main() async {
@@ -126,8 +126,7 @@ class SmartSalonApp extends StatelessWidget {
           case '/admin-dashboard':
             return MaterialPageRoute(builder: (_) => const AdminDashboard());
           case '/client-dashboard':
-            return MaterialPageRoute(
-                builder: (_) => const ClientDashboardScreen());
+            return MaterialPageRoute(builder: (_) => const MainShell());
           case '/my-appointments':
             return MaterialPageRoute(
                 builder: (_) => const MyAppointmentsScreen());

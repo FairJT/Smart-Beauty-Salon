@@ -57,7 +57,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             _buildLoyaltyLevel(_user!.loyaltyPoints),
           const SizedBox(height: 16),
           _buildMenuItem(
-              icon: Icons.calendar_month, title: 'رزروهای من', onTap: () {}),
+              icon: Icons.calendar_month,
+              title: 'رزروهای من',
+              onTap: () => Navigator.of(context).pushNamed('/my-appointments')),
           Card(
             margin: const EdgeInsets.only(bottom: 8),
             shape:
@@ -95,9 +97,23 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
           ),
           _buildMenuItem(
-              icon: Icons.help_outline, title: 'راهنما', onTap: () {}),
+              icon: Icons.help_outline,
+              title: 'راهنما',
+              onTap: () => showDialog(
+                    context: context,
+                    builder: (_) => const AlertDialog(
+                      title: Text('راهنما'),
+                      content: Text('برای پشتیبانی با ما در ارتباط باشید.'),
+                    ),
+                  )),
           _buildMenuItem(
-              icon: Icons.info_outline, title: 'درباره ما', onTap: () {}),
+              icon: Icons.info_outline,
+              title: 'درباره ما',
+              onTap: () => showAboutDialog(
+                    context: context,
+                    applicationName: 'سالن هوشمند',
+                    applicationVersion: '۱.۰.۰',
+                  )),
           const SizedBox(height: 20),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(

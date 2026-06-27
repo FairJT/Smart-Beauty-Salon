@@ -58,11 +58,19 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: FBottomNav(index: 0, onTap: (_) {}, items: const [
-          (icon: Icons.home, label: 'خانه'),
-          (icon: Icons.calendar_today, label: 'رزرو'),
-          (icon: Icons.bookmark, label: 'نوبتها'),
-          (icon: Icons.person, label: 'پروفایل')
-        ]),
+        bottomNavigationBar: FBottomNav(
+            index: 0,
+            onTap: (i) {
+              if (i == 0) return;
+              Navigator.of(context).pushReplacementNamed(
+                i == 3 ? '/profile' : '/login',
+              );
+            },
+            items: const [
+              (icon: Icons.home, label: 'خانه'),
+              (icon: Icons.calendar_today, label: 'رزرو'),
+              (icon: Icons.bookmark, label: 'نوبتها'),
+              (icon: Icons.person, label: 'پروفایل')
+            ]),
       );
 }
