@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/fresha/fresha_ui.dart';
 import '../../presentation/providers/auth_provider.dart';
+import '../../core/role_router.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -33,14 +35,37 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
     setState(() => _loading = true);
-    final success =
-        await ref.read(authProvider.notifier).login(phone, password);
-    setState(() => _loading = false);
-    if (success && mounted) {
-      Navigator.of(context).pushReplacementNamed('/home');
-    } else if (mounted) {
+    try {
+      final success =
+          await ref.read(authProvider.notifier).login(phone, password);
+      setState(() => _loading = false);
+      if (success && mounted) {
+        final ut = ref.read(authProvider).user?.userType ?? 4;
+        Navigator.of(context).pushReplacementNamed(roleHome(ut));
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('ورود ناموفق — شماره یا رمز عبور اشتباه است')),
+        );
+      }
+    } on DioException catch (e) {
+      setState(() => _loading = false);
+      if (!mounted) return;
+      final msg = e.type == DioExceptionType.connectionTimeout ||
+              e.type == DioExceptionType.receiveTimeout ||
+              e.type == DioExceptionType.connectionError
+          ? 'خطا در اتصال به سرور — لطفاً اینترنت خود را بررسی کنید'
+          : 'خطای شبکه: ${e.message}';
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('ورود ناموفق')),
+        SnackBar(content: Text(msg), backgroundColor: Colors.red.shade700),
+      );
+    } catch (e) {
+      setState(() => _loading = false);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('خطای غیرمنتظره: $e'),
+            backgroundColor: Colors.red.shade700),
       );
     }
   }

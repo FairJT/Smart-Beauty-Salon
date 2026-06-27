@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,37 +7,29 @@ import 'l10n/app_localizations.dart';
 import 'presentation/pages/splash_screen.dart';
 import 'presentation/pages/generated/onboarding_screen.dart';
 import 'presentation/pages/login_screen.dart';
-import 'presentation/pages/otp_screen.dart';
 import 'presentation/pages/register_screen.dart';
 import 'presentation/pages/generated/home_screen.dart';
 import 'presentation/pages/generated/salon_detail_screen.dart';
 import 'presentation/pages/booking_screen.dart';
 import 'presentation/pages/profile_screen.dart';
-import 'presentation/pages/generated/onboarding_screen.dart';
 import 'presentation/pages/generated/artist_public_screen.dart';
 import 'presentation/pages/generated/artist_dashboard_screen.dart';
 import 'presentation/pages/generated/manager_dashboard_screen.dart';
 import 'presentation/pages/generated/admin_dashboard_screen.dart';
-import 'presentation/pages/generated/salon_detail_screen.dart';
 import 'presentation/pages/generated/my_appointments_screen.dart';
-import 'presentation/pages/generated/home_screen.dart';
 import 'presentation/pages/generated/booking_flow_screen.dart';
 import 'widgets/error_boundary.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
   ));
-
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
   };
-
   ErrorWidget.builder = (details) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -66,8 +59,17 @@ void main() async {
       ),
     );
   };
-
-  runApp(const ProviderScope(child: SmartSalonApp()));
+  runZonedGuarded(
+    () => runApp(const ProviderScope(child: SmartSalonApp())),
+    (error, stack) {
+      FlutterError.presentError(FlutterErrorDetails(
+        exception: error,
+        stack: stack,
+        library: 'SmartSalon',
+        context: ErrorDescription('Uncaught async error in root zone'),
+      ));
+    },
+  );
 }
 
 class SmartSalonApp extends StatelessWidget {
@@ -91,8 +93,6 @@ class SmartSalonApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const OnboardingScreen());
           case '/login':
             return MaterialPageRoute(builder: (_) => const LoginScreen());
-          case '/otp':
-            return MaterialPageRoute(builder: (_) => const OtpScreen());
           case '/register':
             return MaterialPageRoute(builder: (_) => const RegisterScreen());
           case '/home':
@@ -101,15 +101,16 @@ class SmartSalonApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const SalonDetailScreen());
           case '/booking':
             return MaterialPageRoute(
-                builder: (_) => const BookingScreen(
-                      slug: 'default',
-                      artistId: '',
-                      artistName: '',
-                      serviceId: '',
-                      serviceName: '',
-                      durationMinutes: 0,
-                      price: 0,
-                    ));
+              builder: (_) => const BookingScreen(
+                slug: 'default',
+                artistId: '',
+                artistName: '',
+                serviceId: '',
+                serviceName: '',
+                durationMinutes: 0,
+                price: 0,
+              ),
+            );
           case '/profile':
             return MaterialPageRoute(builder: (_) => const ProfileScreen());
           case '/artist-public':
@@ -146,8 +147,6 @@ class SmartSalonApp extends StatelessWidget {
         ),
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.background,
-        fontFamily: 'Vazirmatn',
-        fontFamilyFallback: const ['Vazirmatn'],
         textTheme: AppTextTheme.farsi(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         ),

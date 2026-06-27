@@ -12,17 +12,8 @@
   <link rel="icon" type="image/png" href="favicon.png"/>
   <title>smart_salon_app</title>
   <link rel="manifest" href="manifest.json">
-  <script>
-    window.onerror = function(msg, url, line, col, err) {
-      document.body.innerHTML = '<pre style="color:red;white-space:pre-wrap">ERROR: ' + msg + '\n' + (err ? err.stack : '') + '</pre>';
-    };
-    window.addEventListener('unhandledrejection', function(e) {
-      document.body.innerHTML = '<pre style="color:red;white-space:pre-wrap">PROMISE REJECTION: ' + e.reason + '\n' + (e.reason && e.reason.stack ? e.reason.stack : '') + '</pre>';
-    });
-  </script>
-  <script src="flutter.js"></script>
-  <script src="main.dart.js"></script>
 </head>
 <body>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

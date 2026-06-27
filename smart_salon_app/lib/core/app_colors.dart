@@ -144,71 +144,32 @@ class AppColors {
 class AppTextTheme {
   static TextTheme farsi({required ColorScheme colorScheme}) {
     return const TextTheme(
-      displayLarge: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-          height: 1.3),
-      displayMedium: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          height: 1.3),
-      headlineLarge: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          height: 1.4),
-      headlineMedium: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          height: 1.4),
-      headlineSmall: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          height: 1.4),
-      titleLarge: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          height: 1.4),
-      titleMedium: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          height: 1.4),
-      bodyLarge: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 16,
-          fontWeight: FontWeight.normal,
-          height: 1.6),
-      bodyMedium: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 14,
-          fontWeight: FontWeight.normal,
-          height: 1.6),
-      bodySmall: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-          height: 1.5),
-      labelLarge: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          height: 1.4),
-      labelMedium: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          height: 1.4),
-      labelSmall: TextStyle(
-          fontFamily: 'Vazirmatn',
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
-          height: 1.4),
+      displayLarge:
+          TextStyle(fontSize: 28, fontWeight: FontWeight.bold, height: 1.3),
+      displayMedium:
+          TextStyle(fontSize: 24, fontWeight: FontWeight.bold, height: 1.3),
+      headlineLarge:
+          TextStyle(fontSize: 22, fontWeight: FontWeight.bold, height: 1.4),
+      headlineMedium:
+          TextStyle(fontSize: 18, fontWeight: FontWeight.w600, height: 1.4),
+      headlineSmall:
+          TextStyle(fontSize: 16, fontWeight: FontWeight.w600, height: 1.4),
+      titleLarge:
+          TextStyle(fontSize: 16, fontWeight: FontWeight.w600, height: 1.4),
+      titleMedium:
+          TextStyle(fontSize: 14, fontWeight: FontWeight.w600, height: 1.4),
+      bodyLarge:
+          TextStyle(fontSize: 16, fontWeight: FontWeight.normal, height: 1.6),
+      bodyMedium:
+          TextStyle(fontSize: 14, fontWeight: FontWeight.normal, height: 1.6),
+      bodySmall:
+          TextStyle(fontSize: 12, fontWeight: FontWeight.normal, height: 1.5),
+      labelLarge:
+          TextStyle(fontSize: 14, fontWeight: FontWeight.w600, height: 1.4),
+      labelMedium:
+          TextStyle(fontSize: 12, fontWeight: FontWeight.w500, height: 1.4),
+      labelSmall:
+          TextStyle(fontSize: 10, fontWeight: FontWeight.w500, height: 1.4),
     );
   }
 

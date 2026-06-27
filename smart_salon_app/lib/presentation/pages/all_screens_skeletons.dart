@@ -90,15 +90,6 @@ class RegisterScreen extends StatelessWidget {
       );
 }
 
-class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('کد تایید')),
-        body: const Center(child: Text('OTP Placeholder')),
-      );
-}
-
 /// ---------------------------------------------------------------------------
 /// Client Screens
 /// ---------------------------------------------------------------------------

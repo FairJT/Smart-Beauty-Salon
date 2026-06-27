@@ -84,8 +84,8 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Featured Salon',
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600)),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   SizedBox(height: 8),
                   Text('Lorem ipsum dolor sit amet...'),
                 ],
@@ -105,12 +105,11 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar:
-            FBottomNav(index: 0, onTap: (_) {}, items: const [
-NavItem(Icons.home, 'خانه'),
-NavItem(Icons.calendar_today, 'رزرو'),
-NavItem(Icons.bookmark, 'نوبتها'),
-NavItem(Icons.person, 'پروفایل')
+        bottomNavigationBar: FBottomNav(index: 0, onTap: (_) {}, items: const [
+          (icon: Icons.home, label: 'خانه'),
+          (icon: Icons.calendar_today, label: 'رزرو'),
+          (icon: Icons.bookmark, label: 'نوبتها'),
+          (icon: Icons.person, label: 'پروفایل')
         ]),
       );
 }
@@ -336,6 +335,7 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       );
+}
 
 // --------------------------
 // B) Client screens
@@ -347,6 +347,7 @@ class BookingFlowScreen extends StatefulWidget {
   @override
   State<BookingFlowScreen> createState() => _BookingFlowScreenState();
 }
+
 class _BookingFlowScreenState extends State<BookingFlowScreen> {
   int step = 0;
   @override
@@ -366,10 +367,11 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
                   spacing: 8,
                   children: List.generate(
                       4,
-                      (i) => FAvatar('A$i',
+                      (i) => GestureDetector(
                           onTap: () {
                             // select artist
-                          })),
+                          },
+                          child: FAvatar('A$i'))),
                 )),
             Step(
                 title: const Text('انتخاب زمان'),
@@ -388,8 +390,7 @@ class _BookingFlowScreenState extends State<BookingFlowScreen> {
                 content: Text('خلاصه رزرو و دکمه پرداخت نهایی.')),
           ],
         ),
-        bottomNavigationBar:
-            FBottomNav(index: 1, onTap: (_) {}, items: const [
+        bottomNavigationBar: FBottomNav(index: 1, onTap: (_) {}, items: const [
           (icon: Icons.home, label: 'خانه'),
           (icon: Icons.calendar_today, label: 'رزرو'),
           (icon: Icons.bookmark, label: 'نوبتها'),
@@ -514,8 +515,7 @@ class FeedbackScreen extends StatelessWidget {
               const TextField(
                 maxLines: 5,
                 decoration: InputDecoration(
-                    labelText: 'متن بازخورد',
-                    border: OutlineInputBorder()),
+                    labelText: 'متن بازخورد', border: OutlineInputBorder()),
               ),
               const SizedBox(height: 12),
               FPrimaryButton('ارسال', onTap: () {
@@ -532,8 +532,7 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('پروفایل'), backgroundColor: FCol.ink),
+        appBar: AppBar(title: const Text('پروفایل'), backgroundColor: FCol.ink),
         body: const Center(child: Text('اطلاعات کاربر')),
       );
 }
@@ -543,8 +542,8 @@ class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            title: const Text('اعلان‌ها'), backgroundColor: FCol.ink),
+        appBar:
+            AppBar(title: const Text('اعلان‌ها'), backgroundColor: FCol.ink),
         body: ListView(
           children: List.generate(
             4,
@@ -558,6 +557,7 @@ class NotificationsScreen extends StatelessWidget {
           ),
         ),
       );
+}
 
 // --------------------------
 // C) Artist screens
@@ -588,8 +588,7 @@ class ArtistScheduleScreen extends StatelessWidget {
   const ArtistScheduleScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('تقویم'), backgroundColor: FCol.olive),
+        appBar: AppBar(title: const Text('تقویم'), backgroundColor: FCol.olive),
         body: ListView(
           children: List.generate(
             5,
@@ -608,8 +607,8 @@ class ArtistAppointmentsScreen extends StatelessWidget {
   const ArtistAppointmentsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            title: const Text('نوبت‌ها'), backgroundColor: FCol.olive),
+        appBar:
+            AppBar(title: const Text('نوبت‌ها'), backgroundColor: FCol.olive),
         body: ListView(
           children: List.generate(
             3,
@@ -646,8 +645,8 @@ class LeaveRequestScreen extends StatelessWidget {
   const LeaveRequestScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('درخواست مرخصی'), backgroundColor: FCol.olive),
+        appBar: AppBar(
+            title: const Text('درخواست مرخصی'), backgroundColor: FCol.olive),
         body: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -678,8 +677,9 @@ class ClientNotesScreen extends StatelessWidget {
   const ClientNotesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('یادداشت‌های مشتری'), backgroundColor: FCol.olive),
+        appBar: AppBar(
+            title: const Text('یادداشت‌های مشتری'),
+            backgroundColor: FCol.olive),
         body: ListView(
           children: List.generate(
             4,
@@ -703,8 +703,8 @@ class ProductUsageScreen extends StatelessWidget {
   const ProductUsageScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('مصرف محصولات'), backgroundColor: FCol.olive),
+        appBar: AppBar(
+            title: const Text('مصرف محصولات'), backgroundColor: FCol.olive),
         body: const Center(child: Text('لیست محصولات مصرفی')),
       );
 }
@@ -714,8 +714,9 @@ class StaffRequestsScreen extends StatelessWidget {
   const StaffRequestsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('درخواست‌های پرسنل'), backgroundColor: FCol.olive),
+        appBar: AppBar(
+            title: const Text('درخواست‌های پرسنل'),
+            backgroundColor: FCol.olive),
         body: const Center(child: Text('لیست درخواست‌ها')),
       );
 }
@@ -736,10 +737,11 @@ class NoticesScreen extends StatelessWidget {
   const NoticesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('اطلاعیه‌ها'), backgroundColor: FCol.olive),
+        appBar: AppBar(
+            title: const Text('اطلاعیه‌ها'), backgroundColor: FCol.olive),
         body: const Center(child: Text('متن اطلاعیه‌ها')),
       );
+}
 
 // --------------------------
 // D) SalonManager screens
@@ -750,8 +752,8 @@ class ManagerDashboardScreen extends StatelessWidget {
   const ManagerDashboardScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('داشبورد مدیر'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('داشبورد مدیر'), backgroundColor: Colors.indigo),
         body: GridView.count(
           crossAxisCount: 2,
           padding: const EdgeInsets.all(12),
@@ -781,8 +783,8 @@ class WorkingHoursScreen extends StatelessWidget {
   const WorkingHoursScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('ساعات کاری'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('ساعات کاری'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('تنظیم ساعات کاری و تعطیلات')),
       );
 }
@@ -792,8 +794,8 @@ class ServicesManagementScreen extends StatelessWidget {
   const ServicesManagementScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('مدیریت خدمات'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('مدیریت خدمات'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('لیست و ویرایش خدمات')),
       );
 }
@@ -814,8 +816,8 @@ class ManagerAppointmentsScreen extends StatelessWidget {
   const ManagerAppointmentsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('نوبت‌ها'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('نوبت‌ها'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('لیست نوبت‌ها برای مدیریت')),
       );
 }
@@ -825,8 +827,9 @@ class CustomersReviewsScreen extends StatelessWidget {
   const CustomersReviewsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('مشتریان و نظرات'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('مشتریان و نظرات'),
+            backgroundColor: Colors.indigo),
         body: const Center(child: Text('آمار مشتریان و نظرات')),
       );
 }
@@ -836,8 +839,8 @@ class ManagerDiscountsScreen extends StatelessWidget {
   const ManagerDiscountsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('تخفیف‌ها'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('تخفیف‌ها'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('مدیریت تخفیف‌ها')),
       );
 }
@@ -847,8 +850,8 @@ class FinanceLedgerScreen extends StatelessWidget {
   const FinanceLedgerScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('حسابداری'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('حسابداری'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('نمایش سندهای مالی')),
       );
 }
@@ -858,8 +861,8 @@ class HiringScreen extends StatelessWidget {
   const HiringScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('استخدام'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('استخدام'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('پست‌ها و درخواست‌های استخدام')),
       );
 }
@@ -869,10 +872,11 @@ class ManagerInboxScreen extends StatelessWidget {
   const ManagerInboxScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('صندوق پیام'), backgroundColor: Colors.indigo),
+        appBar: AppBar(
+            title: const Text('صندوق پیام'), backgroundColor: Colors.indigo),
         body: const Center(child: Text('درخواست‌ها، نظرات و پیام‌ها')),
       );
+}
 
 // --------------------------
 // E) SuperAdmin screens
@@ -883,8 +887,8 @@ class AdminDashboardScreen extends StatelessWidget {
   const AdminDashboardScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('داشبورد ادمین'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('داشبورد ادمین'), backgroundColor: Colors.amber),
         body: GridView.count(
           crossAxisCount: 2,
           padding: const EdgeInsets.all(12),
@@ -903,8 +907,8 @@ class TenantsScreen extends StatelessWidget {
   const TenantsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('مستاجرین'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('مستاجرین'), backgroundColor: Colors.amber),
         body: const Center(child: Text('لیست مستاجرین و سالن‌ها')),
       );
 }
@@ -914,7 +918,8 @@ class UsersScreen extends StatelessWidget {
   const UsersScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('کاربران'), backgroundColor: Colors.amber),
+        appBar:
+            AppBar(title: const Text('کاربران'), backgroundColor: Colors.amber),
         body: const Center(child: Text('مدیریت کاربران')),
       );
 }
@@ -924,8 +929,8 @@ class ServiceTemplatesScreen extends StatelessWidget {
   const ServiceTemplatesScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('قالب‌های سرویس'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('قالب‌های سرویس'), backgroundColor: Colors.amber),
         body: const Center(child: Text('ایجاد/ویرایش قالب سرویس')),
       );
 }
@@ -935,8 +940,8 @@ class PackageListingsScreen extends StatelessWidget {
   const PackageListingsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('بسته‌های خدمات'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('بسته‌های خدمات'), backgroundColor: Colors.amber),
         body: const Center(child: Text('لیست بسته‌ها')),
       );
 }
@@ -946,8 +951,8 @@ class HomepageCMSScreen extends StatelessWidget {
   const HomepageCMSScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('مدیریت محتوا'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('مدیریت محتوا'), backgroundColor: Colors.amber),
         body: const Center(child: Text('اسلایدها و منوها')),
       );
 }
@@ -957,8 +962,8 @@ class BlogEditorScreen extends StatelessWidget {
   const BlogEditorScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('ویرایش بلاگ'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('ویرایش بلاگ'), backgroundColor: Colors.amber),
         body: const Center(child: Text('ویرایش پست‌های بلاگ')),
       );
 }
@@ -979,8 +984,9 @@ class AdminJoinRequestsScreen extends StatelessWidget {
   const AdminJoinRequestsScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('درخواست‌های پیوستن'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('درخواست‌های پیوستن'),
+            backgroundColor: Colors.amber),
         body: const Center(child: Text('مشاهده و تایید درخواست‌ها')),
       );
 }
@@ -990,10 +996,12 @@ class PlatformAccountingScreen extends StatelessWidget {
   const PlatformAccountingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar:
-            AppBar(title: const Text('حسابداری پلتفرم'), backgroundColor: Colors.amber),
+        appBar: AppBar(
+            title: const Text('حسابداری پلتفرم'),
+            backgroundColor: Colors.amber),
         body: const Center(child: Text('آمار مالی پلتفرم')),
       );
+}
 
 // ----------------------------------------------------------------
 // END OF GENERATED SKELETONS

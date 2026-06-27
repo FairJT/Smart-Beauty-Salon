@@ -28,8 +28,7 @@ COPY smart_salon_app/ .
 # it from the gstatic CDN at runtime (which may be blocked → blank page).
 RUN --mount=type=cache,target=/root/.pub-cache \
     flutter build web --release \
-      --no-web-resources-cdn \
-      --dart-define=API_BASE_URL=${API_BASE_URL}
+      --no-web-resources-cdn
 
 # ─── Runtime stage ───────────────────────────────────────────
 FROM nginx:1.27-alpine

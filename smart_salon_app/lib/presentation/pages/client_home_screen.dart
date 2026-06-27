@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/app_colors.dart';
+import '../../core/auth_guard.dart';
 import '../../core/format/jalaali_helper.dart';
 import '../providers/dashboard_provider.dart';
 import '../providers/favorites_provider.dart';
@@ -55,7 +56,14 @@ class _ClientHomeScreenState extends ConsumerState<ClientHomeScreen> {
                   : const ProfileScreen(),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentTab,
-        onDestinationSelected: (i) => setState(() => _currentTab = i),
+        onDestinationSelected: (i) {
+          if ((i == 1 || i == 3) &&
+              !requireLogin(context, ref,
+                  reason: 'برای دیدن این بخش وارد شوید')) {
+            return;
+          }
+          setState(() => _currentTab = i);
+        },
         destinations: const [
           NavigationDestination(
               icon: Icon(Icons.dashboard_outlined),

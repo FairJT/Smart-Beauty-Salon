@@ -153,9 +153,16 @@ public class AuthService : IAuthService
                 _                     => "Client"
             };
 
-            // Fetch the user's active membership to get TenantId (and ArtistId if Artist)
+            // Fetch the user's active membership to get TenantId (and ArtistId if Artist).
+            // NOTE: IgnoreQueryFilters() is required — the global tenant query filter
+            // (IdentityDbContext.ApplyTenantFilter<Membership>) scopes Membership rows to
+            // ITenantContext.TenantId, which is Guid.Empty during an unauthenticated login
+            // request. Without this, the lookup returns null, no tenant_id claim is emitted,
+            // and every subsequent [Authorize] call (incl. GET /profile) 401s with
+            // "No valid tenant in token". Token issuance is inherently cross-tenant.
             var membership = await _db.Memberships
                 .AsNoTracking()
+                .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(m => m.UserId == user.Id && m.IsActive);
 
             if (membership != null)

@@ -8,7 +8,6 @@ import '../../domain/entities/artist_entity.dart';
 import '../../data/repositories/salon_repository_impl.dart';
 import '../../data/repositories/service_repository_impl.dart';
 import '../../data/repositories/artist_repository_impl.dart';
-import 'otp_screen.dart';
 
 class GuestBookingScreen extends ConsumerStatefulWidget {
   final String slug;
@@ -47,7 +46,10 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
   }
 
   Future<void> _loadSalonData() async {
-    setState(() { _loading = true; _error = null; });
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
     try {
       final salonRepo = SalonRepositoryImpl();
       final serviceRepo = ServiceRepositoryImpl();
@@ -56,14 +58,21 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
       _salon = await salonRepo.getSalonBySlug(widget.slug);
       _services = await serviceRepo.getServicesBySalon(_salon!.id);
       _artists = await artistRepo.getArtistsBySalon(_salon!.id);
-      setState(() { _loading = false; });
+      setState(() {
+        _loading = false;
+      });
     } catch (e) {
-      setState(() { _error = e.toString().replaceAll('Exception: ', ''); _loading = false; });
+      setState(() {
+        _error = e.toString().replaceAll('Exception: ', '');
+        _loading = false;
+      });
     }
   }
 
   Future<void> _bookAsGuest() async {
-    if (_selectedService == null || _selectedArtist == null || _selectedTime == null) {
+    if (_selectedService == null ||
+        _selectedArtist == null ||
+        _selectedTime == null) {
       setState(() => _error = 'لطفاً تمام موارد را انتخاب کنید');
       return;
     }
@@ -73,31 +82,46 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
       return;
     }
 
-    setState(() { _loading = true; _error = null; });
-    try {
-      // TODO: Implement guest booking with the backend
-      // For now, navigate to OTP verification
-      if (!mounted) return;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => OtpScreen(phoneNumber: _phoneController.text.trim()),
-        ),
-      );
-    } catch (e) {
-      setState(() => _error = e.toString().replaceAll('Exception: ', ''));
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+
+    // TODO: Implement booking logic here
+
+    setState(() {
+      _loading = false;
+    });
   }
 
   String _jalaliMonthName(int month) {
-    const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+    const months = [
+      'فروردین',
+      'اردیبهشت',
+      'خرداد',
+      'تیر',
+      'مرداد',
+      'شهریور',
+      'مهر',
+      'آبان',
+      'آذر',
+      'دی',
+      'بهمن',
+      'اسفند'
+    ];
     return months[month - 1];
   }
 
   String _weekDayName(DateTime date) {
-    const days = ['دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه','یکشنبه'];
+    const days = [
+      'دوشنبه',
+      'سه‌شنبه',
+      'چهارشنبه',
+      'پنجشنبه',
+      'جمعه',
+      'شنبه',
+      'یکشنبه'
+    ];
     return days[date.weekday - 1];
   }
 
@@ -109,10 +133,7 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => OtpScreen(phoneNumber: _phoneController.text.isNotEmpty ? _phoneController.text.trim() : '')),
-              );
+              Navigator.of(context).pushReplacementNamed('/login');
             },
             child: const Text('ورود', style: TextStyle(color: Colors.white)),
           ),
@@ -134,23 +155,28 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
         children: [
           _buildSalonInfo(),
           const SizedBox(height: 20),
-          const Text('انتخاب خدمت:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('انتخاب خدمت:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
           _buildServiceSelector(),
           const SizedBox(height: 20),
-          const Text('انتخاب هنرمند:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('انتخاب هنرمند:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
           _buildArtistSelector(),
           const SizedBox(height: 20),
-          const Text('انتخاب تاریخ:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('انتخاب تاریخ:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
           _buildDateSelector(),
           const SizedBox(height: 20),
-          const Text('انتخاب ساعت:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('انتخاب ساعت:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
           _buildTimeSelector(),
           const SizedBox(height: 20),
-          const Text('اطلاعات تماس:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const Text('اطلاعات تماس:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           const SizedBox(height: 8),
           _buildContactInfo(),
           const SizedBox(height: 20),
@@ -158,8 +184,12 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               margin: const EdgeInsets.only(bottom: 16),
-              decoration: BoxDecoration(color: Colors.red.shade100, borderRadius: BorderRadius.circular(10)),
-              child: Text(_error!, textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+              decoration: BoxDecoration(
+                  color: Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Text(_error!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.red)),
             ),
           ElevatedButton(
             onPressed: _loading ? null : _bookAsGuest,
@@ -185,14 +215,19 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(_salon!.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          Text(_salon!.name,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           if (_salon!.address != null) ...[
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.location_on_outlined, size: 16, color: AppColors.primary),
+                const Icon(Icons.location_on_outlined,
+                    size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
-                Expanded(child: Text(_salon!.address!, style: const TextStyle(color: Colors.grey))),
+                Expanded(
+                    child: Text(_salon!.address!,
+                        style: const TextStyle(color: Colors.grey))),
               ],
             ),
           ],
@@ -214,23 +249,31 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
             onTap: () => setState(() => _selectedService = service),
             child: Container(
               width: 150,
-              margin: const EdgeInsets.only(left: 8),
+              margin: const EdgeInsetsDirectional.only(start: 8),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                border: Border.all(
+                    color:
+                        isSelected ? AppColors.primary : Colors.grey.shade300),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(service.name,
-                      style: TextStyle(fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.black)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: isSelected ? Colors.white : Colors.black)),
                   const Spacer(),
                   Text('${service.durationMinutes} دقیقه',
-                      style: TextStyle(color: isSelected ? Colors.white70 : Colors.grey, fontSize: 12)),
+                      style: TextStyle(
+                          color: isSelected ? Colors.white70 : Colors.grey,
+                          fontSize: 12)),
                   Text('${service.price.toStringAsFixed(0)} تومان',
-                      style: TextStyle(color: isSelected ? Colors.white : AppColors.primary, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          color: isSelected ? Colors.white : AppColors.primary,
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -253,24 +296,31 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
             onTap: () => setState(() => _selectedArtist = artist),
             child: Container(
               width: 100,
-              margin: const EdgeInsets.only(left: 8),
+              margin: const EdgeInsetsDirectional.only(start: 8),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                border: Border.all(
+                    color:
+                        isSelected ? AppColors.primary : Colors.grey.shade300),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    backgroundColor: isSelected ? Colors.white : AppColors.primary,
+                    backgroundColor:
+                        isSelected ? Colors.white : AppColors.primary,
                     child: Text(artist.name[0],
-                        style: TextStyle(color: isSelected ? AppColors.primary : Colors.white)),
+                        style: TextStyle(
+                            color:
+                                isSelected ? AppColors.primary : Colors.white)),
                   ),
                   const SizedBox(height: 8),
                   Text(artist.name,
-                      style: TextStyle(color: isSelected ? Colors.white : Colors.black, fontSize: 12),
+                      style: TextStyle(
+                          color: isSelected ? Colors.white : Colors.black,
+                          fontSize: 12),
                       textAlign: TextAlign.center),
                 ],
               ),
@@ -289,29 +339,39 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
         itemCount: 14,
         itemBuilder: (_, i) {
           final date = DateTime.now().add(Duration(days: i + 1));
-          final isSelected = date.day == _selectedDate.day && date.month == _selectedDate.month;
+          final isSelected = date.day == _selectedDate.day &&
+              date.month == _selectedDate.month;
           final jalali = date.toJalali();
 
           return GestureDetector(
             onTap: () => setState(() => _selectedDate = date),
             child: Container(
               width: 70,
-              margin: const EdgeInsets.only(left: 8),
+              margin: const EdgeInsetsDirectional.only(start: 8),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+                border: Border.all(
+                    color:
+                        isSelected ? AppColors.primary : Colors.grey.shade300),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(_weekDayName(date),
-                      style: TextStyle(fontSize: 10, color: isSelected ? Colors.white70 : Colors.grey)),
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: isSelected ? Colors.white70 : Colors.grey)),
                   Text('${jalali.day}',
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
-                          color: isSelected ? Colors.white : AppColors.primary)),
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              isSelected ? Colors.white : AppColors.primary)),
                   Text(_jalaliMonthName(jalali.month),
-                      style: TextStyle(fontSize: 10, color: isSelected ? Colors.white70 : Colors.grey)),
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: isSelected ? Colors.white70 : Colors.grey)),
                 ],
               ),
             ),
@@ -322,7 +382,18 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
   }
 
   Widget _buildTimeSelector() {
-    final times = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+    final times = [
+      '09:00',
+      '10:00',
+      '11:00',
+      '12:00',
+      '13:00',
+      '14:00',
+      '15:00',
+      '16:00',
+      '17:00',
+      '18:00'
+    ];
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -335,10 +406,13 @@ class _GuestBookingScreenState extends ConsumerState<GuestBookingScreen> {
             decoration: BoxDecoration(
               color: isSelected ? AppColors.primary : Colors.white,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: isSelected ? AppColors.primary : Colors.grey.shade300),
+              border: Border.all(
+                  color: isSelected ? AppColors.primary : Colors.grey.shade300),
             ),
             child: Text(time,
-                style: TextStyle(color: isSelected ? Colors.white : AppColors.dark, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: isSelected ? Colors.white : AppColors.dark,
+                    fontWeight: FontWeight.bold)),
           ),
         );
       }).toList(),

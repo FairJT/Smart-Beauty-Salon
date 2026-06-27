@@ -258,7 +258,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             },
             child: Container(
               width: 70,
-              margin: const EdgeInsets.only(left: 8),
+              margin: const EdgeInsetsDirectional.only(start: 8),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.white,
                 borderRadius: BorderRadius.circular(12),

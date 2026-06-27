@@ -58,13 +58,18 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<bool> login(String phoneNumber, String password) async {
-    final user = await _authRepository.login(phoneNumber, password);
-    state = AuthState(
-      isLoggedIn: true,
-      user: user,
-      loading: false,
-    );
-    return true;
+    try {
+      final user = await _authRepository.login(phoneNumber, password);
+      state = AuthState(
+        isLoggedIn: true,
+        user: user,
+        loading: false,
+      );
+      return true;
+    } catch (e) {
+      state = AuthState(loading: false);
+      rethrow;
+    }
   }
 
   Future<bool> register({

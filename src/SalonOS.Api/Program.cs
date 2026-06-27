@@ -30,7 +30,11 @@ using Microsoft.AspNetCore.RateLimiting;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -53,11 +57,17 @@ builder.Services.AddDbContext<AppDbContext>((sp, options) =>
 
 // Add EF Core for Booking module
 builder.Services.AddDbContext<BookingDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+});
 
 // Add EF Core for Catalog module
 builder.Services.AddDbContext<CatalogDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.ConfigureWarnings(w => w.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+});
 
 // Add ASP.NET Identity
 builder.Services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>(options =>
@@ -235,8 +245,12 @@ identityDb.Database.Migrate();
                 [RetryCount] INT NOT NULL DEFAULT 0
             )");
 
-        // Apply Booking migrations if any
-        try { bookingDb.Database.Migrate(); } catch { }
+        // Apply Booking migrations. NOTE: must run BEFORE the raw-SQL booking-table
+        // fallbacks below — otherwise those CREATE TABLE statements create e.g.
+        // ArtistSchedules first, InitialBooking then fails on "object already exists",
+        // and the whole Booking migration (incl. Bookings/Leaves) gets skipped.
+        try { bookingDb.Database.Migrate(); }
+        catch (Exception ex) { Console.WriteLine($"[Migrate] BookingDbContext failed (non-fatal): {ex.Message}"); }
 
         // Apply Row-Level Security (idempotent). The .sql uses GO batch separators,
         // which ExecuteSqlRaw can't run, so split on them first.
@@ -511,8 +525,9 @@ identityDb.Database.ExecuteSqlRaw(@"
         // Apply Catalog migrations if any
         try { catalogDb.Database.Migrate(); } catch { }
 
-        // ── Seed users ──────────────────────────────────────────
-        await SeedUsersAsync(userManager, identityDb);
+    // ── Seed users ──────────────────────────────────────────
+    try { await SeedUsersAsync(userManager, identityDb); }
+    catch (Exception ex) { Console.WriteLine($"[Seed] Warning: Seed failed (non-fatal): {ex.Message}"); }
     }
 
 // Configure the HTTP request pipeline.
